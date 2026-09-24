@@ -5,7 +5,7 @@ return [
     'brand' => env('BRAND_NAME', 'PrintIOS'),
     'site_url' => env('SITE_URL', 'http://localhost:3100'),
     // Domaine sur lequel les espaces clients sont créés : <slug>.<app_domain>
-    'app_domain' => env('APP_TENANT_DOMAIN', 'app.printios.com'),
+    'app_domain' => env('APP_TENANT_DOMAIN', 'app.printios.ma'),
     'app_scheme' => env('APP_TENANT_SCHEME', 'https'),
 
     // API plateforme Packspace (API2 branche MultiTanant, routes /platform/*)
@@ -29,5 +29,5 @@ return [
     ],
 
     // Où envoyer les notifications (leads, nouvelles inscriptions, échecs)
-    'notify_email' => env('NOTIFY_EMAIL', 'commercial@printios.com'),
+    'notify_email' => env('NOTIFY_EMAIL', 'commercial@printios.ma'),
 ];

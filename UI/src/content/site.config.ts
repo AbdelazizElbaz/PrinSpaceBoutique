@@ -9,10 +9,10 @@ export const site = {
   brand: "PrintIOS",
   tagline: "Le système d'exploitation de votre imprimerie",
   // Domaine du site vitrine (SEO, liens absolus, e-mails par défaut)
-  domain: "printios.com",
-  url: "https://printios.com",
+  domain: "printios.ma",
+  url: "https://printios.ma",
   // Domaine sur lequel les espaces clients sont créés : <slug>.appDomain
-  appDomain: "app.printios.com",
+  appDomain: "app.printios.ma",
   // Nom technique de la plateforme (utilisé dans les textes « sous le capot »)
   platformName: "Packspace",
   // Agent d'impression desktop
@@ -28,9 +28,9 @@ export const site = {
   },
 
   contact: {
-    email: "contact@printios.com", // À REMPLACER
-    salesEmail: "commercial@printios.com", // À REMPLACER
-    supportEmail: "support@printios.com", // À REMPLACER
+    email: "contact@printios.ma", // À REMPLACER
+    salesEmail: "commercial@printios.ma", // À REMPLACER
+    supportEmail: "support@printios.ma", // À REMPLACER
     phone: "+212 6 00 00 00 00", // À REMPLACER
     whatsapp: "212600000000", // À REMPLACER (format international sans +)
     hours: "Lun–Ven 9h–18h, Sam 9h–13h",
@@ -56,7 +56,7 @@ export const site = {
 
   // Liens vers l'application (page Formation, footer)
   links: {
-    login: "https://app.printios.com",
+    login: "https://app.printios.ma",
     docs: "/formation",
     status: "/contact",
   },
