@@ -1,0 +1,40 @@
+# Site vitrine PrintManagerOS : UI (Next.js), API (Laravel + queue + scheduler), MySQL.
+# Usage : cp API/.env.example API/.env (renseigner PLATFORM_API_TOKEN, MAIL_*),
+#         docker compose up -d --build, puis docker compose exec api php artisan key:generate && php artisan migrate
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: printmanageros_boutique
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      retries: 20
+
+  api:
+    build: ./API
+    env_file: ./API/.env
+    environment:
+      DB_HOST: db
+      DB_DATABASE: printmanageros_boutique
+      DB_USERNAME: root
+      DB_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+    ports: ["8100:8100"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  ui:
+    build:
+      context: ./UI
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8100/api}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3100}
+    ports: ["3100:3100"]
+    depends_on: [api]
+
+volumes:
+  db-data:
