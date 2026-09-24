@@ -26,5 +26,5 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   // Tout sauf les fichiers statiques, l'API interne Next et les métadonnées générées
-  matcher: ["/((?!_next|api|favicon.svg|favicon.ico|robots.txt|sitemap.xml|opengraph-image|screens|.*\\..*).*)"],
+  matcher: ["/((?!_next|api|favicon.svg|favicon.ico|robots.txt|sitemap.xml|screens|.*\\..*).*)"],
 }
