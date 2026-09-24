@@ -1,6 +1,6 @@
 #!/bin/sh
 # Démarrage : attente de la base, migrations (idempotentes), caches Laravel,
-# puis supervisord (php-fpm + Next.js + nginx + queue + scheduler).
+# puis supervisord (php-fpm + Next.js + nginx + queue).
 set -e
 cd /var/www/api
 

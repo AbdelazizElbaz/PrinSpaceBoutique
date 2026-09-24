@@ -26,13 +26,13 @@ export const videos: Video[] = [
   {
     id: "creer-espace",
     track: "demarrer",
-    title: "Créer son espace en 2 minutes",
+    title: "Demander son espace et se connecter",
     duration: "3 min",
     youtubeId: "",
-    summary: "De la page d'inscription à la première connexion : sous-domaine, administrateur, barre de progression du déploiement.",
+    summary: "De la demande d'essai (WhatsApp) à la première connexion avec les accès reçus.",
     script: [
-      { screen: "Page /inscription du site", say: "On choisit un forfait, on saisit le nom de l'atelier, le sous-domaine et l'e-mail de l'administrateur." },
-      { screen: "Écran de progression", say: "L'espace se crée : base de données, structure, données de départ, administrateur, stockage. Ça prend moins de deux minutes." },
+      { screen: "Page Essai gratuit du site", say: "On choisit un forfait et on clique sur le bouton WhatsApp : le message est pré-rempli, il suffit de l'envoyer." },
+      { screen: "E-mail / WhatsApp reçu", say: "Sous un jour ouvré, on reçoit l'adresse de son espace et ses identifiants." },
       { screen: "Redirection vers l'app, page de connexion", say: "On se connecte avec le mot de passe reçu par e-mail, puis on le change dans Mon compte." },
     ],
   },

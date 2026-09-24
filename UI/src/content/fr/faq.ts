@@ -12,7 +12,7 @@ export const faq: FaqGroup[] = [
     items: [
       {
         q: `Comment démarrer avec ${b} ?`,
-        a: `Cliquez sur « Essai gratuit », indiquez le nom de votre atelier, le sous-domaine souhaité et votre e-mail. Votre espace (base de données, stockage, premier administrateur) est créé automatiquement en moins de deux minutes ; vous recevez vos accès par e-mail et vous pouvez commencer à paramétrer immédiatement.`,
+        a: `Cliquez sur « Essai gratuit », choisissez votre forfait et contactez-nous sur WhatsApp (ou laissez vos coordonnées). Un conseiller crée votre espace sous un jour ouvré et vous envoie vos accès par e-mail et WhatsApp ; vous pouvez commencer à paramétrer immédiatement.`,
       },
       {
         q: "L'essai est-il vraiment gratuit ? Faut-il une carte bancaire ?",
@@ -27,8 +27,8 @@ export const faq: FaqGroup[] = [
         a: "Oui. Les clients s'importent depuis un fichier CSV (nom, téléphone, e-mail, adresse), avec détection automatique des doublons. Pour les produits et les options, vous pouvez les saisir ou nous envoyer votre catalogue : sur le forfait Business, l'import est fait par notre équipe.",
       },
       {
-        q: "C'est quoi le sous-domaine ?",
-        a: `C'est l'adresse de votre espace : monatelier.${site.appDomain}. Vous la choisissez à l'inscription ; sur le forfait Business, vous pouvez utiliser votre propre domaine (commandes.votre-marque.ma).`,
+        q: "Quelle sera l'adresse de mon espace ?",
+        a: `Chaque client a sa propre adresse, du type monatelier.${site.appDomain}, communiquée avec vos accès. Sur le forfait Business, vous pouvez utiliser votre propre domaine (commandes.votre-marque.ma).`,
       },
       {
         q: "Faut-il installer quelque chose ?",

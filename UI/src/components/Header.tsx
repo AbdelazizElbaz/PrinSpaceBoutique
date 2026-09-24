@@ -3,9 +3,9 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { Globe, Menu, X } from "lucide-react"
+import { Globe, Menu, MessageCircle, X } from "lucide-react"
 import { Logo } from "./Logo"
-import { site } from "@/content/site.config"
+import { site, whatsappLink } from "@/content/site.config"
 import { getDict, localeNames, localePath, locales, stripLocale, type Locale } from "@/i18n"
 
 export function Header({ locale }: { locale: Locale }) {
@@ -76,6 +76,9 @@ export function Header({ locale }: { locale: Locale }) {
         </nav>
         <div className="hidden items-center gap-1 lg:flex">
           <LangSwitch />
+          <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn-ghost" title={t.common.whatsapp}>
+            <MessageCircle className="h-4 w-4 text-[#25D366]" /> WhatsApp
+          </a>
           <a href={site.links.login} className="btn-ghost">
             {t.nav.login}
           </a>
@@ -99,6 +102,9 @@ export function Header({ locale }: { locale: Locale }) {
               </Link>
             ))}
             <div className="mt-2 flex flex-col gap-2">
+              <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn bg-[#25D366] text-white hover:bg-[#1ebe5d]">
+                <MessageCircle className="h-4 w-4" /> {t.common.whatsapp}
+              </a>
               <a href={site.links.login} className="btn-secondary">
                 {t.nav.login}
               </a>

@@ -41,29 +41,19 @@ export type LeadPayload = {
 export const api = {
   lead: (payload: LeadPayload) => request<{ ok: true; id: number }>("/leads", { method: "POST", body: JSON.stringify(payload) }),
 
-  checkSlug: (slug: string) => request<{ available: boolean; slug: string; reason?: string }>(`/signup/check-slug?slug=${encodeURIComponent(slug)}`),
-
+  // Demande d'essai gratuit (traitée à la main : l'équipe crée l'espace et envoie les accès)
   signup: (payload: {
     plan: string
     billing: "monthly" | "yearly"
     company: string
-    slug: string
     admin_name: string
     email: string
     phone: string
-    password: string
+    city?: string
+    message?: string
+    locale: string
     accept_terms: boolean
   }) => request<{ ok: true; signup_id: string }>("/signup", { method: "POST", body: JSON.stringify(payload) }),
-
-  signupStatus: (id: string) =>
-    request<{
-      status: "pending" | "provisioning" | "active" | "failed"
-      progress: number
-      step: string | null
-      steps: { key: string; label: string; status: "pending" | "running" | "done" | "failed"; message?: string }[]
-      app_url?: string
-      error?: string
-    }>(`/signup/${encodeURIComponent(id)}/status`),
 
   plans: () => request<{ plans: { code: string; name: string; monthly: number; yearly: number }[] }>("/plans"),
 }

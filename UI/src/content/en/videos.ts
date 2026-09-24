@@ -11,9 +11,9 @@ export const tracks: Track[] = [
 ]
 
 export const videos: Video[] = [
-  { id: "creer-espace", track: "demarrer", title: "Create your workspace in 2 minutes", duration: "3 min", youtubeId: "", summary: "From the signup page to the first login: subdomain, administrator, deployment progress bar.", script: [
-    { screen: "Site /signup page", say: "Choose a plan, enter the workshop name, the subdomain and the administrator's e-mail." },
-    { screen: "Progress screen", say: "The workspace is being created: database, structure, initial data, administrator, storage. It takes less than two minutes." },
+  { id: "creer-espace", track: "demarrer", title: "Request your workspace and sign in", duration: "3 min", youtubeId: "", summary: "From the trial request (WhatsApp) to the first login with the access received.", script: [
+    { screen: "Free trial page", say: "Pick a plan and click the WhatsApp button: the message is pre-filled, just send it." },
+    { screen: "E-mail / WhatsApp received", say: "Within one working day you receive your workspace address and credentials." },
     { screen: "Redirect to the app, login page", say: "Sign in with the password received by e-mail, then change it in My account." },
   ] },
   { id: "parametrage", track: "demarrer", title: "First setup: workshop, VAT, products, materials", duration: "6 min", youtubeId: "", summary: "Enter the workshop details, create the first products with their options and the materials consumed.", script: [

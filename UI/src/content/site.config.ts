@@ -11,7 +11,7 @@ export const site = {
   // Domaine du site vitrine (SEO, liens absolus, e-mails par défaut)
   domain: "printios.ma",
   url: "https://printios.ma",
-  // Domaine sur lequel les espaces clients sont créés : <slug>.appDomain
+  // Domaine sur lequel les espaces clients sont créés par l'équipe : <atelier>.appDomain
   appDomain: "app.printios.ma",
   // Nom technique de la plateforme (utilisé dans les textes « sous le capot »)
   platformName: "Packspace",
@@ -63,6 +63,9 @@ export const site = {
 } as const
 
 export type Site = typeof site
+
+/** Lien WhatsApp avec message pré-rempli (canal de contact principal). */
+export const whatsappLink = (text: string) => `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(text)}`
 
 export const money = (n: number, locale: "fr" | "ar" | "en" = "fr") => {
   const nf = { fr: "fr-MA", ar: "ar-MA", en: "en-US" }[locale]

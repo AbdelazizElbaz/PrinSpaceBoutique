@@ -20,7 +20,7 @@ class NewSignupMail extends Mailable implements ShouldQueue
 
     public function envelope(): Envelope
     {
-        return new Envelope(subject: "[Site] Nouvel essai : {$this->signup->company} ({$this->signup->plan}, {$this->signup->slug})", replyTo: [$this->signup->email]);
+        return new Envelope(subject: "[Site] Demande d'essai : {$this->signup->company} ({$this->signup->plan})", replyTo: [$this->signup->email]);
     }
 
     public function content(): Content

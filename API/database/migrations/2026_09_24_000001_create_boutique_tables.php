@@ -27,27 +27,21 @@ return new class extends Migration
             $table->index(['status', 'created_at']);
         });
 
-        // Inscriptions (essai gratuit) → provisioning d'un tenant Packspace
+        // Demandes d'essai gratuit (forfait + coordonnées), traitées à la main
         Schema::create('signups', function (Blueprint $table) {
             $table->id();
-            $table->uuid('public_id')->unique(); // exposé au site pour le polling
+            $table->uuid('public_id')->unique();
             $table->string('plan', 30);
             $table->string('billing', 10)->default('monthly'); // monthly | yearly
             $table->string('company');
-            $table->string('slug', 63)->unique();
             $table->string('admin_name');
             $table->string('email');
             $table->string('phone', 40)->nullable();
-            $table->text('admin_password'); // chiffré (cast encrypted), nécessaire pour l'e-mail de bienvenue puis effacé
-            $table->string('status', 20)->default('pending'); // pending | provisioning | active | failed
-            $table->unsignedBigInteger('tenant_id')->nullable(); // id côté Packspace (base centrale)
-            $table->unsignedBigInteger('provisioning_id')->nullable();
-            $table->unsignedTinyInteger('progress')->default(0);
-            $table->string('current_step', 40)->nullable();
-            $table->json('steps')->nullable();
-            $table->text('error')->nullable();
-            $table->string('app_url')->nullable();
-            $table->timestamp('welcome_sent_at')->nullable();
+            $table->string('city', 100)->nullable();
+            $table->text('message')->nullable();
+            $table->string('locale', 5)->default('fr');
+            $table->string('status', 20)->default('new'); // new | contacted | activated | lost
+            $table->text('notes')->nullable(); // suivi interne
             $table->string('ip', 45)->nullable();
             $table->boolean('accept_terms')->default(false);
             $table->timestamps();

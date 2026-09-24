@@ -1,9 +1,9 @@
 import Link from "next/link"
-import { ArrowRight, Check, PlayCircle } from "lucide-react"
+import { ArrowRight, Check, MessageCircle } from "lucide-react"
 import { Section, SectionHeading, CtaBand, Badge, FaqList } from "@/components/ui"
 import { Icon } from "@/components/Icon"
 import { Mockup } from "@/components/mockups/Mockup"
-import { site, money } from "@/content/site.config"
+import { site, money, whatsappLink } from "@/content/site.config"
 import { getContent } from "@/content"
 import { getDict, isLocale, localePath, isRtl } from "@/i18n"
 import type { LocaleParams } from "@/lib/seo"
@@ -33,9 +33,9 @@ export default async function HomePage({ params }: LocaleParams) {
               <Link href={lp("/inscription")} className="btn-primary">
                 {t.nav.trial(site.trialDays)} <Arrow className={arrowCls} />
               </Link>
-              <Link href={lp("/contact")} className="btn-secondary">
-                <PlayCircle className="h-4 w-4" /> {t.common.seeDemo}
-              </Link>
+              <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn-secondary">
+                <MessageCircle className="h-4 w-4 text-[#25D366]" /> {t.common.whatsapp}
+              </a>
             </div>
             <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">
               {t.home.bullets(money(c.plans[0].monthly, locale)).map((b) => (

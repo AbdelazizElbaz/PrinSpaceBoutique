@@ -2,94 +2,38 @@
 
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useMemo, useState } from "react"
-import { AlertTriangle, Check, CheckCircle2, Circle, Loader2, XCircle } from "lucide-react"
+import { useMemo, useState } from "react"
+import { AlertTriangle, Check, CheckCircle2, Circle, Loader2, MessageCircle } from "lucide-react"
 import type { Plan } from "@/content/types"
 import { site, money } from "@/content/site.config"
 import { api, ApiError } from "@/lib/api"
 import { getDict, localePath, type Locale } from "@/i18n"
 
-const slugify = (s: string) =>
-  s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 30)
-
-type Status = Awaited<ReturnType<typeof api.signupStatus>>
-
+// Parcours « Essai gratuit » : 1) choix du forfait, 2) contact — WhatsApp en
+// premier (message pré-rempli), ou formulaire court qui crée une demande côté
+// API (SignupController::store) traitée à la main par l'équipe.
 export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] }) {
   const t = getDict(locale)
   const lp = (p: string) => localePath(locale, p)
   const params = useSearchParams()
-  const [step, setStep] = useState<1 | 2 | 3>(1)
+  const [step, setStep] = useState<1 | 2>(1)
   const [plan, setPlan] = useState(params.get("plan") && plans.some((p) => p.code === params.get("plan")) ? params.get("plan")! : "pro")
   const [billing, setBilling] = useState<"monthly" | "yearly">(params.get("billing") === "yearly" ? "yearly" : "monthly")
   const [company, setCompany] = useState("")
-  const [slug, setSlug] = useState("")
-  const [slugTouched, setSlugTouched] = useState(false)
-  const [slugState, setSlugState] = useState<{ checking: boolean; available?: boolean; reason?: string }>({ checking: false })
   const [adminName, setAdminName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
-  const [password, setPassword] = useState("")
+  const [city, setCity] = useState("")
+  const [message, setMessage] = useState("")
   const [accept, setAccept] = useState(false)
   const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
   const [error, setError] = useState("")
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({})
-  const [signupId, setSignupId] = useState<string | null>(null)
-  const [status, setStatus] = useState<Status | null>(null)
 
   const selected = useMemo(() => plans.find((p) => p.code === plan)!, [plan, plans])
-
-  useEffect(() => {
-    if (!slugTouched) setSlug(slugify(company))
-  }, [company, slugTouched])
-
-  // Vérification de disponibilité du sous-domaine (debounce)
-  useEffect(() => {
-    if (!slug || slug.length < 3) {
-      setSlugState({ checking: false })
-      return
-    }
-    let alive = true
-    setSlugState({ checking: true })
-    const t = setTimeout(async () => {
-      try {
-        const r = await api.checkSlug(slug)
-        if (alive) setSlugState({ checking: false, available: r.available, reason: r.reason })
-      } catch {
-        if (alive) setSlugState({ checking: false })
-      }
-    }, 450)
-    return () => {
-      alive = false
-      clearTimeout(t)
-    }
-  }, [slug])
-
-  // Polling de la progression du déploiement
-  useEffect(() => {
-    if (!signupId) return
-    let alive = true
-    const tick = async () => {
-      try {
-        const s = await api.signupStatus(signupId)
-        if (!alive) return
-        setStatus(s)
-        if (s.status === "active" || s.status === "failed") return
-      } catch {
-        /* on réessaie */
-      }
-      if (alive) setTimeout(tick, 2000)
-    }
-    tick()
-    return () => {
-      alive = false
-    }
-  }, [signupId])
+  const billingLabel = billing === "yearly" ? t.pricing.yearly : t.pricing.monthly
+  const whatsappUrl = `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(t.signup.whatsappMsg(site.brand, selected.name, billingLabel))}`
 
   async function submit() {
     setError("")
@@ -100,14 +44,13 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
     }
     setSending(true)
     try {
-      const r = await api.signup({ plan, billing, company, slug, admin_name: adminName, email, phone, password, accept_terms: accept })
-      setSignupId(r.signup_id)
-      setStep(3)
+      await api.signup({ plan, billing, company, admin_name: adminName, email, phone, city: city || undefined, message: message || undefined, locale, accept_terms: accept })
+      setSent(true)
     } catch (err) {
       if (err instanceof ApiError) {
         setError(err.message)
         setFieldErrors(err.errors || {})
-      } else setError(t.signup.createErr)
+      } else setError(t.signup.sendErr)
     } finally {
       setSending(false)
     }
@@ -115,12 +58,29 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
 
   const Err = ({ k }: { k: string }) => (fieldErrors[k] ? <p className="mt-1 text-xs text-red-600">{fieldErrors[k][0]}</p> : null)
 
+  if (sent)
+    return (
+      <div className="card mx-auto max-w-2xl text-center">
+        <CheckCircle2 className="mx-auto h-14 w-14 text-emerald-600" />
+        <h1 className="mt-4 text-2xl font-bold text-ink">{t.signup.sentTitle}</h1>
+        <p className="mt-2 text-sm text-slate-600">{t.signup.sentText(email)}</p>
+        <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-secondary mt-6">
+          <MessageCircle className="h-4 w-4" /> {t.signup.sentWhatsapp}
+        </a>
+        <p className="mt-4 text-xs text-slate-500">
+          {t.signup.nextStep}{" "}
+          <Link href={`${lp("/formation")}#demarrer`} className="font-semibold text-brand-700 underline">
+            {t.signup.nextStepLink}
+          </Link>
+        </p>
+      </div>
+    )
+
   return (
     <div className="mx-auto max-w-4xl">
-      {/* Stepper */}
       <ol className="mb-10 flex items-center justify-center gap-4 text-sm">
         {t.signup.steps.map((l, i) => {
-          const n = (i + 1) as 1 | 2 | 3
+          const n = (i + 1) as 1 | 2
           const done = step > n
           return (
             <li key={l} className="flex items-center gap-2">
@@ -128,7 +88,7 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
                 {done ? <Check className="h-4 w-4" /> : n}
               </span>
               <span className={step === n ? "font-semibold text-ink" : "text-slate-500"}>{l}</span>
-              {i < 2 && <span className="mx-2 h-px w-8 bg-slate-300" />}
+              {i < t.signup.steps.length - 1 && <span className="mx-2 h-px w-8 bg-slate-300" />}
             </li>
           )
         })}
@@ -137,9 +97,7 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
       {step === 1 && (
         <div>
           <h1 className="h2 text-center">{t.signup.choosePlan}</h1>
-          <p className="lead mt-3 text-center">
-            {t.signup.chooseLead(site.trialDays)}
-          </p>
+          <p className="lead mt-3 text-center">{t.signup.chooseLead(site.trialDays)}</p>
           <div className="mt-6 flex items-center justify-center gap-3 text-sm">
             <button onClick={() => setBilling("monthly")} className={`rounded-full px-4 py-1.5 ring-1 ${billing === "monthly" ? "bg-brand-600 text-white ring-brand-600" : "ring-slate-300"}`}>
               {t.signup.monthly}
@@ -150,12 +108,7 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {plans.map((p) => (
-              <button
-                key={p.code}
-                type="button"
-                onClick={() => setPlan(p.code)}
-                className={`card text-left transition ${plan === p.code ? "border-brand-500 ring-2 ring-brand-500" : "hover:border-slate-300"}`}
-              >
+              <button key={p.code} type="button" onClick={() => setPlan(p.code)} className={`card text-start transition ${plan === p.code ? "border-brand-500 ring-2 ring-brand-500" : "hover:border-slate-300"}`}>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-ink">{p.name}</span>
                   {plan === p.code ? <CheckCircle2 className="h-5 w-5 text-brand-600" /> : <Circle className="h-5 w-5 text-slate-300" />}
@@ -183,38 +136,26 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
 
       {step === 2 && (
         <div className="grid gap-8 lg:grid-cols-5">
-          <div className="card lg:col-span-3">
-            <h1 className="text-2xl font-bold text-ink">{t.signup.yourSpace}</h1>
-            <p className="mt-1 text-sm text-slate-600">{t.signup.yourSpaceLead}</p>
-            <div className="mt-6 space-y-5">
-              <div>
-                <label className="label">{t.signup.company}</label>
-                <input className="input" value={company} onChange={(e) => setCompany(e.target.value)} placeholder={t.signup.companyPh} />
-                <Err k="company" />
-              </div>
-              <div>
-                <label className="label">{t.signup.slug}</label>
-                <div className="flex items-stretch" dir="ltr">
-                  <input
-                    className="input rounded-r-none"
-                    value={slug}
-                    onChange={(e) => {
-                      setSlugTouched(true)
-                      setSlug(slugify(e.target.value))
-                    }}
-                    placeholder={t.signup.slugPh}
-                  />
-                  <span className="flex items-center rounded-r-lg border border-l-0 border-slate-300 bg-slate-50 px-3 text-sm text-slate-500">.{site.appDomain}</span>
+          <div className="lg:col-span-3 space-y-6">
+            {/* WhatsApp en premier */}
+            <div className="card border-emerald-200 bg-emerald-50/60">
+              <h1 className="text-2xl font-bold text-ink">{t.signup.contactTitle}</h1>
+              <p className="mt-2 text-sm text-slate-600">{t.signup.contactLead}</p>
+              <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn mt-5 w-full bg-[#25D366] text-white hover:bg-[#1ebe5d] sm:w-auto">
+                <MessageCircle className="h-5 w-5" /> {t.signup.whatsappCta}
+              </a>
+              <p className="mt-2 text-xs text-slate-500">{t.signup.whatsappHint}</p>
+            </div>
+
+            {/* Formulaire de secours */}
+            <div className="card">
+              <p className="text-sm font-semibold text-slate-700">{t.signup.or}</p>
+              <div className="mt-4 grid gap-5 sm:grid-cols-2">
+                <div className="sm:col-span-2">
+                  <label className="label">{t.signup.company}</label>
+                  <input className="input" value={company} onChange={(e) => setCompany(e.target.value)} placeholder={t.signup.companyPh} />
+                  <Err k="company" />
                 </div>
-                <p className="mt-1 text-xs">
-                  {slugState.checking && <span className="text-slate-500">{t.signup.checking}</span>}
-                  {!slugState.checking && slugState.available === true && <span className="text-emerald-700">{t.signup.available}</span>}
-                  {!slugState.checking && slugState.available === false && <span className="text-red-600">{slugState.reason || t.signup.taken}</span>}
-                  {!slugState.checking && slugState.available === undefined && <span className="text-slate-500">{t.signup.slugHint}</span>}
-                </p>
-                <Err k="slug" />
-              </div>
-              <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label className="label">{t.signup.adminName}</label>
                   <input className="input" value={adminName} onChange={(e) => setAdminName(e.target.value)} autoComplete="name" />
@@ -231,12 +172,15 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
                   <Err k="email" />
                 </div>
                 <div>
-                  <label className="label">{t.signup.password}</label>
-                  <input className="input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" placeholder={t.signup.passwordPh} dir="ltr" />
-                  <Err k="password" />
+                  <label className="label">{t.signup.city}</label>
+                  <input className="input" value={city} onChange={(e) => setCity(e.target.value)} />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="label">{t.signup.message}</label>
+                  <textarea className="input" rows={3} value={message} onChange={(e) => setMessage(e.target.value)} placeholder={t.signup.messagePh} />
                 </div>
               </div>
-              <label className="flex items-start gap-3 text-sm text-slate-700">
+              <label className="mt-5 flex items-start gap-3 text-sm text-slate-700">
                 <input type="checkbox" className="mt-1" checked={accept} onChange={(e) => setAccept(e.target.checked)} />
                 <span>
                   {t.signup.acceptA}{" "}
@@ -251,29 +195,26 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
                 </span>
               </label>
               {error && (
-                <p className="flex items-start gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+                <p className="mt-4 flex items-start gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /> {error}
                 </p>
               )}
-              <div className="flex items-center justify-between">
+              <div className="mt-5 flex items-center justify-between">
                 <button className="btn-ghost" onClick={() => setStep(1)}>
                   {t.signup.back}
                 </button>
-                <button className="btn-primary" onClick={submit} disabled={sending || slugState.available === false || !slug}>
-                  {sending && <Loader2 className="h-4 w-4 animate-spin" />} {t.signup.create}
+                <button className="btn-primary" onClick={submit} disabled={sending}>
+                  {sending && <Loader2 className="h-4 w-4 animate-spin" />} {t.signup.send}
                 </button>
               </div>
             </div>
           </div>
+
           <aside className="lg:col-span-2">
             <div className="card sticky top-24">
               <p className="eyebrow">{t.signup.summary}</p>
-              <p className="mt-2 text-lg font-bold text-ink">
-                {t.signup.plan(selected.name, billing === "yearly")}
-              </p>
-              <p className="text-sm text-slate-600">
-                {t.signup.afterTrial(money(billing === "yearly" ? selected.yearlyMonthly : selected.monthly, locale))}
-              </p>
+              <p className="mt-2 text-lg font-bold text-ink">{t.signup.plan(selected.name, billing === "yearly")}</p>
+              <p className="text-sm text-slate-600">{t.signup.afterTrial(money(billing === "yearly" ? selected.yearlyMonthly : selected.monthly, locale))}</p>
               <ul className="mt-4 space-y-2 text-sm text-slate-700">
                 {t.signup.summaryBullets(site.trialDays).map((x) => (
                   <li key={x} className="flex gap-2">
@@ -283,59 +224,6 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
               </ul>
             </div>
           </aside>
-        </div>
-      )}
-
-      {step === 3 && (
-        <div className="card mx-auto max-w-2xl">
-          {status?.status === "active" ? (
-            <div className="text-center">
-              <CheckCircle2 className="mx-auto h-14 w-14 text-emerald-600" />
-              <h1 className="mt-4 text-2xl font-bold text-ink">{t.signup.readyTitle}</h1>
-              <p className="mt-2 text-sm text-slate-600">
-                {t.signup.readyText(email)}
-              </p>
-              <a href={status.app_url || `https://${slug}.${site.appDomain}`} className="btn-primary mt-6">
-                {t.signup.open(`${slug}.${site.appDomain}`)}
-              </a>
-              <p className="mt-4 text-xs text-slate-500">
-                {t.signup.nextStep}{" "}
-                <Link href={`${lp("/formation")}#demarrer`} className="font-semibold text-brand-700 underline">
-                  {t.signup.nextStepLink}
-                </Link>
-              </p>
-            </div>
-          ) : status?.status === "failed" ? (
-            <div className="text-center">
-              <XCircle className="mx-auto h-14 w-14 text-red-600" />
-              <h1 className="mt-4 text-2xl font-bold text-ink">{t.signup.failedTitle}</h1>
-              <p className="mt-2 text-sm text-slate-600">{status.error || t.signup.failedDefault} {t.signup.failedText}</p>
-              <Link href={lp("/contact")} className="btn-secondary mt-6">
-                {t.signup.contactSupport}
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <h1 className="text-2xl font-bold text-ink">{t.signup.creating}</h1>
-              <p className="mt-1 text-sm text-slate-600">{t.signup.creatingText}</p>
-              <div className="mt-6 h-3 w-full overflow-hidden rounded-full bg-slate-200">
-                <div className="progress-striped h-full rounded-full bg-brand-600 transition-all duration-700" style={{ width: `${Math.max(4, status?.progress ?? 0)}%` }} />
-              </div>
-              <p className="mt-2 text-end text-xs text-slate-500">{status?.progress ?? 0} %</p>
-              <ul className="mt-6 space-y-3">
-                {(status?.steps || Object.keys(t.signup.stepLabels).map((key) => ({ key, label: "", status: "pending" as const, message: undefined as string | undefined }))).map((s) => (
-                  <li key={s.key} className="flex items-center gap-3 text-sm">
-                    {s.status === "done" && <CheckCircle2 className="h-5 w-5 text-emerald-600" />}
-                    {s.status === "running" && <Loader2 className="h-5 w-5 animate-spin text-brand-600" />}
-                    {s.status === "pending" && <Circle className="h-5 w-5 text-slate-300" />}
-                    {s.status === "failed" && <XCircle className="h-5 w-5 text-red-600" />}
-                    <span className={s.status === "pending" ? "text-slate-500" : "text-ink"}>{t.signup.stepLabels[s.key] ?? s.label}</span>
-                    {s.message && <span className="text-xs text-slate-500">— {s.message}</span>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       )}
     </div>

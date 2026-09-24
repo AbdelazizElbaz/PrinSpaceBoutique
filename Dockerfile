@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------
 # PrintIOS — image UNIQUE : site Next.js + API Laravel + nginx + worker de
-# queue + scheduler, pilotés par supervisord. nginx écoute sur 8080 :
+# queue, pilotés par supervisord. nginx écoute sur 8080 :
 #   /api/*, /up   → Laravel (php-fpm)
 #   tout le reste → Next.js (node, port 3100 interne)
 # Toute la configuration vient des variables d'environnement du conteneur

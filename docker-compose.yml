@@ -1,6 +1,6 @@
 # PrintIOS en local avec Docker : un conteneur applicatif (site + API +
-# worker + scheduler) et MySQL.
-#   cp API/.env.example API/.env   (renseigner PLATFORM_API_TOKEN, MAIL_*)
+# worker) et MySQL.
+#   cp API/.env.example API/.env   (renseigner MAIL_*)
 #   docker compose up -d --build   → http://localhost:8080
 services:
   db:

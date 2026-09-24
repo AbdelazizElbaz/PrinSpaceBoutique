@@ -8,11 +8,11 @@ export const faq: FaqGroup[] = [
     id: "demarrage",
     title: "Getting started and trial",
     items: [
-      { q: `How do I get started with ${b}?`, a: `Click "Free trial", enter your workshop name, the subdomain you want and your e-mail. Your workspace (database, storage, first administrator) is created automatically in under two minutes; you receive your access by e-mail and can start setting up right away.` },
+      { q: `How do I get started with ${b}?`, a: `Click "Free trial", pick your plan and contact us on WhatsApp (or leave your details). An advisor creates your workspace within one working day and sends you your access by e-mail and WhatsApp; you can start setting up right away.` },
       { q: "Is the trial really free? Do I need a credit card?", a: `Yes, ${site.trialDays} days with no commitment and no credit card. At the end of the trial you choose a plan and pay by bank transfer; otherwise the workspace is simply suspended (your data is kept 30 days while you decide).` },
       { q: "How long does it take to be operational?", a: "Half a day for a standard workshop: create your products and options, enter your materials, connect a carrier and import your customers from a CSV file. Our training videos guide you step by step, and the Pro and Business plans include a video-call onboarding session." },
       { q: "Can I import my existing customers and products?", a: "Yes. Customers are imported from a CSV file (name, phone, e-mail, address) with automatic duplicate detection. For products and options you can enter them or send us your catalogue: on the Business plan our team does the import." },
-      { q: "What is the subdomain?", a: `It's the address of your workspace: myworkshop.${site.appDomain}. You choose it at signup; on the Business plan you can use your own domain (orders.your-brand.ma).` },
+      { q: "What will my workspace address be?", a: `Each customer has their own address, like myworkshop.${site.appDomain}, sent with your access. On the Business plan you can use your own domain (orders.your-brand.ma).` },
       { q: "Do I need to install anything?", a: `Not for management: ${b} works in the browser, on computer, tablet and phone. Only the print agent (${site.agentName}) is installed on the workshop workstations that must receive files automatically.` },
     ],
   },

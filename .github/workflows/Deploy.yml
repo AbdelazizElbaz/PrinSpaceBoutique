@@ -1,6 +1,6 @@
 name: Deploy
 
-# Déploie PrintIOS (site Next.js + API Laravel + worker + scheduler dans UNE
+# Déploie PrintIOS (site Next.js + API Laravel + worker dans UNE
 # image, voir Dockerfile à la racine) sur UN service AWS Lightsail Container —
 # même mécanique que les pipelines Packspace : build ici, push avec
 # `aws lightsail push-container-image`, puis déploiement. Aucun secret dans
@@ -12,13 +12,12 @@ name: Deploy
 #               worker dans le même conteneur), base MySQL `printios_boutique`.
 #   GitHub → Settings → Environments → "PrintIOS" :
 #     secrets : AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, APP_KEY,
-#               DB_PASSWORD, MAIL_PASSWORD, PLATFORM_API_TOKEN
+#               DB_PASSWORD, MAIL_PASSWORD
 #     vars    : AWS_REGION, LIGHTSAIL_SERVICE (=printios),
 #               SITE_URL (https://printios.ma),
 #               DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME,
 #               MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_FROM_ADDRESS,
-#               APP_TENANT_DOMAIN (app.printios.ma), NOTIFY_EMAIL,
-#               PLATFORM_API_URL (https://api.om.packspace.ma/api)
+#               NOTIFY_EMAIL
 
 on:
   workflow_dispatch:
@@ -118,13 +117,8 @@ jobs:
                 \"BRAND_NAME\": \"PrintIOS\",
                 \"SITE_URL\": \"${{ vars.SITE_URL }}\",
                 \"SITE_ORIGINS\": \"${{ vars.SITE_URL }}\",
-                \"APP_TENANT_DOMAIN\": \"${{ vars.APP_TENANT_DOMAIN }}\",
-                \"APP_TENANT_SCHEME\": \"https\",
                 \"TRIAL_DAYS\": \"14\",
                 \"NOTIFY_EMAIL\": \"${{ vars.NOTIFY_EMAIL }}\",
-                \"PLATFORM_API_URL\": \"${{ vars.PLATFORM_API_URL }}\",
-                \"PLATFORM_API_TOKEN\": \"${{ secrets.PLATFORM_API_TOKEN }}\",
-                \"PLATFORM_API_TIMEOUT\": \"30\",
                 \"NEXT_PUBLIC_SITE_URL\": \"${{ vars.SITE_URL }}\",
                 \"NEXT_PUBLIC_API_URL\": \"/api\"
               }

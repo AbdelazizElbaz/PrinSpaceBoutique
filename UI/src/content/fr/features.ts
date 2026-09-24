@@ -154,7 +154,7 @@ export const featureBySlug = (slug: string) => features.find((f) => f.slug === s
 
 // Étapes « Comment ça marche » (accueil)
 export const steps = [
-  { n: 1, title: "Créez votre espace", text: "Nom de l'atelier, sous-domaine, premier administrateur. Votre espace est prêt en moins de deux minutes." },
+  { n: 1, title: "Demandez votre espace", text: "Choisissez un forfait et écrivez-nous sur WhatsApp. Un conseiller crée votre espace sous un jour ouvré et vous envoie vos accès." },
   { n: 2, title: "Paramétrez", text: "Produits, options, matériaux, transporteurs, TVA. Importez vos clients depuis un fichier CSV." },
   { n: 3, title: "Vendez et produisez", text: "Prise de commande, avance, fichiers vers l'atelier, bon de livraison : tout s'enchaîne." },
   { n: 4, title: "Encaissez sans écart", text: "Le COD est rapproché du reste à payer ; le tableau de bord vous dit ce qui reste à récupérer." },
@@ -170,7 +170,7 @@ export const audiences = [
 
 // Chiffres mis en avant (accueil) — à ajuster avec vos vraies statistiques
 export const stats = [
-  { value: "2 min", label: "pour créer votre espace" },
+  { value: "24 h", label: "pour recevoir votre espace" },
   { value: "0 écart", label: "entre COD encaissé et reste à payer" },
   { value: "3", label: "transporteurs connectés + livreurs internes" },
   { value: "24/7", label: "agent d'impression en mode service" },

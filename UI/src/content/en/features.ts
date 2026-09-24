@@ -93,7 +93,7 @@ export const features: Feature[] = [
 ]
 
 export const steps: Step[] = [
-  { n: 1, title: "Create your workspace", text: "Workshop name, subdomain, first administrator. Your workspace is ready in under two minutes." },
+  { n: 1, title: "Request your workspace", text: "Choose a plan and write to us on WhatsApp. An advisor creates your workspace within one working day and sends you your access." },
   { n: 2, title: "Set up", text: "Products, options, materials, carriers, VAT. Import your customers from a CSV file." },
   { n: 3, title: "Sell and produce", text: "Order entry, deposit, files to the workshop, delivery note: everything flows." },
   { n: 4, title: "Collect without gaps", text: "COD is reconciled with the balance due; the dashboard tells you what remains to be collected." },
@@ -107,7 +107,7 @@ export const audiences: Audience[] = [
 ]
 
 export const stats: Stat[] = [
-  { value: "2 min", label: "to create your workspace" },
+  { value: "24 h", label: "to receive your workspace" },
   { value: "0 gap", label: "between COD collected and balance due" },
   { value: "3", label: "connected carriers + in-house couriers" },
   { value: "24/7", label: "print agent in service mode" },

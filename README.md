@@ -1,15 +1,14 @@
 # PrintIOS — site vitrine et tunnel d'abonnement
 
 Site public qui vend l'application (Packspace, marque commerciale **PrintIOS**) :
-pages marketing, forfaits, FAQ, vidéothèque de formation, et **inscription en
-libre-service** qui crée automatiquement l'espace du client (tenant) sur la
-plateforme, avec barre de progression.
+pages marketing, forfaits, FAQ, vidéothèque de formation, et **demande d'essai
+gratuit** par WhatsApp (canal principal) ou formulaire, traitée par l'équipe.
 
 | Dossier | Stack | Rôle |
 |---|---|---|
 | `UI/` | Next.js 15, React 19, Tailwind 4, TypeScript | Site vitrine (port 3100) |
-| `API/` | Laravel 11, MySQL | Leads, inscriptions → provisioning Packspace, e-mails (port 8100) |
-| `Dockerfile`, `docker/` | nginx + php-fpm + Next.js + queue + scheduler | **Image unique** de production (Lightsail) |
+| `API/` | Laravel 11, MySQL | Leads et demandes d'essai (e-mails), port 8100 en dev |
+| `Dockerfile`, `docker/` | nginx + php-fpm + Next.js + queue | **Image unique** de production (Lightsail) |
 | `docker-compose.yml` | MySQL + image unique | Test local de l'image de production |
 
 ## Changer la marque, le domaine, les coordonnées
@@ -17,7 +16,7 @@ plateforme, avec barre de progression.
 Tout est dans **un seul fichier** : `UI/src/content/site.config.ts` (marque,
 tagline, domaine du site, domaine des espaces clients, société, e-mails,
 téléphone/WhatsApp, RIB, réseaux sociaux). Côté API, les mêmes valeurs sont
-dans `API/.env` (`BRAND_NAME`, `APP_TENANT_DOMAIN`, `SITE_URL`, `NOTIFY_EMAIL`).
+dans `API/.env` (`BRAND_NAME`, `SITE_URL`, `NOTIFY_EMAIL`).
 Les champs marqués `À REMPLACER` sont des placeholders.
 
 Le contenu est séparé du code, dans `UI/src/content/` :
@@ -52,8 +51,7 @@ le sitemap liste les trois versions. Le routage vit dans `UI/src/middleware.ts`
 `/` accueil · `/fonctionnalites` · `/agent` (agent d'impression) · `/tarifs`
 (mensuel/annuel + comparatif) · `/faq` (recherche + filtres, données
 structurées FAQPage) · `/formation` (6 parcours par rôle) · `/contact`
-(formulaire → lead) · `/inscription` (assistant 3 étapes : forfait → espace →
-déploiement) · `/cgv`, `/confidentialite`, `/mentions-legales` (modèles à
+(formulaire → lead) · `/inscription` (forfait → WhatsApp ou formulaire de demande) · `/cgv`, `/confidentialite`, `/mentions-legales` (modèles à
 faire relire) · `sitemap.xml`, `robots.txt`, image Open Graph générée.
 
 ## Lancer en local
@@ -62,12 +60,11 @@ faire relire) · `sitemap.xml`, `robots.txt`, image Open Graph générée.
 # API
 cd API
 composer install
-copy .env.example .env      # renseigner DB_*, MAIL_*, PLATFORM_API_URL, PLATFORM_API_TOKEN
+copy .env.example .env      # renseigner DB_*, MAIL_*
 php artisan key:generate
 php artisan migrate
 php artisan serve --port=8100
-php artisan queue:work        # 2e fenêtre : obligatoire pour les inscriptions et les e-mails
-php artisan schedule:work     # 3e fenêtre (optionnel) : relance le suivi des déploiements
+php artisan queue:work        # 2e fenêtre : envoi des e-mails
 
 # UI
 cd UI
@@ -76,37 +73,26 @@ copy .env.example .env.local  # NEXT_PUBLIC_API_URL=http://localhost:8100/api
 npm run dev                   # http://localhost:3100
 ```
 
-## Comment fonctionne l'inscription
+## Comment fonctionne la demande d'essai
 
-1. Le visiteur choisit un forfait, saisit le nom de l'atelier, un sous-domaine
-   (vérifié en direct : `GET /api/signup/check-slug`), son e-mail et un mot de passe.
-2. `POST /api/signup` enregistre l'inscription et lance `ProvisionSignupJob` :
-   - `POST {PLATFORM_API_URL}/platform/tenants` (slug, nom, domaine
-     `<slug>.<APP_TENANT_DOMAIN>`, admin = e-mail + mot de passe) → Packspace
-     crée le tenant et lance son déploiement (base, structure, données,
-     admin, stockage, vérification) ;
-   - `POST /platform/tenants/{id}/subscription` avec le plan (par **code** :
-     `starter`, `pro`, `business`) et `trial_days` = 14.
-3. Le site interroge `GET /api/signup/{id}/status` toutes les 2 s ; l'API
-   relit `GET /platform/tenants/{id}/provisioning` et renvoie progression +
-   étapes. À la fin : e-mail de bienvenue (accès + liens formation) et
-   redirection vers l'espace.
-4. Le paiement se fait par virement ; l'activation du forfait se fait depuis
-   la console plateforme (Abonnements & paiements). Sans paiement, l'espace
-   passe en `past_due` puis `expired` selon le délai de grâce.
+Il n'y a **pas de création automatique d'espace**. Le visiteur choisit un
+forfait puis, au choix :
 
-Prérequis côté Packspace (branche `MultiTanant`) : `TENANCY_ENABLED=true`,
-base centrale installée (`php artisan tenants:install`), **plans créés dans la
-console plateforme avec les codes `starter`, `pro`, `business`**, un jeton
-plateforme (`PLATFORM_ADMIN_TOKEN` ou super-admin `platform:admin:create`)
-renseigné dans `API/.env` → `PLATFORM_API_TOKEN`, et un worker de queue actif
-sur l'API Packspace (le déploiement est asynchrone).
+- clique sur le bouton **WhatsApp** (message pré-rempli avec le forfait) — canal
+  principal, présent aussi dans l'en-tête, l'accueil et les bandeaux d'appel ;
+- ou laisse ses coordonnées : `POST /api/signup` enregistre la demande (table
+  `signups`), envoie une notification à `NOTIFY_EMAIL` et un accusé de
+  réception au prospect (FR/AR/EN).
+
+L'équipe crée ensuite le client dans Packspace (console plateforme ou
+administration), lui envoie ses accès, et active l'essai de 14 jours. Le
+numéro WhatsApp est `site.contact.whatsapp` dans `site.config.ts`.
 
 ## Déploiement AWS (un seul conteneur Lightsail)
 
 Une **seule image Docker** (`Dockerfile` à la racine) contient tout : nginx en
 façade (port 8080) qui envoie `/api/*` à Laravel (php-fpm) et le reste à
-Next.js, plus le worker de queue et le scheduler, le tout piloté par
+Next.js, plus le worker de queue, le tout piloté par
 supervisord. Les migrations s'exécutent au démarrage (`docker/entrypoint.sh`).
 Un seul service Lightsail, un seul domaine (`printios.ma`), l'API est servie
 sur `https://printios.ma/api`.
@@ -137,27 +123,25 @@ Settings → Environments → **PrintIOS** :
 |---|---|---|
 | secret | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` | clé IAM |
 | secret | `APP_KEY` | `php artisan key:generate --show` (commence par `base64:`) |
-| secret | `DB_PASSWORD`, `MAIL_PASSWORD`, `PLATFORM_API_TOKEN` | |
+| secret | `DB_PASSWORD`, `MAIL_PASSWORD` | |
 | var | `AWS_REGION` | ex. `eu-west-3` |
 | var | `LIGHTSAIL_SERVICE` | `printios` |
 | var | `SITE_URL` | `https://printios.ma` |
 | var | `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` | |
 | var | `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_FROM_ADDRESS` | SMTP (SES, Brevo, OVH…) |
-| var | `APP_TENANT_DOMAIN` | `app.printios.ma` |
 | var | `NOTIFY_EMAIL` | `commercial@printios.ma` |
-| var | `PLATFORM_API_URL` | `https://api.om.packspace.ma/api` (API2 MultiTanant) |
 
 ### 3. Premier déploiement
 
 *Actions → Deploy → Run workflow*. Vérifier ensuite
 `https://printios.ma/api/ping` puis `https://printios.ma`. Les logs
-(nginx, php-fpm, Next, queue, scheduler) sont dans l'onglet *Logs* du service
+(nginx, php-fpm, Next, queue) sont dans l'onglet *Logs* du service
 Lightsail.
 
 ### En local avec Docker
 
 ```bash
-cp API/.env.example API/.env   # PLATFORM_API_TOKEN, MAIL_*
+cp API/.env.example API/.env   # MAIL_*
 docker compose up -d --build   # MySQL + conteneur unique → http://localhost:8080
 ```
 

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
-import { Check, Minus } from "lucide-react"
-import { site } from "@/content/site.config"
+import { Check, MessageCircle, Minus } from "lucide-react"
+import { site, whatsappLink } from "@/content/site.config"
 import { getDict, localePath, type Locale } from "@/i18n"
 
 export function Section({ children, className = "", id, tone = "white" }: { children: ReactNode; className?: string; id?: string; tone?: "white" | "gray" | "dark" | "brand" }) {
@@ -43,9 +43,9 @@ export function CtaBand({ locale, title, text }: { locale: Locale; title?: strin
           <Link href={localePath(locale, "/inscription")} className="btn-white">
             {t.common.startTrial}
           </Link>
-          <Link href={localePath(locale, "/contact")} className="btn border border-white/40 text-white hover:bg-white/10">
-            {t.common.requestDemo}
-          </Link>
+          <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn border border-white/40 text-white hover:bg-white/10">
+            <MessageCircle className="h-4 w-4" /> {t.common.whatsapp}
+          </a>
         </div>
       </div>
     </Section>

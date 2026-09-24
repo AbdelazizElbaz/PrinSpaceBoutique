@@ -1,11 +1,15 @@
 <x-mail::message>
-# Nouvel essai gratuit
+# Nouvelle demande d'essai gratuit
 
-**Atelier :** {{ $signup->company }}
-**Espace :** {{ $signup->appUrl() }}
+**Atelier :** {{ $signup->company }} @if($signup->city)— {{ $signup->city }}@endif
 **Forfait :** {{ ucfirst($signup->plan) }} ({{ $signup->billing === 'yearly' ? 'annuel' : 'mensuel' }})
-**Administrateur :** {{ $signup->admin_name }} — {{ $signup->email }} — {{ $signup->phone }}
+**Contact :** {{ $signup->admin_name }} — {{ $signup->email }} — {{ $signup->phone }}
+**Langue :** {{ strtoupper($signup->locale) }}
 
-Le déploiement est lancé automatiquement. Suivi dans la console plateforme (tenant `{{ $signup->slug }}`).
-Pensez à activer le forfait à réception du virement.
+@if($signup->message)
+> {{ $signup->message }}
+@endif
+
+À faire : créer le client dans Packspace, lui envoyer ses accès, puis activer l'essai de {{ config('boutique.trial_days') }} jours.
+Reçue le {{ $signup->created_at->format('d/m/Y H:i') }} (IP {{ $signup->ip }}).
 </x-mail::message>
