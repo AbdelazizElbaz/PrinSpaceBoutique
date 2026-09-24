@@ -6,21 +6,21 @@
 
 export const site = {
   // Marque commerciale affichée partout (peut changer plus tard sans toucher aux pages)
-  brand: "PrintManagerOS",
+  brand: "PrintIOS",
   tagline: "Le système d'exploitation de votre imprimerie",
   // Domaine du site vitrine (SEO, liens absolus, e-mails par défaut)
-  domain: "printmanageros.com",
-  url: "https://printmanageros.com",
+  domain: "printios.com",
+  url: "https://printios.com",
   // Domaine sur lequel les espaces clients sont créés : <slug>.appDomain
-  appDomain: "app.printmanageros.com",
+  appDomain: "app.printios.com",
   // Nom technique de la plateforme (utilisé dans les textes « sous le capot »)
   platformName: "Packspace",
   // Agent d'impression desktop
-  agentName: "PrintManagerOS Sync",
+  agentName: "PrintIOS Sync",
   agentTechnicalName: "PackSpaceS3Sync",
 
   company: {
-    legalName: "PrintManagerOS SARL", // À REMPLACER
+    legalName: "PrintIOS SARL", // À REMPLACER
     city: "Casablanca",
     address: "Adresse à compléter, Casablanca, Maroc", // À REMPLACER
     ice: "ICE à compléter", // À REMPLACER
@@ -28,24 +28,24 @@ export const site = {
   },
 
   contact: {
-    email: "contact@printmanageros.com", // À REMPLACER
-    salesEmail: "commercial@printmanageros.com", // À REMPLACER
-    supportEmail: "support@printmanageros.com", // À REMPLACER
+    email: "contact@printios.com", // À REMPLACER
+    salesEmail: "commercial@printios.com", // À REMPLACER
+    supportEmail: "support@printios.com", // À REMPLACER
     phone: "+212 6 00 00 00 00", // À REMPLACER
     whatsapp: "212600000000", // À REMPLACER (format international sans +)
     hours: "Lun–Ven 9h–18h, Sam 9h–13h",
   },
 
   social: {
-    facebook: "https://facebook.com/printmanageros", // À REMPLACER
-    instagram: "https://instagram.com/printmanageros", // À REMPLACER
-    linkedin: "https://linkedin.com/company/printmanageros", // À REMPLACER
-    youtube: "https://youtube.com/@printmanageros", // À REMPLACER
+    facebook: "https://facebook.com/printios", // À REMPLACER
+    instagram: "https://instagram.com/printios", // À REMPLACER
+    linkedin: "https://linkedin.com/company/printios", // À REMPLACER
+    youtube: "https://youtube.com/@printios", // À REMPLACER
   },
 
   // Paiement : virement bancaire (activation manuelle depuis la console plateforme)
   bank: {
-    holder: "PrintManagerOS SARL", // À REMPLACER
+    holder: "PrintIOS SARL", // À REMPLACER
     bankName: "Banque à compléter", // À REMPLACER
     rib: "000 000 0000000000000000 00", // À REMPLACER
   },
@@ -56,7 +56,7 @@ export const site = {
 
   // Liens vers l'application (page Formation, footer)
   links: {
-    login: "https://app.printmanageros.com",
+    login: "https://app.printios.com",
     docs: "/formation",
     status: "/contact",
   },

@@ -1,4 +1,4 @@
-// Langues du site. Le français est servi sans préfixe (printmanageros.com/…),
+// Langues du site. Le français est servi sans préfixe (printios.com/…),
 // l'arabe sous /ar/… (affichage RTL) et l'anglais sous /en/…
 // Le middleware réécrit en interne les URL sans préfixe vers /fr/… pour que
 // toutes les pages vivent sous app/[locale]/.

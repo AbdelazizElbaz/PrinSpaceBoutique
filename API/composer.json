@@ -1,7 +1,7 @@
 {
-  "name": "printmanageros/boutique-api",
+  "name": "printios/boutique-api",
   "type": "project",
-  "description": "API du site vitrine PrintManagerOS : leads, inscriptions (provisioning Packspace), forfaits.",
+  "description": "API du site vitrine PrintIOS : leads, inscriptions (provisioning Packspace), forfaits.",
   "license": "proprietary",
   "require": {
     "php": "^8.2",

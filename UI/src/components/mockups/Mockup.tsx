@@ -75,7 +75,7 @@ const Row = ({ y, cols, colors = [] }: { y: number; cols: string[]; colors?: str
 function Orders() {
   return frame(
     <>
-      <Window x={20} y={20} w={600} h={360} title="Commandes — PrintManagerOS" />
+      <Window x={20} y={20} w={600} h={360} title="Commandes — PrintIOS" />
       <Sidebar x={20} y={48} h={332} items={["Tableau de bord", "Commandes", "Clients", "Livraison", "Atelier", "Finance"]} />
       <text x="150" y="70" fontSize="12" fontWeight="700" fill="#0f172a" fontFamily="Inter, sans-serif">
         Commandes
@@ -359,7 +359,7 @@ function Agent() {
       <rect x="20" y="20" width="600" height="32" rx="10" fill="#2c5282" />
       <rect x="20" y="40" width="600" height="12" fill="#2c5282" />
       <text x="34" y="41" fontSize="10" fontWeight="700" fill="#fff" fontFamily="Inter, sans-serif">
-        PrintManagerOS Sync
+        PrintIOS Sync
         <tspan fontSize="7" fill="#bee3f8">
           {" "}
           v1.0.6

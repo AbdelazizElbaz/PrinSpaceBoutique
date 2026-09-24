@@ -1,6 +1,6 @@
-# PrintManagerOS — site vitrine et tunnel d'abonnement
+# PrintIOS — site vitrine et tunnel d'abonnement
 
-Site public qui vend l'application (Packspace, marque commerciale **PrintManagerOS**) :
+Site public qui vend l'application (Packspace, marque commerciale **PrintIOS**) :
 pages marketing, forfaits, FAQ, vidéothèque de formation, et **inscription en
 libre-service** qui crée automatiquement l'espace du client (tenant) sur la
 plateforme, avec barre de progression.
