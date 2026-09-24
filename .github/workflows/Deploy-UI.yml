@@ -1,0 +1,107 @@
+name: Deploy-UI
+
+# Déploie le site vitrine Next.js (build standalone) sur un service AWS
+# Lightsail Container dédié — même mécanique que Prod-UI.yml du dépôt Packspace.
+#
+# À CRÉER AVANT LE PREMIER RUN : service Lightsail `printios-ui` (Nano),
+# et dans l'environnement GitHub "PrintIOS" :
+#   vars : LIGHTSAIL_UI_SERVICE (=printios-ui), NEXT_PUBLIC_API_URL
+#          (https://api.printios.ma/api), NEXT_PUBLIC_SITE_URL (https://printios.ma)
+#   (+ AWS_REGION et les secrets AWS_* déjà utilisés par Deploy-API.yml)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'UI/**'
+      - '.github/workflows/Deploy-UI.yml'
+
+concurrency:
+  group: deploy-ui
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: PrintIOS
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upgrade AWS CLI and setup lightsailctl
+        run: |
+          curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o awscliv2.zip
+          unzip -q awscliv2.zip
+          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+          sudo curl -s "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o /usr/local/bin/lightsailctl
+          sudo chmod +x /usr/local/bin/lightsailctl
+          aws --version
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Build Docker image
+        run: |
+          VERSION="${{ github.run_number }}"
+          cd UI
+          docker build -t printios-ui:$VERSION \
+            --build-arg NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }} \
+            --build-arg NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }} .
+
+      - name: Push image to Lightsail
+        run: |
+          VERSION="${{ github.run_number }}"
+          aws lightsail push-container-image \
+            --service-name ${{ vars.LIGHTSAIL_UI_SERVICE }} \
+            --label ui-$VERSION \
+            --image printios-ui:$VERSION
+
+      - name: Resolve pushed image name
+        run: |
+          echo "LIGHTSAIL_DOCKER_IMAGE=$(aws lightsail get-container-images --service-name ${{ vars.LIGHTSAIL_UI_SERVICE }} --region ${{ vars.AWS_REGION }} | jq -r .containerImages[0].image)" >> $GITHUB_ENV
+
+      - name: Deploy to Lightsail
+        run: |
+          aws lightsail create-container-service-deployment --region ${{ vars.AWS_REGION }} \
+          --service-name ${{ vars.LIGHTSAIL_UI_SERVICE }} \
+          --output yaml \
+          --containers "{
+            \"ui\": {
+              \"image\": \"$LIGHTSAIL_DOCKER_IMAGE\",
+              \"ports\": { \"3100\": \"HTTP\" },
+              \"environment\": {
+                \"NODE_ENV\": \"production\",
+                \"PORT\": \"3100\",
+                \"HOSTNAME\": \"0.0.0.0\",
+                \"NEXT_PUBLIC_API_URL\": \"${{ vars.NEXT_PUBLIC_API_URL }}\",
+                \"NEXT_PUBLIC_SITE_URL\": \"${{ vars.NEXT_PUBLIC_SITE_URL }}\"
+              }
+            }
+          }" \
+          --public-endpoint "{
+            \"containerName\": \"ui\",
+            \"containerPort\": 3100,
+            \"healthCheck\": {
+              \"path\": \"/\",
+              \"intervalSeconds\": 30,
+              \"timeoutSeconds\": 5,
+              \"healthyThreshold\": 2,
+              \"unhealthyThreshold\": 3
+            }
+          }"
+
+      - name: Wait for deployment
+        run: |
+          for i in $(seq 1 40); do
+            STATE=$(aws lightsail get-container-services --service-name ${{ vars.LIGHTSAIL_UI_SERVICE }} --region ${{ vars.AWS_REGION }} | jq -r '.containerServices[0].currentDeployment.state // .containerServices[0].nextDeployment.state')
+            echo "Déploiement : $STATE"
+            case "$STATE" in ACTIVE) exit 0;; FAILED) exit 1;; esac
+            sleep 15
+          done
+          echo "Timeout" ; exit 1

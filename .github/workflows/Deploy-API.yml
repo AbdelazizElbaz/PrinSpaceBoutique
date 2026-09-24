@@ -1,0 +1,153 @@
+name: Deploy-API
+
+# Déploie l'API boutique (Laravel : leads, inscriptions → provisioning
+# Packspace, e-mails) sur un service AWS Lightsail Container dédié — même
+# mécanique que Prod-API-Worker.yml du dépôt Packspace : image construite ici,
+# poussée avec `aws lightsail push-container-image`, puis déploiement.
+#
+# Un seul conteneur (php-fpm + nginx + worker de queue + scheduler via
+# supervisord, migrations au démarrage — voir API/docker/entrypoint.sh).
+# AUCUN secret n'est cuit dans l'image : tout passe par "environment" du
+# déploiement Lightsail, alimenté par les secrets/variables GitHub de
+# l'environnement "PrintIOS".
+#
+# À CRÉER AVANT LE PREMIER RUN (voir README, section Déploiement AWS) :
+#   Lightsail : service container `printios-api` (Nano suffit au départ),
+#               une base MySQL (base `printios_boutique` sur la DB existante
+#               ou une DB managée Lightsail).
+#   GitHub → Settings → Environments → "PrintIOS" :
+#     secrets : AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, APP_KEY,
+#               DB_PASSWORD, MAIL_PASSWORD, PLATFORM_API_TOKEN
+#     vars    : AWS_REGION, LIGHTSAIL_API_SERVICE (=printios-api),
+#               APP_URL (https://api.printios.ma), SITE_URL (https://printios.ma),
+#               SITE_ORIGINS (https://printios.ma,https://www.printios.ma),
+#               DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME,
+#               MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_FROM_ADDRESS,
+#               APP_TENANT_DOMAIN (app.printios.ma), NOTIFY_EMAIL,
+#               PLATFORM_API_URL (https://api.om.packspace.ma/api)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'API/**'
+      - '.github/workflows/Deploy-API.yml'
+
+concurrency:
+  group: deploy-api
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: PrintIOS
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upgrade AWS CLI and setup lightsailctl
+        run: |
+          curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o awscliv2.zip
+          unzip -q awscliv2.zip
+          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+          sudo curl -s "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o /usr/local/bin/lightsailctl
+          sudo chmod +x /usr/local/bin/lightsailctl
+          aws --version
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Build Docker image
+        run: |
+          VERSION="${{ github.run_number }}"
+          cd API
+          docker build -t printios-api:$VERSION .
+
+      - name: Push image to Lightsail
+        run: |
+          VERSION="${{ github.run_number }}"
+          aws lightsail push-container-image \
+            --service-name ${{ vars.LIGHTSAIL_API_SERVICE }} \
+            --label api-$VERSION \
+            --image printios-api:$VERSION
+
+      - name: Resolve pushed image name
+        run: |
+          echo "LIGHTSAIL_DOCKER_IMAGE=$(aws lightsail get-container-images --service-name ${{ vars.LIGHTSAIL_API_SERVICE }} --region ${{ vars.AWS_REGION }} | jq -r .containerImages[0].image)" >> $GITHUB_ENV
+
+      - name: Deploy to Lightsail
+        run: |
+          aws lightsail create-container-service-deployment --region ${{ vars.AWS_REGION }} \
+          --service-name ${{ vars.LIGHTSAIL_API_SERVICE }} \
+          --output yaml \
+          --containers "{
+            \"api\": {
+              \"image\": \"$LIGHTSAIL_DOCKER_IMAGE\",
+              \"ports\": { \"8100\": \"HTTP\" },
+              \"environment\": {
+                \"APP_NAME\": \"PrintIOS API\",
+                \"APP_ENV\": \"production\",
+                \"APP_DEBUG\": \"false\",
+                \"APP_KEY\": \"${{ secrets.APP_KEY }}\",
+                \"APP_URL\": \"${{ vars.APP_URL }}\",
+                \"APP_TIMEZONE\": \"Africa/Casablanca\",
+                \"APP_LOCALE\": \"fr\",
+                \"LOG_CHANNEL\": \"stderr\",
+                \"LOG_LEVEL\": \"info\",
+                \"DB_CONNECTION\": \"mysql\",
+                \"DB_HOST\": \"${{ vars.DB_HOST }}\",
+                \"DB_PORT\": \"${{ vars.DB_PORT }}\",
+                \"DB_DATABASE\": \"${{ vars.DB_DATABASE }}\",
+                \"DB_USERNAME\": \"${{ vars.DB_USERNAME }}\",
+                \"DB_PASSWORD\": \"${{ secrets.DB_PASSWORD }}\",
+                \"QUEUE_CONNECTION\": \"database\",
+                \"CACHE_STORE\": \"database\",
+                \"SESSION_DRIVER\": \"file\",
+                \"MAIL_MAILER\": \"smtp\",
+                \"MAIL_HOST\": \"${{ vars.MAIL_HOST }}\",
+                \"MAIL_PORT\": \"${{ vars.MAIL_PORT }}\",
+                \"MAIL_USERNAME\": \"${{ vars.MAIL_USERNAME }}\",
+                \"MAIL_PASSWORD\": \"${{ secrets.MAIL_PASSWORD }}\",
+                \"MAIL_ENCRYPTION\": \"tls\",
+                \"MAIL_FROM_ADDRESS\": \"${{ vars.MAIL_FROM_ADDRESS }}\",
+                \"MAIL_FROM_NAME\": \"PrintIOS\",
+                \"BRAND_NAME\": \"PrintIOS\",
+                \"SITE_URL\": \"${{ vars.SITE_URL }}\",
+                \"SITE_ORIGINS\": \"${{ vars.SITE_ORIGINS }}\",
+                \"APP_TENANT_DOMAIN\": \"${{ vars.APP_TENANT_DOMAIN }}\",
+                \"APP_TENANT_SCHEME\": \"https\",
+                \"TRIAL_DAYS\": \"14\",
+                \"NOTIFY_EMAIL\": \"${{ vars.NOTIFY_EMAIL }}\",
+                \"PLATFORM_API_URL\": \"${{ vars.PLATFORM_API_URL }}\",
+                \"PLATFORM_API_TOKEN\": \"${{ secrets.PLATFORM_API_TOKEN }}\",
+                \"PLATFORM_API_TIMEOUT\": \"30\"
+              }
+            }
+          }" \
+          --public-endpoint "{
+            \"containerName\": \"api\",
+            \"containerPort\": 8100,
+            \"healthCheck\": {
+              \"path\": \"/api/ping\",
+              \"intervalSeconds\": 30,
+              \"timeoutSeconds\": 5,
+              \"healthyThreshold\": 2,
+              \"unhealthyThreshold\": 3
+            }
+          }"
+
+      - name: Wait for deployment
+        run: |
+          for i in $(seq 1 40); do
+            STATE=$(aws lightsail get-container-services --service-name ${{ vars.LIGHTSAIL_API_SERVICE }} --region ${{ vars.AWS_REGION }} | jq -r '.containerServices[0].currentDeployment.state // .containerServices[0].nextDeployment.state')
+            echo "Déploiement : $STATE"
+            case "$STATE" in ACTIVE) exit 0;; FAILED) exit 1;; esac
+            sleep 15
+          done
+          echo "Timeout" ; exit 1

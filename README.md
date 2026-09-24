@@ -101,19 +101,72 @@ plateforme (`PLATFORM_ADMIN_TOKEN` ou super-admin `platform:admin:create`)
 renseigné dans `API/.env` → `PLATFORM_API_TOKEN`, et un worker de queue actif
 sur l'API Packspace (le déploiement est asynchrone).
 
-## Déploiement
+## Déploiement AWS (Lightsail Container Services)
+
+Même mécanique que les pipelines Packspace : deux workflows GitHub
+(`.github/workflows/Deploy-UI.yml`, `Deploy-API.yml`) construisent l'image,
+la poussent sur le service Lightsail et déclenchent le déploiement. Ils se
+lancent à chaque push sur `main` (dossier concerné) ou à la main
+(*Run workflow*). Aucun secret n'est cuit dans les images : toute la
+configuration est injectée en variables d'environnement du conteneur.
+
+### 1. Côté AWS (une seule fois)
+
+1. **Lightsail → Containers → Create container service** ×2, dans la région
+   de Packspace : `printios-ui` et `printios-api`, capacité *Nano* (≈ 7 $/mois
+   chacun ; passer en *Micro* si le trafic monte). Scale = 1.
+2. **Base de données** : créer la base `printios_boutique` (et un utilisateur
+   dédié) sur le serveur MySQL déjà utilisé par Packspace, ou une base managée
+   Lightsail. Le serveur doit accepter les connexions du service (mode public
+   Lightsail ou même VPC).
+3. **Domaines** : dans chaque service Lightsail, onglet *Custom domains* →
+   créer un certificat (`printios.ma` + `www.printios.ma` pour l'UI,
+   `api.printios.ma` pour l'API), valider les enregistrements CNAME demandés
+   chez le registrar, puis attacher le certificat. DNS final :
+   `printios.ma` / `www` → domaine public du service UI (CNAME, ou ALIAS/A
+   selon le registrar), `api` → domaine public du service API.
+4. **Utilisateur IAM** : réutiliser la clé qui sert déjà aux workflows
+   Packspace (droits Lightsail), ou en créer une dédiée.
+
+### 2. Côté GitHub (une seule fois)
+
+Settings → Environments → **PrintIOS** :
+
+| Type | Nom | Valeur |
+|---|---|---|
+| secret | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` | clé IAM |
+| secret | `APP_KEY` | `php artisan key:generate --show` (commence par `base64:`) |
+| secret | `DB_PASSWORD`, `MAIL_PASSWORD`, `PLATFORM_API_TOKEN` | |
+| var | `AWS_REGION` | ex. `eu-west-3` |
+| var | `LIGHTSAIL_UI_SERVICE`, `LIGHTSAIL_API_SERVICE` | `printios-ui`, `printios-api` |
+| var | `NEXT_PUBLIC_SITE_URL`, `SITE_URL` | `https://printios.ma` |
+| var | `NEXT_PUBLIC_API_URL` | `https://api.printios.ma/api` |
+| var | `APP_URL` | `https://api.printios.ma` |
+| var | `SITE_ORIGINS` | `https://printios.ma,https://www.printios.ma` |
+| var | `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` | |
+| var | `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_FROM_ADDRESS` | SMTP (SES, Brevo, OVH…) |
+| var | `APP_TENANT_DOMAIN` | `app.printios.ma` |
+| var | `NOTIFY_EMAIL` | `commercial@printios.ma` |
+| var | `PLATFORM_API_URL` | `https://api.om.packspace.ma/api` (API2 MultiTanant) |
+
+### 3. Premier déploiement
+
+Lancer **Deploy-API** puis **Deploy-UI** (*Actions → Run workflow*). Le
+conteneur API exécute `php artisan migrate --force` à chaque démarrage
+(`API/docker/entrypoint.sh`) : pas de commande manuelle. Vérifier
+`https://api.printios.ma/api/ping` puis `https://printios.ma`.
+
+Côté Packspace : `SITE_ORIGINS` n'est pas nécessaire (le site ne parle qu'à
+l'API boutique), mais l'API Packspace doit accepter l'en-tête
+`X-Platform-Token` depuis `api.printios.ma` (pas de restriction CORS sur les
+appels serveur → serveur).
+
+### Alternative : Docker Compose sur un VPS
 
 ```bash
 cp API/.env.example API/.env   # puis éditer
-docker compose up -d --build
-docker compose exec api php artisan key:generate
-docker compose exec api php artisan migrate
+docker compose up -d --build   # MySQL + API (migrations auto) + UI
 ```
-
-Ou séparément : l'UI est un build Next.js `standalone` (Dockerfile fourni),
-l'API un conteneur php-fpm + nginx + queue + scheduler (supervisord).
-DNS : `www.<domaine>` → UI, `api.<domaine>` → API, `*.<APP_TENANT_DOMAIN>` →
-API/UI Packspace.
 
 ## Avant la mise en ligne
 
