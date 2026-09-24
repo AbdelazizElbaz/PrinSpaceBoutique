@@ -127,3 +127,12 @@ body {
   background-size: 40px 40px;
   animation: progress-stripes 1s linear infinite;
 }
+
+/* Arabe : police Cairo (chargée dans le layout quand locale = ar) */
+.font-arabic {
+  font-family: "Cairo", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+[dir="rtl"] .h1,
+[dir="rtl"] .h2 {
+  letter-spacing: 0;
+}

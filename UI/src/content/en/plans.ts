@@ -1,0 +1,145 @@
+import type { Plan, CompareGroup } from "../fr/plans"
+
+export const plans: Plan[] = [
+  {
+    code: "starter",
+    name: "Starter",
+    audience: "Workshops and small print shops that want to leave Excel and WhatsApp behind.",
+    monthly: 300,
+    yearlyMonthly: 250,
+    description: "The whole solution, sized for a small workshop.",
+    limits: [
+      { label: "Users", value: "2" },
+      { label: "Orders / month", value: "300" },
+      { label: "File storage", value: "5 GB" },
+      { label: "Points of sale", value: "1" },
+      { label: "Connected carriers", value: "1" },
+    ],
+    includes: [
+      "Orders, quotes, mockups and production tracking",
+      "Customers, deposits, adjustments and balance due",
+      "Delivery with notes and labels",
+      "Dashboard and statements",
+      "Print agent on 1 workstation",
+      "E-mail support",
+    ],
+    cta: "Start the free trial",
+  },
+  {
+    code: "pro",
+    name: "Pro",
+    audience: "Print shops that deliver every day and want to master cash on delivery.",
+    monthly: 690,
+    yearlyMonthly: 575,
+    highlight: true,
+    badge: "Most popular",
+    description: "For daily activity with delivery and several workstations.",
+    limits: [
+      { label: "Users", value: "Unlimited" },
+      { label: "Orders / month", value: "2,000" },
+      { label: "File storage", value: "50 GB" },
+      { label: "Points of sale", value: "3" },
+      { label: "Connected carriers", value: "All (Ameex, Olivraison, Ozone Express + in-house couriers)" },
+    ],
+    includes: [
+      "Everything in Starter, plus:",
+      "Automatic COD reconciliation with gap alert",
+      "Loyalty programme and promo codes",
+      "Synced public online store",
+      "Print agent on unlimited workstations (service mode)",
+      "Accounting CSV export",
+      "Priority e-mail + WhatsApp support",
+    ],
+    cta: "Start the free trial",
+  },
+  {
+    code: "business",
+    name: "Business",
+    audience: "Networks, franchises and print shops with external resellers.",
+    monthly: 1490,
+    yearlyMonthly: 1240,
+    description: "Unlimited volume, external resellers and dedicated support.",
+    limits: [
+      { label: "Users", value: "Unlimited" },
+      { label: "Orders / month", value: "Unlimited" },
+      { label: "File storage", value: "250 GB" },
+      { label: "Points of sale", value: "Unlimited" },
+      { label: "Connected carriers", value: "All" },
+    ],
+    includes: [
+      "Everything in Pro, plus:",
+      "External resellers with dedicated workspace and catalogue",
+      "Custom domain (orders.your-brand.ma)",
+      "Video-call onboarding (2 h) + data import",
+      "Daily backups kept 30 days",
+      "Dedicated account manager",
+    ],
+    extras: ["Option: dedicated instance (isolated server) on quote"],
+    cta: "Talk to an advisor",
+  },
+]
+
+export const comparison: CompareGroup[] = [
+  {
+    title: "Capacity",
+    rows: [
+      { feature: "Users", starter: "2", pro: "Unlimited", business: "Unlimited" },
+      { feature: "Orders per month", starter: "300", pro: "2,000", business: "Unlimited" },
+      { feature: "Print file storage", starter: "5 GB", pro: "50 GB", business: "250 GB" },
+      { feature: "Points of sale", starter: "1", pro: "3", business: "Unlimited" },
+      { feature: "Workstations with print agent", starter: "1", pro: "Unlimited", business: "Unlimited" },
+    ],
+  },
+  {
+    title: "Orders and sales",
+    rows: [
+      { feature: "Orders, items, options and materials", starter: true, pro: true, business: true },
+      { feature: "Quotes and mockups to approve", starter: true, pro: true, business: true },
+      { feature: "Deposits, adjustments, balance due", starter: true, pro: true, business: true },
+      { feature: "Promo codes and automatic promotions", starter: false, pro: true, business: true },
+      { feature: "Loyalty programme (points earned on delivery)", starter: false, pro: true, business: true },
+      { feature: "Public online store", starter: false, pro: true, business: true },
+      { feature: "External resellers", starter: false, pro: false, business: true },
+    ],
+  },
+  {
+    title: "Delivery and collection",
+    rows: [
+      { feature: "PDF delivery notes and labels", starter: true, pro: true, business: true },
+      { feature: "Carriers (Ameex, Olivraison, Ozone Express)", starter: "1 of your choice", pro: "All", business: "All" },
+      { feature: "In-house couriers and rounds", starter: true, pro: true, business: true },
+      { feature: "Automatic status tracking (webhooks)", starter: true, pro: true, business: true },
+      { feature: "COD reconciliation with gap alert", starter: false, pro: true, business: true },
+      { feature: "Pickups per salesperson", starter: true, pro: true, business: true },
+    ],
+  },
+  {
+    title: "Workshop and printing",
+    rows: [
+      { feature: "Production queue and ready files", starter: true, pro: true, business: true },
+      { feature: "Windows / macOS / Linux print agent", starter: true, pro: true, business: true },
+      { feature: "Service mode (runs with session closed)", starter: false, pro: true, business: true },
+      { feature: "Workstation management from the web", starter: true, pro: true, business: true },
+    ],
+  },
+  {
+    title: "Finance and management",
+    rows: [
+      { feature: "Real-time dashboard", starter: true, pro: true, business: true },
+      { feature: "Customer account statements", starter: true, pro: true, business: true },
+      { feature: "Expenses and margin", starter: true, pro: true, business: true },
+      { feature: "Accounting CSV export", starter: false, pro: true, business: true },
+      { feature: "Deleted orders (trash) and history", starter: true, pro: true, business: true },
+    ],
+  },
+  {
+    title: "Security and support",
+    rows: [
+      { feature: "Dedicated database and storage per customer", starter: true, pro: true, business: true },
+      { feature: "Backups", starter: "Weekly", pro: "Daily (7 d)", business: "Daily (30 d)" },
+      { feature: "Custom domain", starter: false, pro: false, business: true },
+      { feature: "Support", starter: "E-mail", pro: "Priority e-mail + WhatsApp", business: "Dedicated manager" },
+      { feature: "Onboarding training", starter: "Videos", pro: "Videos + 1 h call", business: "Videos + 2 h call + import" },
+    ],
+  },
+]

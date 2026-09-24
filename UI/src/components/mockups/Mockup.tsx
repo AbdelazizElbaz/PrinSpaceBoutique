@@ -3,7 +3,7 @@
 // à héberger. Remplacez-les par de vraies captures (public/screens/*.png)
 // quand vous en aurez : <Image src="/screens/orders.png" …/>.
 
-import type { Feature } from "@/content/features"
+import type { Feature } from "@/content/fr/features"
 
 type Kind = Feature["mockup"]
 

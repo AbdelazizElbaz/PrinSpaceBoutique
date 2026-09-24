@@ -29,6 +29,23 @@ Le contenu est séparé du code, dans `UI/src/content/` :
 Les « captures d'écran » sont des illustrations SVG (`UI/src/components/mockups/Mockup.tsx`) ;
 remplacez-les par de vraies captures dans `UI/public/screens/` quand vous voulez.
 
+## Langues (FR / AR / EN)
+
+Le site est trilingue. Le français est servi sans préfixe (`/tarifs`), l'arabe
+sous `/ar/…` (affichage RTL, police Cairo) et l'anglais sous `/en/…` ; un
+sélecteur de langue est dans l'en-tête, chaque page déclare ses `hreflang` et
+le sitemap liste les trois versions. Le routage vit dans `UI/src/middleware.ts`
+(réécriture interne de `/…` vers `/fr/…`) et toutes les pages sont sous
+`UI/src/app/[locale]/`.
+
+- Chaînes d'interface et textes des pages : `UI/src/i18n/dict/{fr,ar,en}.ts`
+  (le français est la référence typée ; AR et EN doivent avoir la même structure).
+- Contenu (forfaits, fonctionnalités, FAQ, vidéos, pages légales) :
+  `UI/src/content/{fr,ar,en}/*.ts`, assemblé par `getContent(locale)`.
+- Pour ajouter une langue : l'ajouter dans `UI/src/i18n/config.ts`, créer
+  `dict/xx.ts` et `content/xx/`, les enregistrer dans `i18n/index.ts` et
+  `content/index.ts`.
+
 ## Pages
 
 `/` accueil · `/fonctionnalites` · `/agent` (agent d'impression) · `/tarifs`

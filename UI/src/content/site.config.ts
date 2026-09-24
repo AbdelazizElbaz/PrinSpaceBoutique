@@ -64,5 +64,8 @@ export const site = {
 
 export type Site = typeof site
 
-export const money = (n: number) =>
-  `${new Intl.NumberFormat("fr-MA", { maximumFractionDigits: 0 }).format(n)} ${site.currency}`
+export const money = (n: number, locale: "fr" | "ar" | "en" = "fr") => {
+  const nf = { fr: "fr-MA", ar: "ar-MA", en: "en-US" }[locale]
+  const cur = { fr: "DH", ar: "درهم", en: "MAD" }[locale]
+  return `${new Intl.NumberFormat(nf, { maximumFractionDigits: 0 }).format(n)} ${cur}`
+}

@@ -1,0 +1,66 @@
+import type { Metadata } from "next"
+import Link from "next/link"
+import { Check } from "lucide-react"
+import { Section, SectionHeading, CtaBand } from "@/components/ui"
+import { Icon } from "@/components/Icon"
+import { Mockup } from "@/components/mockups/Mockup"
+import { getContent } from "@/content"
+import { getDict, isLocale, localePath } from "@/i18n"
+import { pageAlternates, type LocaleParams } from "@/lib/seo"
+
+export async function generateMetadata({ params }: LocaleParams): Promise<Metadata> {
+  const { locale: raw } = await params
+  const locale = isLocale(raw) ? raw : "fr"
+  const t = getDict(locale)
+  return { title: t.features.metaTitle, description: t.features.metaDesc, alternates: pageAlternates(locale, "/fonctionnalites") }
+}
+
+export default async function FeaturesPage({ params }: LocaleParams) {
+  const { locale: raw } = await params
+  const locale = isLocale(raw) ? raw : "fr"
+  const t = getDict(locale)
+  const { features } = getContent(locale)
+  return (
+    <>
+      <Section className="pb-8">
+        <SectionHeading eyebrow={t.features.eyebrow} title={t.features.title} lead={t.features.lead} />
+        <nav className="mt-10 flex flex-wrap justify-center gap-2">
+          {features.map((f) => (
+            <a key={f.slug} href={`#${f.slug}`} className="rounded-full border border-slate-200 px-4 py-1.5 text-sm text-slate-700 hover:border-brand-300 hover:text-brand-700">
+              {f.title}
+            </a>
+          ))}
+        </nav>
+      </Section>
+      {features.map((f, i) => (
+        <Section key={f.slug} id={f.slug} tone={i % 2 ? "gray" : "white"} className="scroll-mt-20 py-14 sm:py-20">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div className={i % 2 ? "lg:order-2" : ""}>
+              <span className={`inline-flex h-12 w-12 items-center justify-center rounded-xl text-white ${f.color}`}>
+                <Icon name={f.icon} className="h-6 w-6" />
+              </span>
+              <h2 className="h2 mt-5">{f.title}</h2>
+              <p className="lead mt-4">{f.description}</p>
+              <ul className="mt-6 space-y-3">
+                {f.bullets.map((b) => (
+                  <li key={b} className="flex gap-3 text-sm text-slate-700">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" /> {b}
+                  </li>
+                ))}
+              </ul>
+              {f.slug === "atelier" && (
+                <Link href={localePath(locale, "/agent")} className="btn-secondary mt-6">
+                  {t.features.agentLink}
+                </Link>
+              )}
+            </div>
+            <div className={i % 2 ? "lg:order-1" : ""} dir="ltr">
+              <Mockup kind={f.mockup} className="shadow-xl ring-1 ring-slate-200" />
+            </div>
+          </div>
+        </Section>
+      ))}
+      <CtaBand locale={locale} />
+    </>
+  )
+}
