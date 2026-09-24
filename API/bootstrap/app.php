@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         // API publique consommée par le site Next.js : CORS géré par config/cors.php
         $middleware->throttleApi();
+        // Derrière nginx (conteneur unique) puis le load balancer Lightsail :
+        // X-Forwarded-Proto/For sont fiables → URLs https correctes.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

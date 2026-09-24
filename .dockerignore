@@ -1,0 +1,8 @@
+**/node_modules
+**/.next
+**/vendor
+.git
+**/.env
+**/.env.*.local
+API/storage/logs/*
+!API/storage/logs/.gitkeep

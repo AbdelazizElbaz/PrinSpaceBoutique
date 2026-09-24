@@ -1,7 +1,7 @@
 // Client HTTP minimal vers l'API boutique (dossier API/, Laravel).
 // Toutes les routes sont publiques (pas d'auth) et limitées en débit côté serveur.
 
-const BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8100/api").replace(/\/+$/, "")
+const BASE = (process.env.NEXT_PUBLIC_API_URL || "/api").replace(/\/+$/, "")
 
 export class ApiError extends Error {
   status: number
