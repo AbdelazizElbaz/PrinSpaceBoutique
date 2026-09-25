@@ -117,7 +117,10 @@ dans l'image : tout est injecté en variables d'environnement du conteneur.
 
 ### 2. Côté GitHub (une seule fois)
 
-Settings → Environments → **PrintIOS** :
+Le plus simple : `powershell -ExecutionPolicy Bypass -File .\scripts\setup-github-env.ps1`
+(GitHub CLI requis : `winget install GitHub.cli` puis `gh auth login`). Le script
+crée l'environnement, demande chaque valeur (secrets en saisie masquée) et
+peut générer l'`APP_KEY`. Sinon, à la main : Settings → Environments → **PrintIOS** :
 
 | Type | Nom | Valeur |
 |---|---|---|
