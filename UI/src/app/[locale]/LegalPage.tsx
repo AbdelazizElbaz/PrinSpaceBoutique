@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui"
 import { site } from "@/content/site.config"
 import type { LegalDoc } from "@/content/types"
+import { PhoneLink } from "@/components/PhoneLink"
 
 export function LegalPage({ eyebrow, doc, contactTitle }: { eyebrow: string; doc: LegalDoc; contactTitle: string }) {
   const c = site.company
@@ -31,7 +32,9 @@ export function LegalPage({ eyebrow, doc, contactTitle }: { eyebrow: string; doc
         ))}
         <h2>{contactTitle}</h2>
         <p>
-          {c.legalName} — {c.address} — ICE {c.ice} — RC {c.rc} — {site.contact.email}
+          {c.legalName} — {c.address} — ICE {c.ice} — RC {c.rc} —{" "}
+          <a href={`mailto:${site.contact.email}`} className="underline">{site.contact.email}</a> —{" "}
+          <PhoneLink className="underline" />
         </p>
       </article>
     </Section>

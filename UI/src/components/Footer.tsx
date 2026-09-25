@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Logo } from "./Logo"
 import { site } from "@/content/site.config"
 import { getDict, localePath, type Locale } from "@/i18n"
+import { PhoneLink, WhatsAppLink } from "./PhoneLink"
 
 export function Footer({ locale }: { locale: Locale }) {
   const t = getDict(locale)
@@ -49,14 +50,12 @@ export function Footer({ locale }: { locale: Locale }) {
                 {site.contact.email}
               </a>
             </p>
-            <p dir="ltr" className="inline-block">
-              <a className="hover:text-ink" href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>
-                {site.contact.phone}
-              </a>
+            <p>
+              <PhoneLink className="hover:text-ink" message={t.common.whatsappMsg(site.brand)} />
               {" · "}
-              <a className="hover:text-ink" href={`https://wa.me/${site.contact.whatsapp}`} target="_blank" rel="noreferrer">
+              <WhatsAppLink className="hover:text-ink" message={t.common.whatsappMsg(site.brand)}>
                 {t.footer.whatsapp}
-              </a>
+              </WhatsAppLink>
             </p>
             <p>
               {site.company.city}, {t.footer.country}
