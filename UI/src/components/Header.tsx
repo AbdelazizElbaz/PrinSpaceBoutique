@@ -3,17 +3,16 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { Globe, Menu, MessageCircle, X } from "lucide-react"
+import { Menu, MessageCircle, X } from "lucide-react"
 import { Logo } from "./Logo"
 import { site, whatsappLink } from "@/content/site.config"
-import { getDict, localeNames, localePath, locales, stripLocale, type Locale } from "@/i18n"
+import { getDict, localePath, locales, stripLocale, type Locale } from "@/i18n"
 
 export function Header({ locale }: { locale: Locale }) {
   const t = getDict(locale)
   const pathname = usePathname()
   const { path: current } = stripLocale(pathname)
   const [open, setOpen] = useState(false)
-  const [langOpen, setLangOpen] = useState(false)
 
   const nav = [
     { href: "/fonctionnalites", label: t.nav.features },
@@ -24,36 +23,28 @@ export function Header({ locale }: { locale: Locale }) {
     { href: "/contact", label: t.nav.contact },
   ]
 
+  // Même bascule que Packspace (pilule segmentée FR | AR | EN, langue active
+  // en surbrillance), au lieu d'un menu déroulant.
   const LangSwitch = ({ className = "" }: { className?: string }) => (
-    <div className={`relative ${className}`}>
-      <button
-        type="button"
-        onClick={() => setLangOpen((v) => !v)}
-        className="flex items-center gap-1.5 rounded-md px-2.5 py-2 text-sm font-medium text-slate-600 hover:text-ink"
-        aria-label={t.nav.language}
-        aria-expanded={langOpen}
-      >
-        <Globe className="h-4 w-4" /> {localeNames[locale]}
-      </button>
-      {langOpen && (
-        <ul className="absolute end-0 z-50 mt-1 min-w-36 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
-          {locales.map((l) => (
-            <li key={l}>
-              <Link
-                href={localePath(l, current)}
-                hrefLang={l}
-                onClick={() => {
-                  setLangOpen(false)
-                  setOpen(false)
-                }}
-                className={`block px-4 py-2 text-sm hover:bg-slate-50 ${l === locale ? "font-semibold text-brand-700" : "text-slate-700"}`}
-              >
-                {localeNames[l]}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div
+      className={`flex items-center gap-0.5 rounded-full border border-slate-200 bg-slate-100 p-0.5 text-xs ${className}`}
+      role="group"
+      aria-label={t.nav.language}
+    >
+      {locales.map((l) => (
+        <Link
+          key={l}
+          href={localePath(l, current)}
+          hrefLang={l}
+          onClick={() => setOpen(false)}
+          aria-current={l === locale ? "true" : undefined}
+          className={`rounded-full px-2.5 py-1 font-medium transition-colors ${
+            l === locale ? "bg-white text-ink shadow-sm" : "text-slate-500 hover:text-ink"
+          }`}
+        >
+          {l.toUpperCase()}
+        </Link>
+      ))}
     </div>
   )
 
