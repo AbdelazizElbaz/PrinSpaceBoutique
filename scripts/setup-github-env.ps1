@@ -82,7 +82,8 @@ $secrets.APP_KEY = $appKey
 
 foreach ($k in $secrets.Keys) {
   if ([string]::IsNullOrWhiteSpace($secrets[$k])) { Write-Host "  secret $k : IGNORÉ (vide) — à renseigner plus tard" -ForegroundColor Yellow; continue }
-  $secrets[$k] | gh secret set $k --env $env_ --repo $repo | Out-Null
+  # --body (pas le pipe : PowerShell ajoute un \r\n en fin de valeur → mot de passe refusé)
+  gh secret set $k --env $env_ --repo $repo --body $secrets[$k] | Out-Null
   Write-Host "  secret $k : OK"
 }
 
