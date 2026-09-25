@@ -22,7 +22,6 @@ export function Footer({ locale }: { locale: Locale }) {
         { href: "/formation", label: t.footer.trainingVideos },
         { href: "/faq", label: t.nav.faq },
         { href: "/contact", label: t.footer.demo },
-        { href: site.links.login, label: t.nav.login },
       ],
     },
     {

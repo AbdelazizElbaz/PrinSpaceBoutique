@@ -79,9 +79,6 @@ export function Header({ locale }: { locale: Locale }) {
           <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn-ghost" title={t.common.whatsapp}>
             <MessageCircle className="h-4 w-4 text-[#25D366]" /> WhatsApp
           </a>
-          <a href={site.links.login} className="btn-ghost">
-            {t.nav.login}
-          </a>
           <Link href={localePath(locale, "/inscription")} className="btn-primary">
             {t.nav.trial(site.trialDays)}
           </Link>
@@ -104,9 +101,6 @@ export function Header({ locale }: { locale: Locale }) {
             <div className="mt-2 flex flex-col gap-2">
               <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn bg-[#25D366] text-white hover:bg-[#1ebe5d]">
                 <MessageCircle className="h-4 w-4" /> {t.common.whatsapp}
-              </a>
-              <a href={site.links.login} className="btn-secondary">
-                {t.nav.login}
               </a>
               <Link href={localePath(locale, "/inscription")} onClick={() => setOpen(false)} className="btn-primary">
                 {t.nav.trial(site.trialDays)}
