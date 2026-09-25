@@ -152,7 +152,7 @@ export const ar: Dict = {
     customCta: "طلب تكوين",
   },
   agent: {
-    metaTitle: (agent) => `${agent} — PrintosSync الذي يجلب الملفات إلى آلاتك`,
+    metaTitle: (agent) => `${agent} — الوكيل الذي يجلب الملفات إلى آلاتك`,
     metaDesc: "وكيل Windows وmacOS وLinux: تنزيل تلقائي للملفات الجاهزة، وضع الخدمة، حسابات خدمة، تحكم من الويب، تحديثات تلقائية.",
     eyebrow: "PrintosSync",
     title: "الملفات موجودة على الآلة قبل وصول المشغّل",

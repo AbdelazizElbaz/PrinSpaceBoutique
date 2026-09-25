@@ -153,7 +153,7 @@ export const fr = {
     customCta: "Demander une formation",
   },
   agent: {
-    metaTitle: (agent: string) => `${agent} — PrintosSync qui apporte les fichiers sur vos machines`,
+    metaTitle: (agent: string) => `${agent} — l'agent qui apporte les fichiers sur vos machines`,
     metaDesc: "Agent Windows, macOS et Linux : téléchargement automatique des fichiers prêts, mode service, comptes de service, pilotage depuis le web, mises à jour automatiques.",
     eyebrow: "PrintosSync",
     title: "Les fichiers sont déjà sur la machine quand l'opérateur arrive",

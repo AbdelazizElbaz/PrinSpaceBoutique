@@ -152,7 +152,7 @@ export const en: Dict = {
     customCta: "Request training",
   },
   agent: {
-    metaTitle: (agent) => `${agent} — PrintosSync that brings files to your machines`,
+    metaTitle: (agent) => `${agent} — the agent that brings files to your machines`,
     metaDesc: "Windows, macOS and Linux agent: automatic download of ready files, service mode, service accounts, web management, automatic updates.",
     eyebrow: "PrintosSync",
     title: "Files are already on the machine when the operator arrives",
