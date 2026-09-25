@@ -14,3 +14,4 @@
 /bootstrap/cache/*
 !/bootstrap/cache/.gitkeep
 .phpunit.result.cache
+/composer.lock
