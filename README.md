@@ -7,7 +7,7 @@ gratuit** par WhatsApp (canal principal) ou formulaire, traitée par l'équipe.
 | Dossier | Stack | Rôle |
 |---|---|---|
 | `UI/` | Next.js 15, React 19, Tailwind 4, TypeScript | Site vitrine (port 3100) |
-| `API/` | Laravel 11, MySQL | Leads et demandes d'essai (e-mails), port 8100 en dev |
+| `API/` | Laravel 12, MySQL | Leads et demandes d'essai (e-mails), port 8100 en dev |
 | `Dockerfile`, `docker/` | nginx + php-fpm + Next.js + queue | **Image unique** de production (Lightsail) |
 | `docker-compose.yml` | MySQL + image unique | Test local de l'image de production |
 
