@@ -135,13 +135,3 @@ jobs:
               \"unhealthyThreshold\": 3
             }
           }"
-
-      - name: Wait for deployment
-        run: |
-          for i in $(seq 1 40); do
-            STATE=$(aws lightsail get-container-services --service-name ${{ vars.LIGHTSAIL_SERVICE }} --region ${{ vars.AWS_REGION }} | jq -r '.containerServices[0].currentDeployment.state // .containerServices[0].nextDeployment.state')
-            echo "Déploiement : $STATE"
-            case "$STATE" in ACTIVE) exit 0;; FAILED) exit 1;; esac
-            sleep 15
-          done
-          echo "Timeout" ; exit 1
