@@ -19,7 +19,7 @@ export const features: Feature[] = [
     title: "Workshop and printing",
     short: "Ready files arrive on the print workstations by themselves.",
     description:
-      "When an order goes into production, its files are marked \"ready\". PrintosSync installed on each workstation downloads them in the background into the right folder, even when nobody is logged in. No more USB sticks, no more files sent on WhatsApp.",
+      "When an order goes into production, its files are marked \"ready\". PrintiosSync installed on each workstation downloads them in the background into the right folder, even when nobody is logged in. No more USB sticks, no more files sent on WhatsApp.",
     bullets: ["Production queue per machine or operator", "Windows, macOS and Linux agent in service mode", "Dedicated service accounts (never a user account)", "Workstation management from the web: pause, resume, settings", "Sync history and errors per workstation"],
     mockup: "agent",
     color: "bg-violet-600",
@@ -110,12 +110,12 @@ export const stats: Stat[] = [
   { value: "24 h", label: "to receive your workspace" },
   { value: "0 gap", label: "between COD collected and balance due" },
   { value: "3", label: "connected carriers + in-house couriers" },
-  { value: "24/7", label: "PrintosSync in service mode" },
+  { value: "24/7", label: "PrintiosSync in service mode" },
 ]
 
 // FICTIONAL testimonials — replace with real customer feedback before going live
 export const testimonials: Testimonial[] = [
   { name: "Example — Casablanca workshop", role: "Manager, digital print shop", text: "We used to lose 20 minutes per order finding the file and checking what the courier had collected. Now everything is in the order." },
-  { name: "Example — Signage in Rabat", role: "Production manager", text: "PrintosSync runs as a service on the machine's workstation: the files are already there when the operator arrives." },
+  { name: "Example — Signage in Rabat", role: "Production manager", text: "PrintiosSync runs as a service on the machine's workstation: the files are already there when the operator arrives." },
   { name: "Example — Network of 4 points of sale", role: "Director", text: "Each salesperson sees their orders and pickups, I see everything. And COD reconciliation found gaps we never saw before." },
 ]

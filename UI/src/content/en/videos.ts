@@ -4,7 +4,7 @@ import type { Track } from "../types"
 export const tracks: Track[] = [
   { id: "demarrer", title: "Get started", audience: "Administrator", description: "Create your workspace, set it up and invite your team." },
   { id: "vendre", title: "Sell", audience: "Salesperson, operator", description: "Take an order, handle the deposit, track statuses." },
-  { id: "produire", title: "Produce", audience: "Workshop", description: "Install PrintosSync and receive files automatically." },
+  { id: "produire", title: "Produce", audience: "Workshop", description: "Install PrintiosSync and receive files automatically." },
   { id: "livrer", title: "Deliver", audience: "Operator, courier", description: "Pickups, delivery notes, tracking and COD collection." },
   { id: "gerer", title: "Manage", audience: "Manager, accountant", description: "Dashboard, statements, expenses, loyalty, exports." },
   { id: "boutique", title: "Online store", audience: "Administrator", description: "Publish your catalogue and receive web orders." },
@@ -46,7 +46,7 @@ export const videos: Video[] = [
     { screen: "Actions → Edit deposit / Delete", say: "The deposit is edited from Actions; deletion is possible until the parcel is picked up." },
     { screen: "Deleted orders", say: "Deleted orders keep all their details and remain viewable." },
   ] },
-  { id: "installer-agent", track: "produire", title: "Install PrintosSync on a workstation", duration: "5 min", youtubeId: "", summary: "Download the installer, create a service account and connect the agent.", script: [
+  { id: "installer-agent", track: "produire", title: "Install PrintiosSync on a workstation", duration: "5 min", youtubeId: "", summary: "Download the installer, create a service account and connect the agent.", script: [
     { screen: "Sync → Install the agent", say: "Download the Windows (or macOS/Linux) installer from the workspace." },
     { screen: "Sync → Agent accounts → Create", say: "Create \"Workshop station 1\": username + generated password, shown once." },
     { screen: "Agent window", say: "Your workspace address, Test button, then username and password of the service account. The agent stays connected, no password stored." },

@@ -9,7 +9,7 @@ export const en: Dict = {
   },
   nav: {
     features: "Features",
-    agent: "PrintosSync",
+    agent: "PrintiosSync",
     pricing: "Pricing",
     training: "Training",
     faq: "FAQ",
@@ -63,7 +63,7 @@ export const en: Dict = {
     whyTitle: "You know these days",
     whyLead: "The file nobody can find when it's time to print. The courier who collected \"roughly\" the right amount. The deposit written in a notebook. The customer calling to ask where their order is.",
     whyCards: [
-      { t: "The file is already on the machine", d: "As soon as an order goes into production, PrintosSync drops its files in the right folder on the right workstation. No USB stick, no WhatsApp." },
+      { t: "The file is already on the machine", d: "As soon as an order goes into production, PrintiosSync drops its files in the right folder on the right workstation. No USB stick, no WhatsApp." },
       { t: "COD is checked at delivery", d: "The balance due (price – deposit) is sent to the carrier. What they collect is compared automatically; any gap is flagged." },
       { t: "Everyone sees the same thing", d: "Salesperson, workshop, courier, manager: each one sees what concerns them, on the same order file, in real time." },
     ],
@@ -98,11 +98,11 @@ export const en: Dict = {
   },
   features: {
     metaTitle: "Features: orders, workshop, delivery, COD, customers, online store",
-    metaDesc: "All modules: orders and quotes, workshop and PrintosSync, multi-carrier delivery, COD reconciliation, customers and loyalty, online store, dashboard.",
+    metaDesc: "All modules: orders and quotes, workshop and PrintiosSync, multi-carrier delivery, COD reconciliation, customers and loyalty, online store, dashboard.",
     eyebrow: "Features",
     title: "One module per job, one order file",
     lead: "Every feature below exists because a workshop needed it. Nothing theoretical.",
-    agentLink: "Everything about PrintosSync",
+    agentLink: "Everything about PrintiosSync",
   },
   pricing: {
     metaTitle: "Pricing: Starter, Pro, Business — 7-day free trial",
@@ -124,7 +124,7 @@ export const en: Dict = {
     ctaText: "Start the free trial on Pro: you can change plan at any time without losing your data.",
   },
   faq: {
-    metaTitle: "FAQ — getting started, subscription, delivery and COD, PrintosSync, security",
+    metaTitle: "FAQ — getting started, subscription, delivery and COD, PrintiosSync, security",
     metaDesc: "All the answers: free trial, bank transfer payment, carriers, COD reconciliation, sync agent, backups and data.",
     eyebrow: "FAQ",
     title: "Frequently asked questions",
@@ -154,7 +154,7 @@ export const en: Dict = {
   agent: {
     metaTitle: (agent) => `${agent} — the agent that brings files to your machines`,
     metaDesc: "Windows, macOS and Linux agent: automatic download of ready files, service mode, service accounts, web management, automatic updates.",
-    eyebrow: "PrintosSync",
+    eyebrow: "PrintiosSync",
     title: "Files are already on the machine when the operator arrives",
     lead: (agent) => `${agent} is installed on every workshop workstation and automatically brings the files ready to print. No more USB sticks, no more \"can you send it on WhatsApp?\".`,
     tryFree: "Try for free",
