@@ -48,6 +48,6 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-ENV NODE_ENV=production PORT=3100 HOSTNAME=127.0.0.1
+ENV NODE_ENV=production PORT=3100 HOSTNAME=0.0.0.0
 EXPOSE 8080
 CMD ["/usr/local/bin/entrypoint.sh"]
