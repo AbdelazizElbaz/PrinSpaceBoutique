@@ -46,7 +46,7 @@ export default async function AgentPage({ params }: LocaleParams) {
             </ul>
           </div>
           <div dir="ltr">
-            <Mockup kind="agent" className="shadow-2xl ring-1 ring-slate-200" />
+            <Mockup kind="agent" locale={locale} className="shadow-2xl ring-1 ring-slate-200" />
           </div>
         </div>
       </section>
@@ -83,7 +83,7 @@ export default async function AgentPage({ params }: LocaleParams) {
       <Section>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div dir="ltr">
-            <Mockup kind="workshop" className="shadow-xl ring-1 ring-slate-200" />
+            <Mockup kind="workshop" locale={locale} className="shadow-xl ring-1 ring-slate-200" />
           </div>
           <div>
             <p className="eyebrow">{t.agent.webEyebrow}</p>

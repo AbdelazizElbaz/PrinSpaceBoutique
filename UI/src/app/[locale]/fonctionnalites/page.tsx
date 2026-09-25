@@ -55,7 +55,7 @@ export default async function FeaturesPage({ params }: LocaleParams) {
               )}
             </div>
             <div className={i % 2 ? "lg:order-1" : ""} dir="ltr">
-              <Mockup kind={f.mockup} className="shadow-xl ring-1 ring-slate-200" />
+              <Mockup kind={f.mockup} locale={locale} className="shadow-xl ring-1 ring-slate-200" />
             </div>
           </div>
         </Section>

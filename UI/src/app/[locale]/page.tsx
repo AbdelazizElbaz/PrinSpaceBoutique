@@ -46,7 +46,7 @@ export default async function HomePage({ params }: LocaleParams) {
             </ul>
           </div>
           <div className="animate-float" dir="ltr">
-            <Mockup kind="orders" className="shadow-2xl ring-1 ring-slate-200" />
+            <Mockup kind="orders" locale={locale} className="shadow-2xl ring-1 ring-slate-200" />
           </div>
         </div>
       </section>
@@ -92,7 +92,7 @@ export default async function HomePage({ params }: LocaleParams) {
       <Section tone="gray">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div dir="ltr">
-            <Mockup kind="cod" className="shadow-xl ring-1 ring-slate-200" />
+            <Mockup kind="cod" locale={locale} className="shadow-xl ring-1 ring-slate-200" />
           </div>
           <div>
             <p className="eyebrow">{t.home.codEyebrow}</p>
@@ -125,7 +125,7 @@ export default async function HomePage({ params }: LocaleParams) {
             </div>
           </div>
           <div className="order-1 lg:order-2" dir="ltr">
-            <Mockup kind="agent" className="shadow-xl ring-1 ring-slate-200" />
+            <Mockup kind="agent" locale={locale} className="shadow-xl ring-1 ring-slate-200" />
           </div>
         </div>
       </Section>
