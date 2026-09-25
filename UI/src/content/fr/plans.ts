@@ -134,7 +134,7 @@ export const comparison: CompareGroup[] = [
       { feature: "Bons de livraison et étiquettes PDF", starter: true, pro: true, business: true },
       { feature: "Transporteurs (Ameex, Olivraison, Ozone Express)", starter: "1 au choix", pro: "Tous", business: "Tous" },
       { feature: "Livreurs internes et tournées", starter: true, pro: true, business: true },
-      { feature: "Suivi automatique des statuts (webhooks)", starter: true, pro: true, business: true },
+      { feature: "Suivi automatique des statuts", starter: true, pro: true, business: true },
       { feature: "Rapprochement COD avec alerte d'écart", starter: false, pro: true, business: true },
       { feature: "Ramassages (pickups) par vendeur", starter: true, pro: true, business: true },
     ],

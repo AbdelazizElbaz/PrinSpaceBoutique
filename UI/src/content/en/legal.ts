@@ -14,7 +14,7 @@ export const legal: LegalContent = {
     updated: "Last updated: September 2026. In case of discrepancy, the French version prevails.",
     intro: `These terms govern the subscription to the ${b} service, published by ${c.legalName} (“the Publisher”), and its use by the professional customer (“the Customer”).`,
     sections: [
-      { h: "1. Purpose", p: [`${b} is an online software (SaaS) for print shops and graphic workshops: orders, quotes, production, delivery, collection, customers, online store and print sync agent (${site.agentName}). The service is accessible through a workspace dedicated to the Customer at “subdomain.${site.appDomain}”.`] },
+      { h: "1. Purpose", p: [`${b} is an online software for print shops and graphic workshops: orders, quotes, production, delivery, collection, customers, online store and print sync agent (${site.agentName}). The service is accessible through a workspace dedicated to the Customer at “subdomain.${site.appDomain}”.`] },
       { h: "2. Workspace creation and trial period", p: [`The Customer requests their workspace from the ${site.domain} website (WhatsApp or form); the Publisher creates it and sends the access. They benefit from a ${site.trialDays}-day free trial, without commitment or payment method. At the end of the trial, without a plan subscription, the workspace is suspended; data is kept for 30 days then deleted.`] },
       { h: "3. Plans and prices", p: [`Current plans are: ${plans.map((p) => `${p.name} (${money(p.monthly, "en")} excl. VAT per month, or ${money(p.yearlyMonthly, "en")} excl. VAT per month on a yearly commitment)`).join("; ")}. Prices are excl. VAT; the VAT in force in Morocco applies. Each plan has usage limits (users, monthly orders, storage, points of sale) described on the Pricing page. The Publisher may change prices with 30 days' notice; the change applies at the next renewal.`] },
       { h: "4. Payment", p: ["Payment is made by bank transfer, monthly or yearly in advance, upon invoice. The plan is activated on receipt of payment. In case of payment more than 15 days late, access to the workspace may be suspended until settled, without data deletion for 30 days."] },
@@ -36,7 +36,7 @@ export const legal: LegalContent = {
       { h: "1. Data collected on the website", p: ["Contact and signup forms: name, company, e-mail, phone, city, workshop size, message, chosen plan, subdomain. Technical data: IP address, browser, pages visited (anonymised audience measurement). We do not use advertising cookies."] },
       { h: "2. Purposes", ul: ["Answer your demo and contact requests.", "Create and administer your workspace, send you your access and invoices.", "Inform you about service evolutions (you can unsubscribe at any time).", "Ensure service security and prevent abuse."] },
       { h: "3. Your own customers' data", p: [`The data you enter in your workspace (your customers, orders, files) is processed on your behalf: you are the data controller, ${c.legalName} is the processor. It is stored in a database and storage space dedicated to your workspace, encrypted at rest, and never used for any purpose other than providing the service.`] },
-      { h: "4. Hosting and security", p: ["The service is hosted on a professional cloud infrastructure with HTTPS access only. Passwords are hashed. PrintosSync access relies on revocable tokens. Backups are encrypted."] },
+      { h: "4. Hosting and security", p: ["The service is hosted on a Amazon Web Services (AWS) infrastructure with secure connection only. Passwords are never stored in clear text. PrintosSync access can be revoked at any time. Backups are encrypted."] },
       { h: "5. Retention", p: ["Contact requests: 24 months. Account data: for the duration of the subscription then 30 days after cancellation (60 days for backups). Billing data: legal duration."] },
       { h: "6. Recipients", p: ["Our sales and support teams, and our technical providers (hosting, transactional e-mail) strictly for the needs of the service. The carriers you connect only receive the information needed to deliver the orders you entrust to them."] },
       { h: "7. Your rights", p: [`You have a right of access, rectification, objection and deletion of your data. Write to us at ${site.contact.email}. This processing is subject to the required formalities with the CNDP.`] },
@@ -49,7 +49,7 @@ export const legal: LegalContent = {
     sections: [
       { h: "Website publisher", p: [`${c.legalName} — ${c.address}. ICE: ${c.ice}. RC: ${c.rc}. E-mail: ${site.contact.email}. Phone: ${site.contact.phone}.`] },
       { h: "Publication director", p: [`The legal representative of ${c.legalName}.`] },
-      { h: "Hosting", p: ["Website and service hosted on a professional cloud infrastructure (Amazon Web Services). Customer data is stored in dedicated databases and storage spaces."] },
+      { h: "Hosting", p: ["Website and service hosted on a Amazon Web Services (AWS) infrastructure. Customer data is stored in dedicated databases and storage spaces."] },
       { h: "Intellectual property", p: ["All content on this website (texts, illustrations, trademarks, software) is protected. Any reproduction without authorisation is prohibited. Carrier trademarks mentioned (Ameex, Olivraison, Ozone Express) belong to their respective owners."] },
     ],
   },

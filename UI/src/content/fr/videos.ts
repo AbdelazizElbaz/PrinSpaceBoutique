@@ -124,7 +124,7 @@ export const videos: Video[] = [
     script: [
       { screen: "Synchronisation → Installer l'agent", say: "On télécharge l'installeur Windows (ou macOS/Linux) depuis l'espace." },
       { screen: "Synchronisation → Comptes de l'agent → Créer", say: "On crée « Poste atelier 1 » : identifiant + mot de passe généré, affiché une seule fois." },
-      { screen: "Fenêtre de l'agent", say: "Adresse de l'API, bouton Tester, puis identifiant et mot de passe du compte de service. L'agent obtient un jeton valable un an." },
+      { screen: "Fenêtre de l'agent", say: "Adresse de votre espace, bouton Tester, puis identifiant et mot de passe du compte de service. L'agent est connecté durablement, sans mot de passe stocké." },
     ],
   },
   {
@@ -173,7 +173,7 @@ export const videos: Video[] = [
     youtubeId: "",
     summary: "Les statuts remontent tout seuls ; à la livraison, on vérifie que le COD encaissé égale le reste à payer.",
     script: [
-      { screen: "Commande → Historique de livraison", say: "Les statuts du transporteur arrivent par webhook : pris en charge, en cours, livré, retour." },
+      { screen: "Commande → Historique de livraison", say: "Les statuts du transporteur arrivent automatiquement : pris en charge, en cours, livré, retour." },
       { screen: "Liste des commandes livrées", say: "Le COD collecté est enregistré ; si l'écart avec le reste à payer n'est pas nul, un badge le signale." },
       { screen: "Export CSV", say: "Colonnes brut, ajustement, net, livraison, avance, reste, COD attendu / collecté : de quoi pointer avec le transporteur." },
     ],

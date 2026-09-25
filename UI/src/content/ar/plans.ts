@@ -86,7 +86,7 @@ export const comparison: CompareGroup[] = [
       { feature: "وصولات توصيل وملصقات PDF", starter: true, pro: true, business: true },
       { feature: "الناقلون (Ameex، Olivraison، Ozone Express)", starter: "واحد حسب الاختيار", pro: "الكل", business: "الكل" },
       { feature: "موزّعون داخليون وجولات", starter: true, pro: true, business: true },
-      { feature: "تتبع تلقائي للحالات (webhooks)", starter: true, pro: true, business: true },
+      { feature: "تتبع تلقائي للحالات", starter: true, pro: true, business: true },
       { feature: "مطابقة الدفع عند الاستلام مع تنبيه بالفرق", starter: false, pro: true, business: true },
       { feature: "عمليات جمع الطرود لكل بائع", starter: true, pro: true, business: true },
     ],

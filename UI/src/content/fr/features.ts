@@ -54,10 +54,10 @@ export const features: Feature[] = [
     title: "Livraison multi-transporteurs",
     short: "Ameex, Olivraison, Ozone Express ou vos propres livreurs.",
     description:
-      "Créez un ramassage, imprimez les bons et étiquettes, et laissez les statuts remonter automatiquement par webhook. Chaque vendeur peut créer les ramassages de ses propres commandes ; on sait toujours qui a créé quoi.",
+      "Créez un ramassage, imprimez les bons et étiquettes, et laissez les statuts remonter automatiquement automatiquement. Chaque vendeur peut créer les ramassages de ses propres commandes ; on sait toujours qui a créé quoi.",
     bullets: [
       "Bons de livraison et étiquettes PDF régénérables",
-      "Statuts transporteur en temps réel (webhooks)",
+      "Statuts transporteur en temps réel",
       "Livreurs internes, tournées et zones de livraison",
       "Suppression bloquée dès que le colis est ramassé",
       "Frais de livraison par zone, livraison offerte",
@@ -137,13 +137,13 @@ export const features: Feature[] = [
     title: "Sécurité et données",
     short: "Une base de données et un stockage dédiés à chaque client.",
     description:
-      "Chaque espace client dispose de sa propre base MySQL et de son propre espace de stockage chiffré pour les fichiers d'impression. Vos données ne sont jamais mélangées à celles d'un autre client, et vous pouvez tout exporter à tout moment.",
+      "Chaque espace client dispose de sa propre base de données et de son propre espace de stockage chiffré pour les fichiers d'impression. Vos données ne sont jamais mélangées à celles d'un autre client, et vous pouvez tout exporter à tout moment.",
     bullets: [
       "Base de données isolée par client",
-      "Stockage fichiers dédié (S3), chiffré au repos",
+      "Stockage de fichiers dédié et chiffré",
       "Sauvegardes automatiques",
       "Export complet (CSV, fichiers) sur demande",
-      "Hébergement conforme, accès HTTPS uniquement",
+      "Hébergé sur Amazon Web Services (AWS), connexion sécurisée",
     ],
     mockup: "dashboard",
     color: "bg-slate-900",

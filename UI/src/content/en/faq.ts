@@ -33,7 +33,7 @@ export const faq: FaqGroup[] = [
     id: "livraison",
     title: "Delivery and cash on delivery (COD)",
     items: [
-      { q: "Which carriers are supported?", a: "Ameex, Olivraison and Ozone Express are natively integrated (parcel creation, delivery note, labels, status tracking via webhook). You can also manage your own couriers with rounds and zones. Other carriers are added regularly; tell us which one you use." },
+      { q: "Which carriers are supported?", a: "Ameex, Olivraison and Ozone Express are natively integrated (parcel creation, delivery note, labels, status tracking automatically). You can also manage your own couriers with rounds and zones. Other carriers are added regularly; tell us which one you use." },
       { q: "How does COD reconciliation work?", a: "Each order has a \"balance due\" = price (with adjustments and shipping) – deposit collected. At delivery, the amount collected by the carrier is recorded on the order. If COD collected – balance due is not zero, a gap badge appears in the order list and in the CSV export so you can settle it with the carrier." },
       { q: "A customer paid a deposit: how does it work?", a: "The deposit is entered on the order (cash, transfer, card). It appears under the price in the list, the balance due is reduced accordingly, and that balance is sent as the COD amount to the carrier. The deposit can be edited or removed from the Actions menu as long as the order is not delivered." },
       { q: "Who can create a pickup?", a: "Administrators and operators for all orders; in-house salespeople only for their own orders. The name of the person who created the pickup is shown on it." },
@@ -47,7 +47,7 @@ export const faq: FaqGroup[] = [
     items: [
       { q: `What is the ${site.agentName} agent for?`, a: "It is installed on the workshop workstations and automatically downloads, in the background, the files of orders ready to print into the folder of your choice (per machine, per day, per customer…). It resumes interrupted downloads, handles large files in chunks and reports its state in your web workspace." },
       { q: "Which systems does it run on?", a: "Windows 10/11, macOS (Apple Silicon and Intel) and Linux. Installers are downloaded from the Sync page of your workspace, and the agent updates itself when a new version is published." },
-      { q: "Which account does the agent sign in with?", a: "With a dedicated service account, created from the Sync page (\"Agent accounts\"). It is not a user account: it can do nothing but sync files, and you can deactivate it or revoke its token at any time. Create one per workstation or per workshop." },
+      { q: "Which account does the agent sign in with?", a: "With a dedicated service account, created from the Sync page (\"Agent accounts\"). It is not a user account: it can do nothing but sync files, and you can deactivate it or revoke its access at any time. Create one per workstation or per workshop." },
       { q: "Does the agent work if nobody is logged in on the workstation?", a: "Yes, in service mode (Pro and Business plans): the agent runs as a system service and keeps syncing even with the session closed. The agent window is then only used to control it." },
       { q: "Can we have several workstations?", a: "As many as needed (1 workstation on Starter). Each workstation has a stable identity, keeps its synced folders, and you manage them all from the web: pause, resume, parallelism settings, removal of an obsolete workstation." },
     ],
@@ -56,11 +56,11 @@ export const faq: FaqGroup[] = [
     id: "securite",
     title: "Security and data",
     items: [
-      { q: "Where is my data hosted?", a: "On a professional cloud infrastructure (AWS), HTTPS access only. Each customer has their own MySQL database and their own encrypted storage space for files: your data is never mixed with another customer's." },
+      { q: "Where is my data hosted?", a: "On a Amazon Web Services (AWS) infrastructure, secure connection only. Each customer has their own database and their own encrypted storage space for files: your data is never mixed with another customer's." },
       { q: "Who has access to my data?", a: "You and the users you create, according to their role (administrator, operator, in-house salesperson, external reseller, courier). An external reseller, for example, sees neither promo codes, nor delivery, nor mockups and quotes. Our team only accesses your workspace at your request, for support." },
       { q: "Are there backups?", a: "Yes, automatic: weekly on Starter, daily on Pro (kept 7 days) and Business (30 days). A restore can be requested from support." },
       { q: "Can I export my data?", a: "At any time: CSV export of orders, customers and statements from the application, and full export (database + files) on request, in particular on cancellation." },
-      { q: "Are passwords and tokens protected?", a: "Passwords are hashed, never stored in clear text. PrintosSync never stores a password: it obtains a dedicated, revocable token valid one year." },
+      { q: "Are passwords protected?", a: "Passwords are never stored in clear text. PrintosSync never stores a password: it uses a dedicated access that can be revoked at any time." },
     ],
   },
   {

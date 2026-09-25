@@ -75,7 +75,7 @@ export const en: Dict = {
     codLead: "Each order keeps its price, adjustments, shipping and the deposit collected. At delivery, the amount collected by the carrier is reconciled with the balance due. Gaps show up in the list, the dashboard and the CSV export.",
     codBullets: [
       "Deposit recorded on the order, balance due sent as COD",
-      "Carrier statuses received automatically (webhooks)",
+      "Carrier statuses received automatically",
       "Gap badge, dedicated filter, export to reconcile with the carrier",
       "Loyalty points credited only on delivery or pickup",
     ],
@@ -165,10 +165,10 @@ export const en: Dict = {
     points: [
       { t: "Background sync", d: "Files from ready orders are downloaded to the local folder you choose, per machine or per workshop. Automatic resume after a cut, large files split into parallel chunks." },
       { t: "Service mode", d: "Installed as a system service, the agent runs even when the session is closed or nobody is logged in. The window is only there to control it." },
-      { t: "Dedicated service accounts", d: "The agent signs in with an account created for it from the Sync page, never a user account. Revocable one-year token, password never stored." },
+      { t: "Dedicated service accounts", d: "The agent signs in with an account created for it from the Sync page, never a user account. Access revocable at any time, password never stored." },
       { t: "Web management", d: "From your workspace: state of each workstation, pause / resume, immediate check, parallelism settings, history and errors, removal of obsolete workstations." },
       { t: "Automatic updates", d: "New version published? The agent offers it (or installs it by itself if enabled) and restarts without intervention." },
-      { t: "Security", d: "HTTPS only, signed temporary download URLs, stable machine identity: reconnecting a workstation finds its folders again." },
+      { t: "Security", d: "Secure connection only, temporary download links, stable machine identity: reconnecting a workstation finds its folders again." },
     ],
     installEyebrow: "Installation",
     installTitle: "Three steps, five minutes",

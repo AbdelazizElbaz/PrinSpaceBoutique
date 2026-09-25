@@ -30,8 +30,8 @@ export const features: Feature[] = [
     title: "Multi-carrier delivery",
     short: "Ameex, Olivraison, Ozone Express or your own couriers.",
     description:
-      "Create a pickup, print notes and labels, and let statuses come back automatically via webhooks. Each salesperson can create pickups for their own orders; you always know who created what.",
-    bullets: ["Regenerable PDF delivery notes and labels", "Real-time carrier statuses (webhooks)", "In-house couriers, rounds and delivery zones", "Deletion blocked once the parcel is picked up", "Shipping fees per zone, free shipping"],
+      "Create a pickup, print notes and labels, and let statuses come back automatically automatically. Each salesperson can create pickups for their own orders; you always know who created what.",
+    bullets: ["Regenerable PDF delivery notes and labels", "Real-time carrier statuses", "In-house couriers, rounds and delivery zones", "Deletion blocked once the parcel is picked up", "Shipping fees per zone, free shipping"],
     mockup: "delivery",
     color: "bg-amber-500",
   },
@@ -85,8 +85,8 @@ export const features: Feature[] = [
     title: "Security and data",
     short: "A dedicated database and storage for each customer.",
     description:
-      "Each customer workspace has its own MySQL database and its own encrypted storage space for print files. Your data is never mixed with another customer's, and you can export everything at any time.",
-    bullets: ["Isolated database per customer", "Dedicated file storage (S3), encrypted at rest", "Automatic backups", "Full export (CSV, files) on request", "Compliant hosting, HTTPS access only"],
+      "Each customer workspace has its own database and its own encrypted storage space for print files. Your data is never mixed with another customer's, and you can export everything at any time.",
+    bullets: ["Isolated database per customer", "Dedicated, encrypted file storage", "Automatic backups", "Full export (CSV, files) on request", "Hosted on Amazon Web Services (AWS), secure connection"],
     mockup: "dashboard",
     color: "bg-slate-900",
   },

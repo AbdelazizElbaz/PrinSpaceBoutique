@@ -108,7 +108,7 @@ export const comparison: CompareGroup[] = [
       { feature: "PDF delivery notes and labels", starter: true, pro: true, business: true },
       { feature: "Carriers (Ameex, Olivraison, Ozone Express)", starter: "1 of your choice", pro: "All", business: "All" },
       { feature: "In-house couriers and rounds", starter: true, pro: true, business: true },
-      { feature: "Automatic status tracking (webhooks)", starter: true, pro: true, business: true },
+      { feature: "Automatic status tracking", starter: true, pro: true, business: true },
       { feature: "COD reconciliation with gap alert", starter: false, pro: true, business: true },
       { feature: "Pickups per salesperson", starter: true, pro: true, business: true },
     ],

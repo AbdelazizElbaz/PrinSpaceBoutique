@@ -76,7 +76,7 @@ export const faq: FaqGroup[] = [
     items: [
       {
         q: "Quels transporteurs sont pris en charge ?",
-        a: "Ameex, Olivraison et Ozone Express sont intégrés nativement (création du colis, bon de livraison, étiquettes, suivi des statuts par webhook). Vous pouvez aussi gérer vos propres livreurs avec des tournées et des zones. D'autres transporteurs sont ajoutés régulièrement ; dites-nous lequel vous utilisez.",
+        a: "Ameex, Olivraison et Ozone Express sont intégrés nativement (création du colis, bon de livraison, étiquettes, suivi des statuts automatiquement). Vous pouvez aussi gérer vos propres livreurs avec des tournées et des zones. D'autres transporteurs sont ajoutés régulièrement ; dites-nous lequel vous utilisez.",
       },
       {
         q: "Comment fonctionne le rapprochement COD ?",
@@ -114,7 +114,7 @@ export const faq: FaqGroup[] = [
       },
       {
         q: "Avec quel compte l'agent se connecte-t-il ?",
-        a: "Avec un compte de service dédié, créé depuis la page Synchronisation (« Comptes de l'agent »). Ce n'est pas un compte utilisateur : il ne peut rien faire d'autre que synchroniser les fichiers, et vous pouvez le désactiver ou révoquer son jeton à tout moment. Créez-en un par poste ou par atelier.",
+        a: "Avec un compte de service dédié, créé depuis la page Synchronisation (« Comptes de l'agent »). Ce n'est pas un compte utilisateur : il ne peut rien faire d'autre que synchroniser les fichiers, et vous pouvez le désactiver ou révoquer son accès à tout moment. Créez-en un par poste ou par atelier.",
       },
       {
         q: "L'agent fonctionne-t-il si personne n'est connecté sur le poste ?",
@@ -132,7 +132,7 @@ export const faq: FaqGroup[] = [
     items: [
       {
         q: "Où sont hébergées mes données ?",
-        a: "Sur une infrastructure cloud professionnelle (AWS), avec accès HTTPS uniquement. Chaque client dispose de sa propre base de données MySQL et de son propre espace de stockage chiffré pour les fichiers : vos données ne sont jamais mélangées à celles d'un autre client.",
+        a: "Sur une infrastructure Amazon Web Services (AWS), avec connexion sécurisée. Chaque client dispose de sa propre base de données et de son propre espace de stockage chiffré pour les fichiers : vos données ne sont jamais mélangées à celles d'un autre client.",
       },
       {
         q: "Qui a accès à mes données ?",
@@ -147,8 +147,8 @@ export const faq: FaqGroup[] = [
         a: "À tout moment : export CSV des commandes, clients et relevés depuis l'application, et export complet (base + fichiers) sur demande, notamment en cas de résiliation.",
       },
       {
-        q: "Les mots de passe et les jetons sont-ils protégés ?",
-        a: "Les mots de passe sont hachés, jamais stockés en clair. PrintosSync n'enregistre jamais de mot de passe : il obtient un jeton dédié, révocable, valable un an.",
+        q: "Les mots de passe sont-ils protégés ?",
+        a: "Les mots de passe ne sont jamais stockés en clair. PrintosSync n'enregistre jamais de mot de passe : il utilise un accès dédié, révocable à tout moment.",
       },
     ],
   },

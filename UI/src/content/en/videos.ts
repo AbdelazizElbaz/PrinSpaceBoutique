@@ -49,7 +49,7 @@ export const videos: Video[] = [
   { id: "installer-agent", track: "produire", title: "Install PrintosSync on a workstation", duration: "5 min", youtubeId: "", summary: "Download the installer, create a service account and connect the agent.", script: [
     { screen: "Sync → Install the agent", say: "Download the Windows (or macOS/Linux) installer from the workspace." },
     { screen: "Sync → Agent accounts → Create", say: "Create \"Workshop station 1\": username + generated password, shown once." },
-    { screen: "Agent window", say: "API address, Test button, then username and password of the service account. The agent gets a one-year token." },
+    { screen: "Agent window", say: "Your workspace address, Test button, then username and password of the service account. The agent stays connected, no password stored." },
   ] },
   { id: "dossiers-sync", track: "produire", title: "Choose the folders to sync", duration: "4 min", youtubeId: "", summary: "Create a sync instance: source folder, local folder, deletion of removed files.", script: [
     { screen: "Agent → Explorer (left column)", say: "Browse the print folder and click \"Sync this folder…\"." },
@@ -66,7 +66,7 @@ export const videos: Video[] = [
     { screen: "Regenerate", say: "If the document is lost, regenerate it from the carrier's stored response." },
   ] },
   { id: "suivi-cod", track: "livrer", title: "Status tracking and COD reconciliation", duration: "5 min", youtubeId: "", summary: "Statuses come back by themselves; at delivery, check that COD collected equals the balance due.", script: [
-    { screen: "Order → Delivery history", say: "Carrier statuses arrive via webhook: picked up, in transit, delivered, return." },
+    { screen: "Order → Delivery history", say: "Carrier statuses arrive automatically: picked up, in transit, delivered, return." },
     { screen: "Delivered orders list", say: "The COD collected is recorded; if the gap with the balance due is not zero, a badge flags it." },
     { screen: "CSV export", say: "Columns gross, adjustment, net, shipping, deposit, balance, COD expected / collected: everything to reconcile with the carrier." },
   ] },

@@ -76,7 +76,7 @@ export const fr = {
     codLead: "Chaque commande garde son prix, ses ajustements, sa livraison et l'avance encaissée. À la livraison, le montant collecté par le transporteur est rapproché du reste à payer. Les écarts remontent dans la liste, le tableau de bord et l'export CSV.",
     codBullets: [
       "Avance saisie sur la commande, reste à payer transmis comme COD",
-      "Statuts transporteur reçus automatiquement (webhooks)",
+      "Statuts transporteur reçus automatiquement",
       "Badge d'écart, filtre dédié, export pour pointer avec le transporteur",
       "Points de fidélité crédités seulement à la livraison ou au retrait",
     ],
@@ -166,10 +166,10 @@ export const fr = {
     points: [
       { t: "Synchronisation en arrière-plan", d: "Les fichiers des commandes prêtes sont téléchargés dans le dossier local que vous choisissez, par machine ou par atelier. Reprise automatique après coupure, gros fichiers découpés en morceaux parallèles." },
       { t: "Mode service", d: "Installé comme service de l'ordinateur, l'agent tourne même quand la session est fermée ou qu'aucun utilisateur n'est connecté. La fenêtre sert uniquement à le piloter." },
-      { t: "Comptes de service dédiés", d: "L'agent se connecte avec un compte créé pour lui depuis la page Synchronisation, jamais avec un compte utilisateur. Jeton révocable valable un an, mot de passe jamais stocké." },
+      { t: "Comptes de service dédiés", d: "L'agent se connecte avec un compte créé pour lui depuis la page Synchronisation, jamais avec un compte utilisateur. Accès révocable à tout moment, mot de passe jamais stocké." },
       { t: "Pilotage depuis le web", d: "Depuis votre espace : état de chaque poste, pause / reprise, vérification immédiate, réglages de parallélisme, historique et erreurs, suppression d'un poste obsolète." },
       { t: "Mises à jour automatiques", d: "Une nouvelle version publiée ? L'agent la propose (ou l'installe seul si vous l'activez) et redémarre sans intervention." },
-      { t: "Sécurité", d: "Communication HTTPS uniquement, URLs de téléchargement signées et temporaires, identité machine stable : reconnecter un poste retrouve ses dossiers." },
+      { t: "Sécurité", d: "Connexion sécurisée, liens de téléchargement temporaires, identité machine stable : reconnecter un poste retrouve ses dossiers." },
     ],
     installEyebrow: "Installation",
     installTitle: "Trois étapes, cinq minutes",
