@@ -85,7 +85,7 @@ forfait puis, au choix :
   réception au prospect (FR/AR/EN).
 
 L'équipe crée ensuite le client dans Packspace (console plateforme ou
-administration), lui envoie ses accès, et active l'essai de 14 jours. Le
+administration), lui envoie ses accès, et active l'essai de 7 jours. Le
 numéro WhatsApp est `site.contact.whatsapp` dans `site.config.ts`.
 
 ## Déploiement AWS (un seul conteneur Lightsail)

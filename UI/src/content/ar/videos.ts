@@ -4,7 +4,7 @@ import type { Track } from "../types"
 export const tracks: Track[] = [
   { id: "demarrer", title: "البداية", audience: "المدير", description: "إنشاء الفضاء وإعداده ودعوة الفريق." },
   { id: "vendre", title: "البيع", audience: "البائع، المشغّل", description: "تسجيل طلبية، تدبير التسبيق، تتبع الحالات." },
-  { id: "produire", title: "الإنتاج", audience: "الورشة", description: "تثبيت وكيل الطباعة والتوصل بالملفات تلقائياً." },
+  { id: "produire", title: "الإنتاج", audience: "الورشة", description: "تثبيت PrintosSync والتوصل بالملفات تلقائياً." },
   { id: "livrer", title: "التوصيل", audience: "المشغّل، الموصّل", description: "عمليات الجمع، وصولات التوصيل، التتبع وتحصيل الدفع عند الاستلام." },
   { id: "gerer", title: "التسيير", audience: "المسيّر، المحاسب", description: "لوحة القيادة، كشوف الحساب، المصاريف، الولاء، التصدير." },
   { id: "boutique", title: "المتجر الإلكتروني", audience: "المدير", description: "نشر الكتالوج والتوصل بطلبيات الويب." },
@@ -46,7 +46,7 @@ export const videos: Video[] = [
     { screen: "الإجراءات ← تعديل التسبيق / حذف", say: "التسبيق يُعدَّل من الإجراءات؛ الحذف ممكن حتى جمع الطرد." },
     { screen: "الطلبيات المحذوفة", say: "الطلبيات المحذوفة تحتفظ بكل تفاصيلها وتبقى قابلة للاطلاع." },
   ] },
-  { id: "installer-agent", track: "produire", title: "تثبيت وكيل الطباعة على جهاز", duration: "5 د", youtubeId: "", summary: "تنزيل المثبِّت، إنشاء حساب خدمة وربط الوكيل.", script: [
+  { id: "installer-agent", track: "produire", title: "تثبيت PrintosSync على جهاز", duration: "5 د", youtubeId: "", summary: "تنزيل المثبِّت، إنشاء حساب خدمة وربط الوكيل.", script: [
     { screen: "المزامنة ← تثبيت الوكيل", say: "ننزّل مثبِّت Windows (أو macOS/Linux) من الفضاء." },
     { screen: "المزامنة ← حسابات الوكيل ← إنشاء", say: "ننشئ «جهاز الورشة 1»: معرّف + كلمة مرور مولَّدة تُعرض مرة واحدة." },
     { screen: "نافذة الوكيل", say: "عنوان API، زر اختبار، ثم معرّف وكلمة مرور حساب الخدمة. يحصل الوكيل على رمز صالح لسنة." },

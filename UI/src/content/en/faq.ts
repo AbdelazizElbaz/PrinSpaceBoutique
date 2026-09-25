@@ -13,7 +13,7 @@ export const faq: FaqGroup[] = [
       { q: "How long does it take to be operational?", a: "Half a day for a standard workshop: create your products and options, enter your materials, connect a carrier and import your customers from a CSV file. Our training videos guide you step by step, and the Pro and Business plans include a video-call onboarding session." },
       { q: "Can I import my existing customers and products?", a: "Yes. Customers are imported from a CSV file (name, phone, e-mail, address) with automatic duplicate detection. For products and options you can enter them or send us your catalogue: on the Business plan our team does the import." },
       { q: "What will my workspace address be?", a: `Each customer has their own address, like myworkshop.${site.appDomain}, sent with your access. On the Business plan you can use your own domain (orders.your-brand.ma).` },
-      { q: "Do I need to install anything?", a: `Not for management: ${b} works in the browser, on computer, tablet and phone. Only the print agent (${site.agentName}) is installed on the workshop workstations that must receive files automatically.` },
+      { q: "Do I need to install anything?", a: `Not for management: ${b} works in the browser, on computer, tablet and phone. Only PrintosSync (${site.agentName}) is installed on the workshop workstations that must receive files automatically.` },
     ],
   },
   {
@@ -43,7 +43,7 @@ export const faq: FaqGroup[] = [
   },
   {
     id: "atelier",
-    title: "Workshop and print agent",
+    title: "Workshop and PrintosSync",
     items: [
       { q: `What is the ${site.agentName} agent for?`, a: "It is installed on the workshop workstations and automatically downloads, in the background, the files of orders ready to print into the folder of your choice (per machine, per day, per customer…). It resumes interrupted downloads, handles large files in chunks and reports its state in your web workspace." },
       { q: "Which systems does it run on?", a: "Windows 10/11, macOS (Apple Silicon and Intel) and Linux. Installers are downloaded from the Sync page of your workspace, and the agent updates itself when a new version is published." },
@@ -60,7 +60,7 @@ export const faq: FaqGroup[] = [
       { q: "Who has access to my data?", a: "You and the users you create, according to their role (administrator, operator, in-house salesperson, external reseller, courier). An external reseller, for example, sees neither promo codes, nor delivery, nor mockups and quotes. Our team only accesses your workspace at your request, for support." },
       { q: "Are there backups?", a: "Yes, automatic: weekly on Starter, daily on Pro (kept 7 days) and Business (30 days). A restore can be requested from support." },
       { q: "Can I export my data?", a: "At any time: CSV export of orders, customers and statements from the application, and full export (database + files) on request, in particular on cancellation." },
-      { q: "Are passwords and tokens protected?", a: "Passwords are hashed, never stored in clear text. The print agent never stores a password: it obtains a dedicated, revocable token valid one year." },
+      { q: "Are passwords and tokens protected?", a: "Passwords are hashed, never stored in clear text. PrintosSync never stores a password: it obtains a dedicated, revocable token valid one year." },
     ],
   },
   {

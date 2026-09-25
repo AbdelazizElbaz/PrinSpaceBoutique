@@ -16,7 +16,7 @@ export type Video = {
 export const tracks: { id: Video["track"]; title: string; audience: string; description: string }[] = [
   { id: "demarrer", title: "Démarrer", audience: "Administrateur", description: "Créer son espace, le paramétrer et inviter son équipe." },
   { id: "vendre", title: "Vendre", audience: "Vendeur, opérateur", description: "Prendre une commande, gérer l'avance, suivre les statuts." },
-  { id: "produire", title: "Produire", audience: "Atelier", description: "Installer l'agent d'impression et recevoir les fichiers automatiquement." },
+  { id: "produire", title: "Produire", audience: "Atelier", description: "Installer PrintosSync et recevoir les fichiers automatiquement." },
   { id: "livrer", title: "Livrer", audience: "Opérateur, livreur", description: "Ramassages, bons de livraison, suivi et encaissement COD." },
   { id: "gerer", title: "Gérer", audience: "Gérant, comptable", description: "Tableau de bord, relevés, dépenses, fidélité, exports." },
   { id: "boutique", title: "Boutique en ligne", audience: "Administrateur", description: "Publier son catalogue et recevoir des commandes web." },
@@ -117,7 +117,7 @@ export const videos: Video[] = [
   {
     id: "installer-agent",
     track: "produire",
-    title: "Installer l'agent d'impression sur un poste",
+    title: "Installer PrintosSync sur un poste",
     duration: "5 min",
     youtubeId: "",
     summary: "Télécharger l'installeur, créer un compte de service et connecter l'agent.",

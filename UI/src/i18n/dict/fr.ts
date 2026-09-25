@@ -10,7 +10,7 @@ export const fr = {
   },
   nav: {
     features: "Fonctionnalités",
-    agent: "Agent d'impression",
+    agent: "PrintosSync",
     pricing: "Tarifs",
     training: "Formation",
     faq: "FAQ",
@@ -64,7 +64,7 @@ export const fr = {
     whyTitle: "Vous connaissez ces journées",
     whyLead: "Le fichier introuvable au moment d'imprimer. Le livreur qui a encaissé « à peu près » le bon montant. L'avance notée sur un carnet. Le client qui appelle pour savoir où en est sa commande.",
     whyCards: [
-      { t: "Le fichier est déjà sur la machine", d: "Dès qu'une commande passe en production, l'agent d'impression dépose ses fichiers dans le bon dossier du bon poste. Sans clé USB, sans WhatsApp." },
+      { t: "Le fichier est déjà sur la machine", d: "Dès qu'une commande passe en production, PrintosSync dépose ses fichiers dans le bon dossier du bon poste. Sans clé USB, sans WhatsApp." },
       { t: "Le COD est vérifié à la livraison", d: "Le reste à payer (prix – avance) est transmis au transporteur. Ce qu'il collecte est comparé automatiquement ; tout écart est signalé." },
       { t: "Tout le monde voit la même chose", d: "Vendeur, atelier, livreur, gérant : chacun voit ce qui le concerne, sur le même dossier de commande, en temps réel." },
     ],
@@ -99,14 +99,14 @@ export const fr = {
   },
   features: {
     metaTitle: "Fonctionnalités : commandes, atelier, livraison, COD, clients, boutique",
-    metaDesc: "Tous les modules : commandes et devis, atelier et agent d'impression, livraison multi-transporteurs, rapprochement COD, clients et fidélité, boutique en ligne, tableau de bord.",
+    metaDesc: "Tous les modules : commandes et devis, atelier et PrintosSync, livraison multi-transporteurs, rapprochement COD, clients et fidélité, boutique en ligne, tableau de bord.",
     eyebrow: "Fonctionnalités",
     title: "Un module par métier, un seul dossier de commande",
     lead: "Chaque fonctionnalité ci-dessous existe parce qu'un atelier en avait besoin. Rien de théorique.",
-    agentLink: "Tout savoir sur l'agent d'impression",
+    agentLink: "Tout savoir sur PrintosSync",
   },
   pricing: {
-    metaTitle: "Tarifs : Starter, Pro, Business — essai gratuit 14 jours",
+    metaTitle: "Tarifs : Starter, Pro, Business — essai gratuit 7 jours",
     metaDesc: (brand: string, d: number) => `Forfaits ${brand} à partir de 300 DH HT/mois. Même application pour tous, limites par volume. Essai gratuit ${d} jours sans carte bancaire.`,
     eyebrow: "Tarifs",
     title: "Toute la solution, à la taille de votre atelier",
@@ -125,7 +125,7 @@ export const fr = {
     ctaText: "Commencez l'essai gratuit sur Pro : vous pourrez changer de forfait à tout moment, sans perdre vos données.",
   },
   faq: {
-    metaTitle: "FAQ — démarrage, abonnement, livraison et COD, agent d'impression, sécurité",
+    metaTitle: "FAQ — démarrage, abonnement, livraison et COD, PrintosSync, sécurité",
     metaDesc: "Toutes les réponses : essai gratuit, paiement par virement, transporteurs, rapprochement COD, agent de synchronisation, sauvegardes et données.",
     eyebrow: "FAQ",
     title: "Questions fréquentes",
@@ -153,9 +153,9 @@ export const fr = {
     customCta: "Demander une formation",
   },
   agent: {
-    metaTitle: (agent: string) => `${agent} — l'agent d'impression qui apporte les fichiers sur vos machines`,
+    metaTitle: (agent: string) => `${agent} — PrintosSync qui apporte les fichiers sur vos machines`,
     metaDesc: "Agent Windows, macOS et Linux : téléchargement automatique des fichiers prêts, mode service, comptes de service, pilotage depuis le web, mises à jour automatiques.",
-    eyebrow: "Agent d'impression",
+    eyebrow: "PrintosSync",
     title: "Les fichiers sont déjà sur la machine quand l'opérateur arrive",
     lead: (agent: string) => `${agent} s'installe sur chaque poste de l'atelier et apporte automatiquement les fichiers prêts à imprimer. Plus de clé USB, plus de « tu me l'envoies sur WhatsApp ? ».`,
     tryFree: "Essayer gratuitement",

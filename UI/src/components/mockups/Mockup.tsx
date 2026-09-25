@@ -359,7 +359,7 @@ function Agent() {
       <rect x="20" y="20" width="600" height="32" rx="10" fill="#2c5282" />
       <rect x="20" y="40" width="600" height="12" fill="#2c5282" />
       <text x="34" y="41" fontSize="10" fontWeight="700" fill="#fff" fontFamily="Inter, sans-serif">
-        PrintIOS Sync
+        PrintosSync
         <tspan fontSize="7" fill="#bee3f8">
           {" "}
           v1.0.6

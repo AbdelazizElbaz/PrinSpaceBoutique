@@ -15,8 +15,8 @@ export const site = {
   appDomain: "app.printios.ma",
   // Nom technique de la plateforme (utilisé dans les textes « sous le capot »)
   platformName: "Packspace",
-  // Agent d'impression desktop
-  agentName: "PrintIOS Sync",
+  // PrintosSync desktop
+  agentName: "PrintosSync",
   agentTechnicalName: "PackSpaceS3Sync",
 
   company: {
@@ -50,7 +50,7 @@ export const site = {
     rib: "000 000 0000000000000000 00", // À REMPLACER
   },
 
-  trialDays: 14,
+  trialDays: 7,
   currency: "DH",
   vatRate: 0.2,
 

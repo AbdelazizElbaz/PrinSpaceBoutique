@@ -5,7 +5,7 @@ return [
     'brand' => env('BRAND_NAME', 'PrintIOS'),
     'site_url' => env('SITE_URL', 'http://localhost:3100'),
     // Essai gratuit à l'inscription (jours) — doit correspondre à site.config.ts
-    'trial_days' => (int) env('TRIAL_DAYS', 14),
+    'trial_days' => (int) env('TRIAL_DAYS', 7),
 
     // Forfaits proposés (miroir de UI/src/content/*/plans.ts)
     'plans' => [

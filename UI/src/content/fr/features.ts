@@ -37,7 +37,7 @@ export const features: Feature[] = [
     title: "Atelier et impression",
     short: "Les fichiers prêts arrivent seuls sur les postes d'impression.",
     description:
-      "Quand une commande passe en production, ses fichiers sont marqués « prêts ». L'agent d'impression installé sur chaque poste les télécharge en arrière-plan dans le bon dossier, même quand personne n'est connecté. Plus de clés USB, plus de fichiers envoyés par WhatsApp.",
+      "Quand une commande passe en production, ses fichiers sont marqués « prêts ». PrintosSync installé sur chaque poste les télécharge en arrière-plan dans le bon dossier, même quand personne n'est connecté. Plus de clés USB, plus de fichiers envoyés par WhatsApp.",
     bullets: [
       "File de production par machine ou par opérateur",
       "Agent Windows, macOS et Linux en mode service",
@@ -173,7 +173,7 @@ export const stats = [
   { value: "24 h", label: "pour recevoir votre espace" },
   { value: "0 écart", label: "entre COD encaissé et reste à payer" },
   { value: "3", label: "transporteurs connectés + livreurs internes" },
-  { value: "24/7", label: "agent d'impression en mode service" },
+  { value: "24/7", label: "PrintosSync en mode service" },
 ]
 
 // Témoignages : FICTIFS, à remplacer par de vrais retours clients avant mise en ligne
@@ -186,7 +186,7 @@ export const testimonials = [
   {
     name: "Exemple — Signalétique à Rabat",
     role: "Responsable production",
-    text: "L'agent d'impression tourne en service sur le poste de la machine : les fichiers sont déjà là quand l'opérateur arrive.",
+    text: "PrintosSync tourne en service sur le poste de la machine : les fichiers sont déjà là quand l'opérateur arrive.",
   },
   {
     name: "Exemple — Réseau de 4 points de vente",

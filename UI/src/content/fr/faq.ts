@@ -32,7 +32,7 @@ export const faq: FaqGroup[] = [
       },
       {
         q: "Faut-il installer quelque chose ?",
-        a: `Non pour la gestion : ${b} fonctionne dans le navigateur, sur ordinateur, tablette et téléphone. Seul l'agent d'impression (${site.agentName}) s'installe sur les postes de l'atelier qui doivent recevoir les fichiers automatiquement.`,
+        a: `Non pour la gestion : ${b} fonctionne dans le navigateur, sur ordinateur, tablette et téléphone. Seul PrintosSync (${site.agentName}) s'installe sur les postes de l'atelier qui doivent recevoir les fichiers automatiquement.`,
       },
     ],
   },
@@ -102,7 +102,7 @@ export const faq: FaqGroup[] = [
   },
   {
     id: "atelier",
-    title: "Atelier et agent d'impression",
+    title: "Atelier et PrintosSync",
     items: [
       {
         q: `À quoi sert l'agent ${site.agentName} ?`,
@@ -148,7 +148,7 @@ export const faq: FaqGroup[] = [
       },
       {
         q: "Les mots de passe et les jetons sont-ils protégés ?",
-        a: "Les mots de passe sont hachés, jamais stockés en clair. L'agent d'impression n'enregistre jamais de mot de passe : il obtient un jeton dédié, révocable, valable un an.",
+        a: "Les mots de passe sont hachés, jamais stockés en clair. PrintosSync n'enregistre jamais de mot de passe : il obtient un jeton dédié, révocable, valable un an.",
       },
     ],
   },
