@@ -93,7 +93,7 @@ numéro WhatsApp est `site.contact.whatsapp` dans `site.config.ts`.
 Une **seule image Docker** (`Dockerfile` à la racine) contient tout : nginx en
 façade (port 8080) qui envoie `/api/*` à Laravel (php-fpm) et le reste à
 Next.js, plus le worker de queue, le tout piloté par
-supervisord. Les migrations s'exécutent au démarrage (`docker/entrypoint.sh`).
+supervisord. Les migrations ne sont **pas** lancées par le conteneur : `cd API && php artisan migrate` depuis un poste dont le `.env` pointe sur la MySQL Lightsail.
 Un seul service Lightsail, un seul domaine (`printios.ma`), l'API est servie
 sur `https://printios.ma/api`.
 
