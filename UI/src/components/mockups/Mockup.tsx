@@ -1,7 +1,9 @@
-// Illustrations vectorielles « captures d'écran stylisées » de l'application,
-// TRADUITES selon la langue du site (fr / ar / en). Dessinées en SVG pour
-// rester nettes à toute taille, sans photo à héberger. Remplacez-les par de
-// vraies captures (public/screens/*.png) quand vous en aurez.
+// Maquettes HTML « captures d'écran » de l'application, reproduisant le style
+// réel de PrintIOS (barre latérale blanche + item actif bleu, bascule FR/AR,
+// cartes arrondies, tableaux à en-têtes gris, badges de statut), avec des
+// données GÉNÉRÉES (aucune donnée client réelle) et TRADUITES fr / ar / en.
+// Rendu en HTML/Tailwind : net à toute taille, aucune image à héberger, RTL
+// natif pour l'arabe.
 
 import type { Feature } from "@/content/fr/features"
 import type { Locale } from "@/i18n/config"
@@ -56,485 +58,405 @@ const STR = {
 
 type S = (typeof STR)["fr"] | (typeof STR)["en"] | (typeof STR)["ar"]
 
-const frame = (children: React.ReactNode, w = 640, h = 400) => (
-  <svg viewBox={`0 0 ${w} ${h}`} className="h-auto w-full" role="img" aria-label="Aperçu de l'application">
-    <defs>
-      <linearGradient id="mk-bg" x1="0" x2="1" y1="0" y2="1">
-        <stop offset="0" stopColor="#eef4ff" />
-        <stop offset="1" stopColor="#f8fafc" />
-      </linearGradient>
-      <filter id="mk-shadow" x="-5%" y="-5%" width="110%" height="115%">
-        <feDropShadow dx="0" dy="8" stdDeviation="10" floodColor="#0f172a" floodOpacity=".12" />
-      </filter>
-    </defs>
-    <rect width={w} height={h} rx="16" fill="url(#mk-bg)" />
+
+// ---------------------------------------------------------------------------
+// Briques communes (style de l'application)
+// ---------------------------------------------------------------------------
+type Tone = "green" | "blue" | "amber" | "red" | "slate" | "violet"
+const TONE: Record<Tone, string> = {
+  green: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+  blue: "bg-blue-50 text-blue-700 ring-blue-200",
+  amber: "bg-amber-50 text-amber-700 ring-amber-200",
+  red: "bg-red-50 text-red-700 ring-red-200",
+  slate: "bg-slate-100 text-slate-600 ring-slate-200",
+  violet: "bg-violet-50 text-violet-700 ring-violet-200",
+}
+const Badge = ({ tone = "slate", children }: { tone?: Tone; children: React.ReactNode }) => (
+  <span className={`inline-flex items-center whitespace-nowrap rounded-md px-1.5 py-0.5 text-[9px] font-medium ring-1 ring-inset ${TONE[tone]}`}>{children}</span>
+)
+const Btn = ({ primary = false, children }: { primary?: boolean; children: React.ReactNode }) => (
+  <span className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-[9px] font-medium ${primary ? "bg-blue-600 text-white" : "border border-slate-200 bg-white text-slate-700"}`}>{children}</span>
+)
+const Card = ({ title, children, className = "" }: { title?: string; children: React.ReactNode; className?: string }) => (
+  <div className={`rounded-xl border border-slate-200 bg-white p-3 shadow-sm ${className}`}>
+    {title && <p className="mb-2 text-[10px] font-semibold text-slate-800">{title}</p>}
     {children}
-  </svg>
+  </div>
+)
+const Th = ({ children, right = false }: { children: React.ReactNode; right?: boolean }) => (
+  <th className={`px-2 py-1.5 text-[8px] font-semibold uppercase tracking-wide text-slate-500 ${right ? "text-end" : "text-start"}`}>{children}</th>
+)
+const Td = ({ children, right = false, className = "" }: { children: React.ReactNode; right?: boolean; className?: string }) => (
+  <td className={`px-2 py-1.5 align-top text-[9px] text-slate-700 ${right ? "text-end" : "text-start"} ${className}`}>{children}</td>
 )
 
-const Window = ({ x, y, w, h, title, f }: { x: number; y: number; w: number; h: number; title: string; f: string }) => (
-  <g filter="url(#mk-shadow)">
-    <rect x={x} y={y} width={w} height={h} rx="10" fill="#fff" stroke="#e2e8f0" />
-    <rect x={x} y={y} width={w} height="28" rx="10" fill="#f1f5f9" />
-    <rect x={x} y={y + 18} width={w} height="10" fill="#f1f5f9" />
-    <circle cx={x + 14} cy={y + 14} r="4" fill="#fca5a5" />
-    <circle cx={x + 26} cy={y + 14} r="4" fill="#fcd34d" />
-    <circle cx={x + 38} cy={y + 14} r="4" fill="#86efac" />
-    <text x={x + 54} y={y + 18} fontSize="10" fill="#64748b" fontFamily={f}>
-      {title}
-    </text>
-  </g>
+const LogoMark = () => (
+  <span className="inline-flex items-center gap-1.5">
+    <svg viewBox="0 0 40 40" className="h-4 w-4" aria-hidden="true">
+      <rect x="4" y="4" width="32" height="32" rx="9" fill="#2547e9" />
+      <path d="M13 12h9.5a4.5 4.5 0 0 1 0 9H13z" fill="#fff" opacity=".95" />
+      <path d="M13 21h6v7h-6z" fill="#fff" opacity=".7" />
+      <path d="M23 24l5 4-5 4v-2.5h-4v-3h4z" fill="#a5f3fc" />
+    </svg>
+    <span className="text-[10px] font-bold tracking-tight text-slate-900">{site.brand}</span>
+  </span>
 )
 
-const Sidebar = ({ x, y, h, items, f }: { x: number; y: number; h: number; items: string[]; f: string }) => (
-  <g>
-    <rect x={x} y={y} width="110" height={h} fill="#0f172a" />
-    <rect x={x + 12} y={y + 14} width="60" height="10" rx="3" fill="#3b66f5" />
-    {items.map((it, i) => (
-      <g key={it}>
-        <rect x={x + 12} y={y + 40 + i * 22} width="86" height="14" rx="4" fill={i === 1 ? "#1e2ead" : "transparent"} />
-        <text x={x + 18} y={y + 50 + i * 22} fontSize="8" fill={i === 1 ? "#fff" : "#94a3b8"} fontFamily={f}>
-          {it}
-        </text>
-      </g>
-    ))}
-  </g>
-)
+/** Coque de l'application : barre latérale + barre du haut + contenu. */
+function AppShell({ s, locale, active, title, subtitle, children }: { s: S; locale: Locale; active: keyof S["nav"]; title: string; subtitle?: string; children: React.ReactNode }) {
+  const nav: (keyof S["nav"])[] = ["dashboard", "workshop", "orders", "delivery", "clients", "finance", "sync"]
+  const rtl = locale === "ar"
+  return (
+    <div dir={rtl ? "rtl" : "ltr"} className="flex h-[400px] w-full overflow-hidden bg-slate-50 text-slate-800" style={{ fontFamily: s.font }}>
+      <aside className="hidden w-[132px] shrink-0 flex-col border-e border-slate-200 bg-white sm:flex">
+        <div className="flex h-9 items-center px-3"><LogoMark /></div>
+        <nav className="mt-1 space-y-0.5 px-2">
+          {nav.map((k) => (
+            <div key={k} className={`flex items-center gap-2 rounded-lg px-2 py-1.5 text-[9px] font-medium ${k === active ? "bg-blue-600 text-white" : "text-slate-600"}`}>
+              <span className={`h-3 w-3 rounded ${k === active ? "bg-white/30" : "bg-slate-200"}`} />
+              {s.nav[k]}
+              {k !== active && <span className="ms-auto text-slate-300">›</span>}
+            </div>
+          ))}
+        </nav>
+      </aside>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="flex h-9 items-center justify-between border-b border-slate-200 bg-white px-3">
+          <span className="text-[9px] text-slate-400">≡</span>
+          <div className="flex items-center gap-2">
+            <span className="flex items-center rounded-full border border-slate-200 bg-slate-100 p-0.5 text-[8px]">
+              <span className={`rounded-full px-1.5 py-0.5 ${locale === "ar" ? "text-slate-500" : "bg-white font-semibold shadow-sm"}`}>FR</span>
+              <span className={`rounded-full px-1.5 py-0.5 ${locale === "ar" ? "bg-white font-semibold shadow-sm" : "text-slate-500"}`}>AR</span>
+            </span>
+            <span className="relative h-3.5 w-3.5 rounded-full border border-slate-300"><span className="absolute -end-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-red-500" /></span>
+            <span className="h-5 w-5 rounded-full bg-gradient-to-br from-blue-400 to-violet-500" />
+          </div>
+        </header>
+        <main className="min-w-0 flex-1 overflow-hidden p-3">
+          <p className="text-[13px] font-bold text-slate-900">{title}</p>
+          {subtitle && <p className="mb-2 text-[9px] text-slate-500">{subtitle}</p>}
+          {children}
+        </main>
+      </div>
+    </div>
+  )
+}
 
-const Pill = ({ x, y, w, text, color, f }: { x: number; y: number; w: number; text: string; color: string; f: string }) => (
-  <g>
-    <rect x={x} y={y} width={w} height="14" rx="7" fill={color} opacity=".15" />
-    <text x={x + w / 2} y={y + 10} fontSize="7.5" textAnchor="middle" fill={color} fontFamily={f} fontWeight="600">
-      {text}
-    </text>
-  </g>
-)
+// ---------------------------------------------------------------------------
+// Écrans
+// ---------------------------------------------------------------------------
+const money = (s: S, v: string) => `${v} ${s.cur}`
 
-const Row = ({ y, cols, colors = [], f }: { y: number; cols: string[]; colors?: string[]; f: string }) => (
-  <g>
-    <line x1="150" x2="620" y1={y + 18} y2={y + 18} stroke="#f1f5f9" />
-    {cols.map((c, i) => (
-      <text key={i} x={[158, 240, 340, 430, 520][i]} y={y + 11} fontSize="8" fill={colors[i] || "#334155"} fontFamily={f}>
-        {c}
-      </text>
-    ))}
-  </g>
-)
-
-function Orders(s: S) {
-  const f = s.font
+function Orders(s: S, locale: Locale) {
   const o = s.orders
-  const gray = ["#64748b", "#64748b", "#64748b", "#64748b", "#64748b"]
   const rows = [
-    ["CMD-2041", "Atelier Nour", `134,00 ${s.cur}`, `84,00 ${s.cur}`, o.st.prod, "#7c3aed"],
-    ["CMD-2040", "Sté Amine", `1 250,00 ${s.cur}`, `1 250,00 ${s.cur}`, o.st.ready, "#0891b2"],
-    ["CMD-2039", "Karim B.", `460,00 ${s.cur}`, `0,00 ${s.cur}`, o.st.delivered, "#059669"],
-    ["CMD-2038", "Imprim'Plus", `2 980,00 ${s.cur}`, `980,00 ${s.cur}`, o.st.shipping, "#d97706"],
-    ["CMD-2037", "Hanae L.", `89,00 ${s.cur}`, `89,00 ${s.cur}`, o.st.new, "#2547e9"],
-    ["CMD-2036", "Sté Amine", `3 120,00 ${s.cur}`, `0,00 ${s.cur}`, o.st.delivered, "#059669"],
+    { id: "ORD-199", c: "Karim Idrissi", n: 1, st: o.st.prod, tone: "blue" as Tone, p: "120,00", r: "120,00", pay: o.st.new, payTone: "red" as Tone },
+    { id: "ORD-198", c: "Nadia Tazi", n: 1, st: o.st.prod, tone: "blue" as Tone, p: "495,00", r: "495,00", pay: o.st.new, payTone: "red" as Tone, gap: true },
+    { id: "ORD-196", c: "Sara Benali", n: 2, st: o.st.delivered, tone: "green" as Tone, p: "200,00", r: "0,00", pay: "COD", payTone: "green" as Tone, sub: o.detail2 },
+    { id: "ORD-195", c: "Sara Benali", n: 1, st: o.st.shipping, tone: "amber" as Tone, p: "350,00", r: "0,00", pay: "COD", payTone: "green" as Tone },
+    { id: "ORD-193", c: "Hind Alaoui", n: 1, st: o.st.ready, tone: "violet" as Tone, p: "139,00", r: "139,00", pay: o.st.new, payTone: "red" as Tone, sub: o.detail1 },
+    { id: "ORD-189", c: "Sara Benali", n: 1, st: o.st.ready, tone: "violet" as Tone, p: "240,00", r: "40,00", pay: "Virement", payTone: "amber" as Tone },
   ]
-  return frame(
-    <>
-      <Window x={20} y={20} w={600} h={360} title={`${o.title} — ${site.brand}`} f={f} />
-      <Sidebar x={20} y={48} h={332} items={[s.nav.dashboard, s.nav.orders, s.nav.clients, s.nav.delivery, s.nav.workshop, s.nav.finance]} f={f} />
-      <text x="150" y="70" fontSize="12" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {o.title}
-      </text>
-      <rect x="150" y="80" width="200" height="18" rx="6" fill="#f1f5f9" />
-      <text x="158" y="92" fontSize="7.5" fill="#94a3b8" fontFamily={f}>
-        {o.search}
-      </text>
-      <rect x="540" y="78" width="80" height="20" rx="6" fill="#2547e9" />
-      <text x="580" y="91" fontSize="8" textAnchor="middle" fill="#fff" fontFamily={f} fontWeight="600">
-        {o.newBtn}
-      </text>
-      <rect x="150" y="108" width="470" height="18" fill="#f8fafc" />
-      <Row y={108} cols={[...o.cols]} colors={gray} f={f} />
-      {rows.map((r, i) => (
-        <g key={r[0]}>
-          <Row y={130 + i * 34} cols={[r[0], r[1], r[2], r[3]]} f={f} />
-          <Pill x={520} y={130 + i * 34 + 2} w={70} text={r[4]} color={r[5]} f={f} />
-          {i === 0 && (
-            <>
-              <text x="340" y="153" fontSize="6.5" fill="#94a3b8" fontFamily={f}>
-                {o.detail1}
-              </text>
-              <text x="340" y="161" fontSize="6.5" fill="#dc2626" fontFamily={f}>
-                {o.detail2}
-              </text>
-            </>
-          )}
-          {i === 3 && <Pill x={430} y={130 + i * 34 + 14} w={62} text={o.gap} color="#dc2626" f={f} />}
-        </g>
-      ))}
-    </>,
+  return (
+    <AppShell s={s} locale={locale} active="orders" title={o.title} subtitle={o.search}>
+      <Card>
+        <div className="mb-2 flex flex-wrap items-center gap-1.5">
+          <Btn primary>{o.newBtn}</Btn>
+          <span className="flex-1 rounded-md border border-slate-200 px-2 py-1 text-[8px] text-slate-400">{o.search}</span>
+          <Btn>20 – 26 / 09</Btn>
+        </div>
+        <table className="w-full border-collapse">
+          <thead className="bg-slate-50"><tr>{o.cols.map((c) => <Th key={c}>{c}</Th>)}</tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.id} className="border-t border-slate-100">
+                <Td><span className="font-mono font-semibold text-slate-900">{r.id}</span>{r.gap && <span className="ms-1"><Badge tone="red">{o.gap}</Badge></span>}</Td>
+                <Td>{r.c}<span className="block text-[8px] text-slate-400">{r.n} art.</span></Td>
+                <Td><span className="font-semibold">{money(s, r.p)}</span>{r.sub && <span className="block text-[8px] text-slate-400">{r.sub}</span>}</Td>
+                <Td><span className={r.r === "0,00" ? "text-emerald-600" : "font-semibold text-slate-900"}>{money(s, r.r)}</span><span className="ms-1"><Badge tone={r.payTone}>{r.pay}</Badge></span></Td>
+                <Td><Badge tone={r.tone}>{r.st}</Badge></Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+    </AppShell>
   )
 }
 
-function Workshop(s: S) {
-  const f = s.font
+function Workshop(s: S, locale: Locale) {
   const w = s.workshop
-  return frame(
-    <>
-      <Window x={20} y={20} w={600} h={360} title={w.title} f={f} />
-      <Sidebar x={20} y={48} h={332} items={[s.nav.dashboard, s.nav.workshop, s.nav.orders, s.nav.sync]} f={f} />
-      {[0, 1, 2].map((i) => (
-        <g key={i}>
-          <rect x={150 + i * 155} y="70" width="145" height="290" rx="8" fill="#f8fafc" stroke="#e2e8f0" />
-          <text x={160 + i * 155} y="88" fontSize="9" fontWeight="700" fill="#0f172a" fontFamily={f}>
-            {w.cols[i]}
-          </text>
-          {[0, 1, 2, 3].slice(0, 4 - i).map((j) => (
-            <g key={j}>
-              <rect x={158 + i * 155} y={100 + j * 60} width="129" height="50" rx="6" fill="#fff" stroke="#e2e8f0" />
-              <rect x={166 + i * 155} y={108 + j * 60} width="18" height="22" rx="3" fill="#dbe6fe" />
-              <text x={190 + i * 155} y={117 + j * 60} fontSize="7.5" fontWeight="600" fill="#0f172a" fontFamily={f}>
-                CMD-20{40 - j - i * 3} · {["flyer-A5", "bache-3x2", "cartes-350g", "affiche-A2"][j]}.pdf
-              </text>
-              <text x={190 + i * 155} y={128 + j * 60} fontSize="6.5" fill="#64748b" fontFamily={f}>
-                {w.machines[j]} · {["12", "38", "4", "9"][j]} {w.mb}
-              </text>
-              <rect x={166 + i * 155} y={138 + j * 60} width="113" height="4" rx="2" fill="#e2e8f0" />
-              <rect x={166 + i * 155} y={138 + j * 60} width={[113, 60, 113, 20][j]} height="4" rx="2" fill={i === 2 ? "#059669" : "#2547e9"} />
-            </g>
-          ))}
-        </g>
-      ))}
-    </>,
+  const col = (name: string, tone: string, cards: { id: string; c: string; items: string; since: string; late?: boolean }[]) => (
+    <div className="min-w-0 flex-1">
+      <div className="mb-1.5 flex items-center gap-1.5 text-[9px] font-semibold text-slate-700"><span className={`h-1.5 w-1.5 rounded-full ${tone}`} />{name}<span className="ms-auto rounded-full bg-slate-100 px-1.5 text-[8px] text-slate-500">{cards.length}</span></div>
+      <div className="space-y-1.5">
+        {cards.map((c) => (
+          <div key={c.id} className={`rounded-lg border bg-white p-1.5 shadow-sm ${c.late ? "border-red-300" : "border-slate-200"}`}>
+            <p className="font-mono text-[7px] text-slate-400">{c.id}</p>
+            <p className="text-[9px] font-semibold text-slate-800">{c.c}</p>
+            <p className="truncate text-[8px] text-slate-500">{c.items}</p>
+            <p className={`mt-0.5 text-end text-[8px] font-medium ${c.late ? "text-red-600" : "text-slate-400"}`}>{c.since}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+  const m = w.machines
+  return (
+    <AppShell s={s} locale={locale} active="workshop" title={w.title}>
+      <div className="flex gap-2">
+        {col(w.cols[0], "bg-blue-500", [
+          { id: "ORD-201", c: "Atelier Lumière", items: `${m[0]} · 2 ${w.mb}`, since: "12 min" },
+          { id: "ORD-200", c: "Karim Idrissi", items: `${m[1]} · 340 ${w.mb}`, since: "1 h" },
+          { id: "ORD-198", c: "Nadia Tazi", items: `${m[2]} · 18 ${w.mb}`, since: "23 h", late: true },
+        ])}
+        {col(w.cols[1], "bg-amber-500", [
+          { id: "ORD-197", c: "Boutique Zen", items: `${m[0]} · 6 ${w.mb}`, since: "35 min" },
+          { id: "ORD-194", c: "Hind Alaoui", items: `${m[3]} · 12 ${w.mb}`, since: "2 j", late: true },
+        ])}
+        {col(w.cols[2], "bg-emerald-500", [
+          { id: "ORD-196", c: "Sara Benali", items: `${m[1]} · 410 ${w.mb}`, since: "✓" },
+          { id: "ORD-195", c: "Maison Parfums", items: `${m[0]} · 9 ${w.mb}`, since: "✓" },
+          { id: "ORD-192", c: "Le Petit Café", items: `${m[2]} · 3 ${w.mb}`, since: "✓" },
+        ])}
+      </div>
+    </AppShell>
   )
 }
 
-function Delivery(s: S) {
-  const f = s.font
+function Delivery(s: S, locale: Locale) {
   const d = s.delivery
-  const times = ["09:12", "11:40", "14:05", "—", "—"]
-  const colors = ["#059669", "#059669", "#059669", "#2547e9", "#cbd5e1"]
-  return frame(
-    <>
-      <Window x={20} y={20} w={600} h={360} title={d.title} f={f} />
-      <Sidebar x={20} y={48} h={332} items={[s.nav.orders, s.nav.delivery, s.nav.pickups, s.nav.couriers]} f={f} />
-      <text x="150" y="70" fontSize="12" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {d.h}
-      </text>
-      <text x="150" y="84" fontSize="7.5" fill="#64748b" fontFamily={f}>
-        {d.sub}
-      </text>
-      <rect x="150" y="96" width="290" height="264" rx="8" fill="#fff" stroke="#e2e8f0" />
-      <rect x="160" y="106" width="270" height="26" rx="4" fill="#0f172a" />
-      <text x="170" y="122" fontSize="8" fill="#fff" fontFamily={f} fontWeight="700">
-        {d.note}
-      </text>
-      {[0, 1, 2].map((i) => (
-        <g key={i}>
-          <rect x="160" y={140 + i * 70} width="270" height="62" rx="4" fill="#f8fafc" stroke="#e2e8f0" />
-          <rect x="168" y={148 + i * 70} width="46" height="46" fill="#0f172a" opacity=".85" />
-          <rect x="172" y={152 + i * 70} width="38" height="38" fill="#fff" />
-          {[...Array(6)].map((_, k) => (
-            <rect key={k} x={176 + (k % 3) * 11} y={156 + Math.floor(k / 3) * 15 + i * 70} width={k % 2 ? 4 : 7} height="12" fill="#0f172a" />
-          ))}
-          <text x="224" y={158 + i * 70} fontSize="7.5" fontWeight="700" fill="#0f172a" fontFamily={f}>
-            {["Sté Amine — Casablanca", "Hanae L. — Rabat", "Imprim'Plus — Tanger"][i]}
-          </text>
-          <text x="224" y={170 + i * 70} fontSize="6.5" fill="#475569" fontFamily={f}>
-            {[`CMD-2040 · 1 250,00 ${s.cur}`, `CMD-2037 · 89,00 ${s.cur}`, `CMD-2038 · 980,00 ${s.cur}`][i]}
-          </text>
-          <text x="224" y={182 + i * 70} fontSize="6.5" fill="#475569" fontFamily={f}>
-            {d.ref} AMX-{88210 + i}
-          </text>
-        </g>
-      ))}
-      <rect x="456" y="96" width="164" height="264" rx="8" fill="#fff" stroke="#e2e8f0" />
-      <text x="466" y="114" fontSize="9" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {d.tracking}
-      </text>
-      {d.steps.map((st, i) => (
-        <g key={st}>
-          <circle cx="474" cy={134 + i * 34} r="5" fill={colors[i]} />
-          {i < 4 && <line x1="474" x2="474" y1={139 + i * 34} y2={163 + i * 34} stroke="#e2e8f0" strokeWidth="2" />}
-          <text x="486" y={132 + i * 34} fontSize="7.5" fontWeight="600" fill="#0f172a" fontFamily={f}>
-            {st}
-          </text>
-          <text x="486" y={142 + i * 34} fontSize="6.5" fill="#64748b" fontFamily={f}>
-            {times[i]}
-          </text>
-        </g>
-      ))}
-      <rect x="466" y="318" width="144" height="26" rx="6" fill="#2547e9" />
-      <text x="538" y="334" fontSize="8" textAnchor="middle" fill="#fff" fontFamily={f} fontWeight="600">
-        {d.print}
-      </text>
-    </>,
+  const tabs = [s.nav.pickups, d.steps[0], d.steps[2], d.steps[4].split(" ")[0], d.tracking]
+  const rows = [
+    { id: "ORD-198", c: "Boutique Zen", city: "Casablanca", carrier: "Olivraison", st: d.steps[0], tone: "slate" as Tone, trk: "9H588A60A9" },
+    { id: "ORD-193", c: "Azura Fleurs", city: "Salé", carrier: "Ameex", st: d.steps[1], tone: "blue" as Tone, trk: "SLE0926B25" },
+    { id: "ORD-192", c: "Maison Parfums", city: "Kénitra", carrier: "Olivraison", st: d.steps[2], tone: "amber" as Tone, trk: "579287B692" },
+    { id: "ORD-189", c: "Parfumerie Iris", city: "Oulmès", carrier: "Olivraison", st: d.steps[3], tone: "violet" as Tone, trk: "IL29505926" },
+    { id: "ORD-185", c: "Pâtisserie Amal", city: "Casablanca", carrier: "Ameex", st: d.steps[4], tone: "green" as Tone, trk: "3O3C324926" },
+  ]
+  return (
+    <AppShell s={s} locale={locale} active="delivery" title={s.nav.delivery} subtitle={d.h + " · " + d.sub}>
+      <div className="mb-2 flex gap-1 border-b border-slate-200">
+        {tabs.map((t, i) => <span key={t} className={`px-2 pb-1 text-[9px] ${i === 2 ? "border-b-2 border-blue-600 font-semibold text-blue-700" : "text-slate-500"}`}>{t}</span>)}
+      </div>
+      <Card>
+        <div className="mb-1.5 flex items-center justify-between"><p className="text-[10px] font-semibold">{d.steps[2]} (13)</p><Btn>{d.print}</Btn></div>
+        <table className="w-full border-collapse">
+          <thead className="bg-slate-50"><tr><Th>ID</Th><Th>{s.nav.clients}</Th><Th>{d.ref}</Th><Th>{s.orders.cols[4]}</Th><Th>{d.tracking}</Th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.id} className="border-t border-slate-100">
+                <Td><span className="font-mono font-semibold text-slate-900">{r.id}</span></Td>
+                <Td>{r.c}<span className="block text-[8px] text-slate-400">{r.city}</span></Td>
+                <Td>{r.carrier}</Td>
+                <Td><Badge tone={r.tone}>{r.st}</Badge></Td>
+                <Td><span className="font-mono text-[8px] text-slate-500">{r.trk}…</span></Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+    </AppShell>
   )
 }
 
-function Cod(s: S) {
-  const f = s.font
+function Cod(s: S, locale: Locale) {
   const c = s.cod
-  const vals = [`3 026,00 ${s.cur}`, `−46,00 ${s.cur}`, `2 980,00 ${s.cur}`, `+ 35,00 ${s.cur}`, `− 2 035,00 ${s.cur}`, `980,00 ${s.cur}`]
-  const cols = ["#334155", "#dc2626", "#0f172a", "#334155", "#059669", "#0f172a"]
-  const kv = [`48 300 ${s.cur}`, `47 910 ${s.cur}`, c.gaps, `21 450 ${s.cur}`]
-  return frame(
-    <>
-      <Window x={20} y={20} w={600} h={360} title={c.title} f={f} />
-      <Sidebar x={20} y={48} h={332} items={[s.nav.orders, s.nav.finance, s.nav.statements, s.nav.expenses]} f={f} />
-      <text x="150" y="70" fontSize="12" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        CMD-2038 · Imprim&apos;Plus
-      </text>
-      {c.rows.map((r, i) => (
-        <g key={r}>
-          <text x="160" y={100 + i * 26} fontSize="8.5" fill="#64748b" fontFamily={f}>
-            {r}
-          </text>
-          <text x="430" y={100 + i * 26} fontSize="9" textAnchor="end" fontWeight={i === 5 ? 700 : 500} fill={cols[i]} fontFamily={f}>
-            {vals[i]}
-          </text>
-          <line x1="160" x2="430" y1={108 + i * 26} y2={108 + i * 26} stroke="#f1f5f9" />
-        </g>
-      ))}
-      <rect x="160" y="262" width="270" height="86" rx="8" fill="#fef2f2" stroke="#fecaca" />
-      <text x="172" y="282" fontSize="8.5" fontWeight="700" fill="#b91c1c" fontFamily={f}>
-        {c.gapT}
-      </text>
-      <text x="172" y="298" fontSize="7.5" fill="#7f1d1d" fontFamily={f}>
-        {c.gap1}
-      </text>
-      <text x="172" y="310" fontSize="7.5" fill="#7f1d1d" fontFamily={f}>
-        {c.gap2}
-      </text>
-      <text x="172" y="330" fontSize="7" fill="#991b1b" fontFamily={f}>
-        {c.gap3}
-      </text>
-      <rect x="450" y="90" width="170" height="258" rx="8" fill="#fff" stroke="#e2e8f0" />
-      <text x="460" y="108" fontSize="9" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {c.month}
-      </text>
-      {c.kpis.map((k, i) => (
-        <g key={k}>
-          <text x="460" y={132 + i * 48} fontSize="7" fill="#64748b" fontFamily={f}>
-            {k}
-          </text>
-          <text x="460" y={148 + i * 48} fontSize="13" fontWeight="700" fill={i === 2 ? "#dc2626" : "#0f172a"} fontFamily={f}>
-            {kv[i]}
-          </text>
-        </g>
-      ))}
-    </>,
+  const vals = ["1 030,00", "−50,00", "980,00", "0,00", "0,00", "980,00"]
+  return (
+    <AppShell s={s} locale={locale} active="finance" title={c.title} subtitle={c.month}>
+      <div className="mb-2 grid grid-cols-4 gap-2">
+        {c.kpis.map((k, i) => (
+          <div key={k} className="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+            <p className="text-[8px] text-slate-500">{k}</p>
+            <p className={`text-[12px] font-bold ${i === 2 ? "text-red-600" : "text-slate-900"}`}>{i === 2 ? c.gaps : money(s, ["12 480", "11 550", "", "3 200"][i])}</p>
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-5 gap-2">
+        <Card className="col-span-3">
+          <table className="w-full">
+            <tbody>
+              {c.rows.map((r, i) => (
+                <tr key={r} className={i === c.rows.length - 1 ? "border-t border-slate-200" : ""}>
+                  <Td className={i === c.rows.length - 1 ? "font-semibold text-slate-900" : ""}>{r}</Td>
+                  <Td right className={i === c.rows.length - 1 ? "font-bold text-slate-900" : i === 1 ? "text-red-600" : ""}>{money(s, vals[i])}</Td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Card>
+        <div className="col-span-2 rounded-xl border border-red-200 bg-red-50 p-2.5">
+          <p className="text-[10px] font-semibold text-red-700">⚠ {c.gapT}</p>
+          <p className="mt-1 text-[8px] text-red-700">{c.gap1}</p>
+          <p className="text-[8px] text-red-700">{c.gap2}</p>
+          <p className="mt-1 text-[8px] text-slate-600">{c.gap3}</p>
+          <div className="mt-2"><Btn primary>CSV</Btn></div>
+        </div>
+      </div>
+    </AppShell>
   )
 }
 
-function Clients(s: S) {
-  const f = s.font
+function Clients(s: S, locale: Locale) {
   const c = s.clients
-  const kv = ["38", `84 720 ${s.cur}`, `1 250 ${s.cur}`]
-  const prices = [`1 250 ${s.cur}`, `3 120 ${s.cur}`, `890 ${s.cur}`, `650 ${s.cur}`]
-  const colors = ["#0891b2", "#059669", "#059669", "#059669"]
-  return frame(
-    <>
-      <Window x={20} y={20} w={600} h={360} title={c.title} f={f} />
-      <Sidebar x={20} y={48} h={332} items={[s.nav.orders, s.nav.clients, s.nav.loyalty, s.nav.promo]} f={f} />
-      <circle cx="180" cy="90" r="20" fill="#dbe6fe" />
-      <text x="180" y="95" fontSize="12" textAnchor="middle" fontWeight="700" fill="#2547e9" fontFamily={f}>
-        SA
-      </text>
-      <text x="210" y="86" fontSize="12" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        Sté Amine
-      </text>
-      <text x="210" y="100" fontSize="7.5" fill="#64748b" fontFamily={f}>
-        {c.meta}
-      </text>
-      <Pill x={470} y={78} w={120} text={c.pts} color="#d97706" f={f} />
-      {c.kpis.map((k, i) => (
-        <g key={k}>
-          <rect x={150 + i * 158} y="120" width="148" height="52" rx="8" fill="#fff" stroke="#e2e8f0" />
-          <text x={160 + i * 158} y="138" fontSize="7" fill="#64748b" fontFamily={f}>
-            {k}
-          </text>
-          <text x={160 + i * 158} y="158" fontSize="14" fontWeight="700" fill="#0f172a" fontFamily={f}>
-            {kv[i]}
-          </text>
-        </g>
-      ))}
-      <text x="150" y="196" fontSize="9" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {c.last}
-      </text>
-      {["CMD-2040", "CMD-2036", "CMD-2011", "CMD-1987"].map((ref, i) => (
-        <g key={ref}>
-          <Row y={204 + i * 34} cols={[ref, c.items[i], prices[i]]} f={f} />
-          <Pill x={470} y={206 + i * 34} w={110} text={c.st[i]} color={colors[i]} f={f} />
-        </g>
-      ))}
-    </>,
+  const rows = [
+    ["Zen Organics", "06 12 34 56 78", "1 662", "1", "0"],
+    ["Ilias Amrani", "06 23 45 67 89", "270", "1", "0"],
+    ["Studio 26", "06 34 56 78 90", "210", "1", "0"],
+    ["Golden Parfum", "06 45 67 89 01", "178", "0", "0"],
+    ["Ons Beauté", "06 56 78 90 12", "175", "1", "0"],
+    ["Chaïma Bennani", "06 67 89 01 23", "165", "1", "0"],
+    ["Rim Concept", "06 78 90 12 34", "138", "2", "1"],
+  ]
+  return (
+    <AppShell s={s} locale={locale} active="clients" title={s.nav.clients} subtitle={c.pts}>
+      <div className="mb-2 grid grid-cols-3 gap-2">
+        {c.kpis.map((k, i) => (
+          <div key={k} className="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+            <p className="text-[8px] text-slate-500">{k}</p>
+            <p className="text-[12px] font-bold text-slate-900">{[ "101", money(s, "84 320"), money(s, "2 140")][i]}</p>
+          </div>
+        ))}
+      </div>
+      <Card>
+        <div className="mb-1.5 flex items-center justify-between"><p className="text-[10px] font-semibold">{c.last}</p><Btn primary>+</Btn></div>
+        <table className="w-full border-collapse">
+          <thead className="bg-slate-50"><tr><Th>{s.orders.cols[1]}</Th><Th>☎</Th><Th right>★</Th><Th right>{s.nav.orders}</Th><Th right>↩</Th><Th>✓</Th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r[0]} className="border-t border-slate-100">
+                <Td><span className="font-semibold text-slate-900">{r[0]}</span></Td>
+                <Td><span className="font-mono text-[8px] text-slate-500">{r[1]}</span></Td>
+                <Td right><span className="font-semibold text-amber-600">{r[2]}</span></Td>
+                <Td right>{r[3]}</Td>
+                <Td right><span className={r[4] !== "0" ? "text-red-600" : ""}>{r[4]}</span></Td>
+                <Td><Badge tone={r[4] !== "0" ? "amber" : "green"}>{r[4] !== "0" ? "!" : "✓"}</Badge></Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+    </AppShell>
   )
 }
 
-function StoreMock(s: S) {
-  const f = s.font
+function StoreMock(s: S, locale: Locale) {
   const st = s.store
-  return frame(
-    <>
-      <Window x={20} y={20} w={600} h={360} title={st.title} f={f} />
-      <rect x="20" y="48" width="600" height="60" fill="#0f172a" />
-      <text x="40" y="84" fontSize="14" fontWeight="700" fill="#fff" fontFamily={f}>
-        {st.h}
-      </text>
-      <text x="600" y="84" fontSize="8" textAnchor="end" fill="#94a3b8" fontFamily={f}>
-        {st.cart}
-      </text>
-      {st.products.map((p, i) => (
-        <g key={p}>
-          <rect x={40 + (i % 3) * 190} y={124 + Math.floor(i / 3) * 120} width="172" height="106" rx="8" fill="#fff" stroke="#e2e8f0" />
-          <rect x={48 + (i % 3) * 190} y={132 + Math.floor(i / 3) * 120} width="156" height="54" rx="4" fill={["#dbe6fe", "#fde68a", "#bbf7d0", "#fbcfe8", "#c7d2fe", "#fed7aa"][i]} />
-          <text x={48 + (i % 3) * 190} y={200 + Math.floor(i / 3) * 120} fontSize="8.5" fontWeight="700" fill="#0f172a" fontFamily={f}>
-            {p}
-          </text>
-          <text x={48 + (i % 3) * 190} y={214 + Math.floor(i / 3) * 120} fontSize="7.5" fill="#2547e9" fontFamily={f} fontWeight="600">
-            {st.from} {[120, 90, 350, 450, 60, 40][i]} {s.cur} · {st.opts}
-          </text>
-        </g>
-      ))}
-    </>,
+  const rtl = locale === "ar"
+  return (
+    <div dir={rtl ? "rtl" : "ltr"} className="h-[400px] w-full overflow-hidden bg-white text-slate-800" style={{ fontFamily: s.font }}>
+      <div className="flex items-center justify-between border-b border-slate-200 px-3 py-2">
+        <span className="rounded-full bg-slate-100 px-2 py-0.5 font-mono text-[8px] text-slate-500">{st.title}</span>
+        <span className="text-[10px] font-bold">{st.h}</span>
+        <Btn primary>{st.cart}</Btn>
+      </div>
+      <div className="grid grid-cols-3 gap-2 p-3">
+        {st.products.map((p, i) => (
+          <div key={p} className="rounded-xl border border-slate-200 p-2 shadow-sm">
+            <div className={`mb-1.5 h-14 rounded-lg ${["bg-blue-100", "bg-amber-100", "bg-emerald-100", "bg-violet-100", "bg-pink-100", "bg-cyan-100"][i]}`} />
+            <p className="text-[9px] font-semibold">{p}</p>
+            <p className="text-[8px] text-slate-500">{st.from} <span className="font-semibold text-slate-800">{money(s, ["49", "120", "180", "290", "35", "60"][i])}</span> · 3 {st.opts}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 
-function Agent(s: S) {
-  const f = s.font
+function Agent(s: S, locale: Locale) {
   const a = s.agent
-  const inst = [
-    [a.inst[0], "PrintProd/HP-Indigo → D:\\Impression\\HP", `${a.active} · 142 ${a.files} · 2,1 ${a.gb}`],
-    [a.inst[1], "PrintProd/Roland-GF → D:\\Impression\\Roland", `${a.active} · 38 ${a.files} · 6,4 ${a.gb}`],
-  ]
-  const files: [string, number, string, string][] = [
-    ["CMD-2041_flyer-A5.pdf", 100, "#059669", a.done],
-    ["CMD-2040_cartes-350g.pdf", 100, "#059669", a.done],
-    ["CMD-2038_bache-3x2.tif", 62, "#2547e9", a.chunks],
-    ["CMD-2037_affiche-A2.pdf", 15, "#2547e9", a.queued],
-  ]
-  return frame(
-    <>
-      <rect x="20" y="20" width="600" height="360" rx="10" fill="#fff" stroke="#e2e8f0" filter="url(#mk-shadow)" />
-      <rect x="20" y="20" width="600" height="32" rx="10" fill="#2c5282" />
-      <rect x="20" y="40" width="600" height="12" fill="#2c5282" />
-      <text x="34" y="41" fontSize="10" fontWeight="700" fill="#fff" fontFamily={f}>
-        {site.agentName}
-        <tspan fontSize="7" fill="#bee3f8">
-          {" "}
-          v1.0.6
-        </tspan>
-      </text>
-      <rect x="520" y="28" width="46" height="16" rx="8" fill="#48bb78" />
-      <text x="543" y="39" fontSize="7" textAnchor="middle" fill="#fff" fontFamily={f} fontWeight="700">
-        {a.service}
-      </text>
-      <text x="600" y="40" fontSize="7.5" textAnchor="end" fill="#e2e8f0" fontFamily={f}>
-        {a.host}
-      </text>
-      <rect x="20" y="52" width="200" height="328" fill="#f8fafc" />
-      <text x="32" y="74" fontSize="8.5" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {a.folder}
-      </text>
-      {["PrintProd/", "HP-Indigo/", "Roland-GF/", "Xerox/", "Archives/"].map((fo, i) => (
-        <g key={fo}>
-          <rect x="28" y={84 + i * 20} width="184" height="16" rx="3" fill={i === 1 ? "#dbe6fe" : "transparent"} />
-          <text x="36" y={95 + i * 20} fontSize="7.5" fill={i === 1 ? "#1d36d6" : "#334155"} fontFamily={f}>
-            📁 {fo}
-          </text>
-        </g>
-      ))}
-      <rect x="30" y="344" width="180" height="24" rx="5" fill="#2547e9" />
-      <text x="120" y="359" fontSize="7.5" textAnchor="middle" fill="#fff" fontFamily={f} fontWeight="600">
-        {a.sync}
-      </text>
-      <text x="236" y="74" fontSize="8.5" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {a.instances}
-      </text>
-      {inst.map((r, i) => (
-        <g key={r[0]}>
-          <rect x="236" y={84 + i * 58} width="372" height="50" rx="6" fill="#fff" stroke="#e2e8f0" />
-          <text x="246" y={100 + i * 58} fontSize="8" fontWeight="700" fill="#0f172a" fontFamily={f}>
-            {r[0]}
-          </text>
-          <text x="246" y={112 + i * 58} fontSize="6.5" fill="#64748b" fontFamily={f}>
-            {r[1]}
-          </text>
-          <text x="246" y={124 + i * 58} fontSize="6.5" fill="#059669" fontFamily={f} fontWeight="600">
-            {r[2]}
-          </text>
-        </g>
-      ))}
-      <text x="236" y="216" fontSize="8.5" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {a.filesT}
-      </text>
-      {files.map((fl, i) => (
-        <g key={fl[0]}>
-          <text x="236" y={236 + i * 30} fontSize="7.5" fill="#0f172a" fontFamily={f}>
-            {fl[0]}
-          </text>
-          <text x="608" y={236 + i * 30} fontSize="6.5" textAnchor="end" fill="#64748b" fontFamily={f}>
-            {fl[3]}
-          </text>
-          <rect x="236" y={242 + i * 30} width="372" height="5" rx="2.5" fill="#e2e8f0" />
-          <rect x="236" y={242 + i * 30} width={(372 * fl[1]) / 100} height="5" rx="2.5" fill={fl[2]} />
-        </g>
-      ))}
-    </>,
+  return (
+    <AppShell s={s} locale={locale} active="sync" title={s.nav.sync} subtitle={a.instances}>
+      <div className="grid grid-cols-5 gap-2">
+        <Card className="col-span-2">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" />
+            <p className="text-[10px] font-semibold text-slate-900">{a.host}</p>
+            <span className="ms-auto"><Badge tone="green">{a.active}</Badge></span>
+          </div>
+          <p className="mt-0.5 text-[8px] text-slate-500">win32 · v1.0.6 · {a.service}</p>
+          <p className="mt-2 text-[8px] font-semibold uppercase text-slate-500">{a.folder}</p>
+          {a.inst.map((i, n) => (
+            <div key={i} className="mt-1 rounded-lg border border-slate-200 p-1.5">
+              <p className="text-[9px] font-medium">{i}</p>
+              <p className="font-mono text-[7px] text-slate-400">PrintProd/PrintWorkSpace → D:\Impression</p>
+              <div className="mt-1 h-1 w-full rounded-full bg-slate-100"><div className="h-1 rounded-full bg-blue-600" style={{ width: n === 0 ? "100%" : "62%" }} /></div>
+              <p className="mt-0.5 text-[8px] text-slate-500">{n === 0 ? `157/157 ${a.files}` : a.chunks}</p>
+            </div>
+          ))}
+        </Card>
+        <Card className="col-span-3" title={a.filesT}>
+          <table className="w-full border-collapse">
+            <thead className="bg-slate-50"><tr><Th>{a.filesT}</Th><Th right>{a.gb}</Th><Th>{s.orders.cols[4]}</Th></tr></thead>
+            <tbody>
+              {[["ORD-201_carte-visite.pdf", "0,02", a.done, "green"], ["ORD-200_bache-3x2.tif", "0,34", a.done, "green"], ["ORD-198_stickers.pdf", "0,02", a.queued, "blue"], ["ORD-197_flyers-A5.pdf", "0,01", a.queued, "blue"], ["ORD-194_rollup.pdf", "0,09", a.done, "green"]].map((r) => (
+                <tr key={r[0]} className="border-t border-slate-100">
+                  <Td><span className="font-mono text-[8px]">{r[0]}</span></Td>
+                  <Td right>{r[1]}</Td>
+                  <Td><Badge tone={r[3] as Tone}>{r[2]}</Badge></Td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="mt-2 flex gap-1"><Btn>{a.sync}</Btn><Btn primary>↻</Btn></div>
+        </Card>
+      </div>
+    </AppShell>
   )
 }
 
-function Dashboard(s: S) {
-  const f = s.font
+function Dashboard(s: S, locale: Locale) {
   const d = s.dashboard
-  const kv = [`128 450 ${s.cur}`, "412", "37", `18 320 ${s.cur}`]
-  const kd = ["+12 %", "+8 %", "", d.gaps]
-  const kc = ["#059669", "#059669", "#2547e9", "#dc2626"]
-  const counts = [24, 61, 18, 37, 248, 6]
-  const cc = ["#2547e9", "#7c3aed", "#0891b2", "#d97706", "#059669", "#dc2626"]
-  return frame(
-    <>
-      <Window x={20} y={20} w={600} h={360} title={d.title} f={f} />
-      <Sidebar x={20} y={48} h={332} items={[s.nav.dashboard, s.nav.orders, s.nav.clients, s.nav.delivery, s.nav.finance]} f={f} />
-      {d.kpis.map((k, i) => (
-        <g key={k}>
-          <rect x={150 + i * 118} y="66" width="108" height="58" rx="8" fill="#fff" stroke="#e2e8f0" />
-          <text x={160 + i * 118} y="82" fontSize="6.5" fill="#64748b" fontFamily={f}>
-            {k}
-          </text>
-          <text x={160 + i * 118} y="100" fontSize="12" fontWeight="700" fill="#0f172a" fontFamily={f}>
-            {kv[i]}
-          </text>
-          <text x={160 + i * 118} y="114" fontSize="6.5" fill={kc[i]} fontFamily={f} fontWeight="600">
-            {kd[i]}
-          </text>
-        </g>
-      ))}
-      <rect x="150" y="136" width="300" height="224" rx="8" fill="#fff" stroke="#e2e8f0" />
-      <text x="160" y="154" fontSize="8.5" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {d.sales}
-      </text>
-      {[30, 45, 38, 60, 52, 70, 64, 80, 58, 74, 90, 68, 84, 96].map((h, i) => (
-        <rect key={i} x={164 + i * 20} y={340 - h * 1.7} width="12" height={h * 1.7} rx="2" fill={i === 13 ? "#2547e9" : "#bfd3fe"} />
-      ))}
-      <rect x="462" y="136" width="158" height="224" rx="8" fill="#fff" stroke="#e2e8f0" />
-      <text x="472" y="154" fontSize="8.5" fontWeight="700" fill="#0f172a" fontFamily={f}>
-        {d.byStatus}
-      </text>
-      {d.st.map((st, i) => (
-        <g key={st}>
-          <text x="472" y={176 + i * 30} fontSize="7" fill="#334155" fontFamily={f}>
-            {st}
-          </text>
-          <text x="610" y={176 + i * 30} fontSize="7" textAnchor="end" fill="#0f172a" fontWeight="700" fontFamily={f}>
-            {counts[i]}
-          </text>
-          <rect x="472" y={181 + i * 30} width="138" height="4" rx="2" fill="#f1f5f9" />
-          <rect x="472" y={181 + i * 30} width={Math.max(6, (counts[i] / 248) * 138)} height="4" rx="2" fill={cc[i]} />
-        </g>
-      ))}
-    </>,
+  const pts = [6.2, 1.1, 3.4, 2.6, 0.4, 1.0]
+  const max = 8
+  const path = pts.map((v, i) => `${i === 0 ? "M" : "L"} ${10 + i * 44} ${60 - (v / max) * 52}`).join(" ")
+  const bars = [["Sara Benali", 92], ["Hind Alaoui", 48], ["Atelier Central", 12], ["Nadia Tazi", 6], ["Karim Idrissi", 4]] as const
+  return (
+    <AppShell s={s} locale={locale} active="dashboard" title={d.title}>
+      <div className="mb-2 grid grid-cols-4 gap-2">
+        {d.kpis.map((k, i) => (
+          <div key={k} className="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+            <p className="text-[8px] text-slate-500">{k}</p>
+            <p className="text-[12px] font-bold text-slate-900">{[money(s, "15 099"), "38", "13", money(s, "2 140")][i]}</p>
+            {i === 3 && <p className="text-[7px] text-red-600">{d.gaps}</p>}
+          </div>
+        ))}
+      </div>
+      <div className="mb-2 grid grid-cols-6 gap-1">
+        {d.st.map((st, i) => (
+          <div key={st} className="rounded-lg border border-slate-200 bg-white px-1.5 py-1 text-center">
+            <p className="text-[7px] text-slate-500">{st}</p>
+            <p className="text-[10px] font-bold">{[0, 7, 4, 2, 25, 1][i]}</p>
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <Card title={d.sales}>
+          <div dir="ltr"><svg viewBox="0 0 240 70" className="h-auto w-full">
+            {[0, 1, 2, 3].map((g) => <line key={g} x1="8" x2="232" y1={8 + g * 17.3} y2={8 + g * 17.3} stroke="#e2e8f0" strokeDasharray="3 3" />)}
+            <path d={path} fill="none" stroke="#2547e9" strokeWidth="1.5" />
+            {pts.map((v, i) => <circle key={i} cx={10 + i * 44} cy={60 - (v / max) * 52} r="2" fill="#fff" stroke="#2547e9" />)}
+            {["21", "22", "23", "24", "25", "26"].map((t, i) => <text key={t} x={10 + i * 44} y="68" fontSize="6" fill="#94a3b8" textAnchor="middle">{t}</text>)}
+          </svg></div>
+        </Card>
+        <Card title={d.byStatus}>
+          <div dir="ltr" className="space-y-1">
+            {bars.map(([n, v]) => (
+              <div key={n} className="flex items-center gap-1.5">
+                <span className="w-16 truncate text-[8px] text-slate-600">{n}</span>
+                <div className="h-2.5 flex-1 rounded bg-slate-100"><div className="h-2.5 rounded bg-blue-600" style={{ width: `${v}%` }} /></div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
+    </AppShell>
   )
 }
 
 export function Mockup({ kind, className = "", locale = "fr" }: { kind: Kind; className?: string; locale?: Locale }) {
   const s: S = STR[locale] ?? STR.fr
   const m = { orders: Orders, workshop: Workshop, delivery: Delivery, cod: Cod, clients: Clients, store: StoreMock, agent: Agent, dashboard: Dashboard }[kind]
-  return <div className={`overflow-hidden rounded-2xl ${className}`}>{m(s)}</div>
+  return <div className={`overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 ${className}`}>{m(s, locale)}</div>
 }
