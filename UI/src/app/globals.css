@@ -128,6 +128,223 @@ body {
   animation: progress-stripes 1s linear infinite;
 }
 
+/* ==========================================================================
+   Animations (voir src/components/motion.tsx)
+   ========================================================================== */
+
+/* Apparition au scroll */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.9s ease;
+  will-change: opacity, transform;
+}
+.reveal-up { transform: translateY(28px); }
+.reveal-down { transform: translateY(-28px); }
+.reveal-left { transform: translateX(-36px); }
+.reveal-right { transform: translateX(36px); }
+.reveal-zoom { transform: scale(0.92); filter: blur(6px); }
+.reveal-none { transform: none; }
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Hero : entrée en cascade au chargement (pas besoin d'observer) */
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(22px); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+.hero-in { animation: hero-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-in-1 { animation-delay: 0.05s; }
+.hero-in-2 { animation-delay: 0.18s; }
+.hero-in-3 { animation-delay: 0.32s; }
+.hero-in-4 { animation-delay: 0.46s; }
+.hero-in-5 { animation-delay: 0.6s; }
+.hero-in-mock { animation: hero-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both; }
+
+/* Titre : dégradé animé sur le mot clé */
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.text-shine {
+  background: linear-gradient(90deg, #2547e9, #7c3aed, #06b6d4, #2547e9);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-x 6s ease infinite;
+}
+
+/* Aurora : halos de couleur qui dérivent derrière le hero */
+@keyframes aurora-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, -40px) scale(1.15); }
+  66% { transform: translate(-40px, 30px) scale(0.95); }
+}
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-70px, 40px) scale(1.1); }
+  66% { transform: translate(50px, -30px) scale(1.05); }
+}
+.aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+.aurora > span {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.aurora > span:nth-child(1) { width: 520px; height: 520px; left: -120px; top: -140px; background: #bfd3fe; animation: aurora-1 18s ease-in-out infinite; }
+.aurora > span:nth-child(2) { width: 460px; height: 460px; right: -80px; top: 40px; background: #ddd6fe; animation: aurora-2 22s ease-in-out infinite; }
+.aurora > span:nth-child(3) { width: 380px; height: 380px; left: 40%; bottom: -160px; background: #a5f3fc; animation: aurora-1 26s ease-in-out infinite reverse; }
+
+/* Tilt 3D des mockups */
+.tilt-scene { perspective: 1200px; }
+.tilt {
+  --rx: 0deg;
+  --ry: 0deg;
+  --gx: 50%;
+  --gy: 50%;
+  position: relative;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+  border-radius: 1rem;
+}
+.tilt-glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 55%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.tilt-glare:hover::after { opacity: 1; }
+
+/* Halo lumineux derrière le mockup du hero */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.04); }
+}
+.mock-glow {
+  position: absolute;
+  inset: 8% -4% -6% -4%;
+  z-index: -1;
+  border-radius: 2rem;
+  background: conic-gradient(from 180deg at 50% 50%, #93b4fd, #c4b5fd, #67e8f9, #93b4fd);
+  filter: blur(40px);
+  animation: glow-pulse 6s ease-in-out infinite;
+}
+
+/* Bouton principal : reflet qui traverse */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+.btn-shine:hover::before { left: 125%; }
+.btn-primary { @apply hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-600/30 active:translate-y-0; transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease; }
+
+/* Cartes : bordure dégradée qui s'allume au survol + élévation */
+.card-glow {
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #3b66f5, #7c3aed, #06b6d4);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.card-glow:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -20px rgba(37, 71, 233, 0.35);
+}
+.card-glow:hover::before { opacity: 1; }
+.card-glow:hover .card-icon { transform: scale(1.12) rotate(-6deg); }
+.card-icon { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* Étapes : ligne de progression qui se dessine */
+@keyframes draw-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.steps-line {
+  position: absolute;
+  top: 20px;
+  left: 2.5rem;
+  right: 2.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, #3b66f5, #7c3aed, #06b6d4);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+[dir="rtl"] .steps-line { transform-origin: right center; }
+.is-in .steps-line { animation: draw-x 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards; }
+@keyframes pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  70% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.is-in .step-dot { animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* Tarif mis en avant : anneau qui respire */
+@keyframes ring-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 102, 245, 0.35); }
+  50% { box-shadow: 0 0 0 14px rgba(59, 102, 245, 0); }
+}
+.ring-breathe { animation: ring-pulse 2.8s ease-out infinite; }
+
+/* Chiffres clés : léger flottement décalé */
+.stat-float { animation: float 7s ease-in-out infinite; }
+.stat-float:nth-child(2) { animation-delay: -1.5s; }
+.stat-float:nth-child(3) { animation-delay: -3s; }
+.stat-float:nth-child(4) { animation-delay: -4.5s; }
+
+/* Sans JavaScript : tout reste visible */
+@media (scripting: none) {
+  .reveal { opacity: 1; transform: none; filter: none; }
+}
+
+/* Accessibilité : on coupe tout si l'utilisateur le demande */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .hero-in, .hero-in-mock, .text-shine, .aurora > span, .mock-glow, .stat-float, .ring-breathe, .animate-float, .step-dot, .steps-line {
+    animation: none !important;
+  }
+  .steps-line { transform: scaleX(1); }
+  .tilt { transform: none !important; }
+}
+
 /* Arabe : police Cairo (chargée dans le layout quand locale = ar) */
 .font-arabic {
   font-family: "Cairo", "Inter", ui-sans-serif, system-ui, sans-serif;
