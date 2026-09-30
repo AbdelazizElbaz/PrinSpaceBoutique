@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
   const { locale: raw } = await params
   const locale = isLocale(raw) ? raw : "fr"
   const t = getDict(locale)
-  return { title: t.footer.privacy, robots: { index: false }, alternates: pageAlternates(locale, "/confidentialite") }
+  return { title: t.footer.privacy, alternates: pageAlternates(locale, "/confidentialite") }
 }
 
 export default async function Page({ params }: LocaleParams) {

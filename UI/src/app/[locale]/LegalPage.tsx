@@ -16,7 +16,7 @@ export function LegalPage({ eyebrow, doc, contactTitle }: { eyebrow: string; doc
           </p>
         )}
         {doc.sections.map((s) => (
-          <section key={s.h}>
+          <section key={s.h} id={s.id} className={s.id ? "scroll-mt-24" : undefined}>
             <h2>{s.h}</h2>
             {s.p?.map((p, i) => (
               <p key={i}>{p}</p>

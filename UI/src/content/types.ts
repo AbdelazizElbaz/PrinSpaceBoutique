@@ -3,7 +3,7 @@ import type { Feature } from "./fr/features"
 import type { FaqGroup } from "./fr/faq"
 import type { Video } from "./fr/videos"
 
-export type LegalSection = { h: string; p?: string[]; ul?: string[] }
+export type LegalSection = { h: string; p?: string[]; ul?: string[]; id?: string } // id : ancre (#suppression…)
 export type LegalDoc = { title: string; updated: string; intro: string; sections: LegalSection[] }
 export type LegalContent = { eyebrow: string; cgv: LegalDoc; privacy: LegalDoc; notice: LegalDoc; contactTitle: string }
 
