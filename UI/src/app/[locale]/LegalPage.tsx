@@ -33,7 +33,11 @@ export function LegalPage({ eyebrow, doc, contactTitle }: { eyebrow: string; doc
         <h2>{contactTitle}</h2>
         <p>
           {c.legalName} — {c.address} — ICE {c.ice} — RC {c.rc} —{" "}
-          <a href={`mailto:${site.contact.email}`} className="underline">{site.contact.email}</a> —{" "}
+          {site.contact.showEmail && (
+            <>
+              <a href={`mailto:${site.contact.email}`} className="underline">{site.contact.email}</a> —{" "}
+            </>
+          )}
           <PhoneLink className="underline" />
         </p>
       </article>

@@ -147,7 +147,13 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
               <p className="mt-2 text-xs text-slate-500">{t.signup.whatsappHint}</p>
             </div>
 
-            {/* Formulaire de secours */}
+            {/* Formulaire de secours — masqué tant que site.contact.showForms = false */}
+            {!site.contact.showForms && (
+              <button className="btn-ghost" onClick={() => setStep(1)}>
+                {t.signup.back}
+              </button>
+            )}
+            {site.contact.showForms && (
             <div className="card">
               <p className="text-sm font-semibold text-slate-700">{t.signup.or}</p>
               <div className="mt-4 grid gap-5 sm:grid-cols-2">
@@ -208,6 +214,7 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
                 </button>
               </div>
             </div>
+            )}
           </div>
 
           <aside className="lg:col-span-2">

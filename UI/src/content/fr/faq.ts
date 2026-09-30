@@ -12,7 +12,7 @@ export const faq: FaqGroup[] = [
     items: [
       {
         q: `Comment démarrer avec ${b} ?`,
-        a: `Cliquez sur « Essai gratuit », choisissez votre forfait et contactez-nous sur WhatsApp (ou laissez vos coordonnées). Un conseiller crée votre espace en quelques minutes et vous envoie vos accès par e-mail et WhatsApp ; vous pouvez commencer à paramétrer immédiatement.`,
+        a: `Cliquez sur « Essai gratuit », choisissez votre forfait et contactez-nous par WhatsApp ou par téléphone. Un conseiller crée votre espace en quelques minutes et vous envoie vos accès par e-mail et WhatsApp ; vous pouvez commencer à paramétrer immédiatement.`,
       },
       {
         q: "L'essai est-il vraiment gratuit ? Faut-il une carte bancaire ?",
@@ -158,7 +158,7 @@ export const faq: FaqGroup[] = [
     items: [
       {
         q: "Comment contacter le support ?",
-        a: `Par e-mail (${site.contact.supportEmail}) sur tous les forfaits, par WhatsApp prioritaire sur Pro, et via votre gestionnaire de compte dédié sur Business. Horaires : ${site.contact.hours}.`,
+        a: `Par téléphone et WhatsApp (${site.contact.phone}) sur tous les forfaits, en priorité sur Pro, et via votre gestionnaire de compte dédié sur Business. Horaires : ${site.contact.hours}.`,
       },
       {
         q: "Proposez-vous une formation ?",

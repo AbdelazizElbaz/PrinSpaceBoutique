@@ -8,7 +8,7 @@ export const faq: FaqGroup[] = [
     id: "demarrage",
     title: "Getting started and trial",
     items: [
-      { q: `How do I get started with ${b}?`, a: `Click "Free trial", pick your plan and contact us on WhatsApp (or leave your details). An advisor creates your workspace in a few minutes and sends you your access by e-mail and WhatsApp; you can start setting up right away.` },
+      { q: `How do I get started with ${b}?`, a: `Click "Free trial", pick your plan and contact us on WhatsApp or by phone. An advisor creates your workspace in a few minutes and sends you your access by e-mail and WhatsApp; you can start setting up right away.` },
       { q: "Is the trial really free? Do I need a credit card?", a: `Yes, ${site.trialDays} days with no commitment and no credit card. At the end of the trial you choose a plan and pay by bank transfer; otherwise the workspace is simply suspended (your data is kept 30 days while you decide).` },
       { q: "How long does it take to be operational?", a: "Half a day for a standard workshop: create your products and options, enter your materials, connect a carrier and import your customers from a CSV file. Our training videos guide you step by step, and the Pro and Business plans include a video-call onboarding session." },
       { q: "Can I import my existing customers and products?", a: "Yes. Customers are imported from a CSV file (name, phone, e-mail, address) with automatic duplicate detection. For products and options you can enter them or send us your catalogue: on the Business plan our team does the import." },
@@ -67,7 +67,7 @@ export const faq: FaqGroup[] = [
     id: "support",
     title: "Support and evolutions",
     items: [
-      { q: "How do I contact support?", a: `By e-mail (${site.contact.supportEmail}) on all plans, by priority WhatsApp on Pro, and through your dedicated account manager on Business. Hours: ${site.contact.hours}.` },
+      { q: "How do I contact support?", a: `By phone and WhatsApp (${site.contact.phone}) on all plans, with priority on Pro, and through your dedicated account manager on Business. Hours: ${site.contact.hours}.` },
       { q: "Do you offer training?", a: "Yes: a complete free video library organised by role (sales, workshop, delivery, management), plus a video-call onboarding session on Pro (1 h) and Business (2 h). On-site training is available on quote." },
       { q: "Can I request a feature?", a: "Of course. The application evolves every month based on requests from the workshops that use it; updates are automatic and without service interruption." },
       { q: "Can we have a dedicated instance?", a: "Yes, as an option on the Business plan: isolated server, own domain and agreed maintenance window, on quote." },

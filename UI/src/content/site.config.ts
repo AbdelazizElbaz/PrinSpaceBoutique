@@ -34,6 +34,11 @@ export const site = {
     phone: "+212 6 00 00 00 00", // À REMPLACER
     whatsapp: "212600000000", // À REMPLACER (format international sans +)
     hours: "Lun–Ven 9h–18h, Sam 9h–13h",
+    // Canaux affichés sur le site. Pour l'instant : téléphone et WhatsApp
+    // uniquement — formulaires et adresses e-mail masqués (passer à true
+    // pour les réafficher, le code est conservé).
+    showEmail: false,
+    showForms: false,
   },
 
   social: {

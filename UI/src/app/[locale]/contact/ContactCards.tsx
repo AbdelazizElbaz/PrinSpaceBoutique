@@ -16,7 +16,7 @@ export function ContactCards({ locale }: { locale: Locale }) {
     { icon: Mail, t: t.contact.email, v: site.contact.salesEmail, href: `mailto:${site.contact.salesEmail}`, ext: false },
     { icon: Phone, t: t.contact.phone, v: site.contact.phone, href: mobile ? tel : whatsappLink(msg), ext: !mobile },
     { icon: MessageCircle, t: t.contact.whatsapp, v: t.contact.writeWhatsapp, href: whatsappLink(msg), ext: true },
-  ]
+  ].filter((c) => site.contact.showEmail || c.icon !== Mail)
   return (
     <div className="space-y-6">
       {cards.map((c) => (

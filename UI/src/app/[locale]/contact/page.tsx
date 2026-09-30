@@ -21,19 +21,29 @@ export default async function ContactPage({ params }: LocaleParams) {
   return (
     <Section>
       <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} lead={t.contact.lead} />
-      <div className="mt-12 grid gap-10 lg:grid-cols-5">
-        <div className="lg:col-span-2">
+      {site.contact.showForms ? (
+        <div className="mt-12 grid gap-10 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <ContactCards locale={locale} />
+            <p className="mt-6 text-sm text-slate-500">
+              {site.contact.hours}. {site.company.legalName}, {site.company.city}.
+            </p>
+          </div>
+          <div className="card lg:col-span-3">
+            <Suspense>
+              <ContactForm locale={locale} />
+            </Suspense>
+          </div>
+        </div>
+      ) : (
+        // Téléphone + WhatsApp uniquement (formulaire masqué).
+        <div className="mx-auto mt-12 max-w-xl">
           <ContactCards locale={locale} />
-          <p className="mt-6 text-sm text-slate-500">
+          <p className="mt-6 text-center text-sm text-slate-500">
             {site.contact.hours}. {site.company.legalName}, {site.company.city}.
           </p>
         </div>
-        <div className="card lg:col-span-3">
-          <Suspense>
-            <ContactForm locale={locale} />
-          </Suspense>
-        </div>
-      </div>
+      )}
     </Section>
   )
 }

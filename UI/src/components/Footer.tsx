@@ -44,11 +44,13 @@ export function Footer({ locale }: { locale: Locale }) {
             {site.tagline}. {t.footer.blurb}
           </p>
           <div className="mt-5 space-y-1 text-sm text-slate-600">
-            <p>
-              <a className="hover:text-ink" href={`mailto:${site.contact.email}`}>
-                {site.contact.email}
-              </a>
-            </p>
+            {site.contact.showEmail && (
+              <p>
+                <a className="hover:text-ink" href={`mailto:${site.contact.email}`}>
+                  {site.contact.email}
+                </a>
+              </p>
+            )}
             <p>
               <PhoneLink className="hover:text-ink" message={t.common.whatsappMsg(site.brand)} />
               {" · "}
