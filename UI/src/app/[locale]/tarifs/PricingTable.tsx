@@ -1,5 +1,6 @@
 "use client"
 
+import { PlanPrice } from "@/components/PlanPrice"
 import Link from "next/link"
 import { Fragment, useState } from "react"
 import { Check } from "lucide-react"
@@ -36,8 +37,7 @@ export function PricingTable({ locale, plans, comparison }: { locale: Locale; pl
               <h3 className="text-xl font-bold text-ink">{p.name}</h3>
               <p className="mt-1 min-h-10 text-sm text-slate-600">{p.audience}</p>
               <p className="mt-5">
-                <span className="text-4xl font-bold text-ink">{money(yearly ? p.yearlyMonthly : p.monthly, locale)}</span>
-                <span className="text-sm text-slate-500"> {t.common.perMonthHT}</span>
+                <PlanPrice plan={p} yearly={yearly} locale={locale} perLabel={t.common.perMonthHT} />
               </p>
               <p className="text-xs text-slate-500">{yearly ? t.pricing.yearlyTotal(money(p.yearlyMonthly * 12, locale)) : t.common.orYearly(money(p.yearlyMonthly, locale))}</p>
               <Link href={p.code === "business" ? `${lp("/contact")}?sujet=business` : `${lp("/inscription")}?plan=${p.code}&billing=${yearly ? "yearly" : "monthly"}`} className={`mt-6 ${p.highlight ? "btn-primary" : "btn-secondary"}`}>
@@ -81,7 +81,7 @@ export function PricingTable({ locale, plans, comparison }: { locale: Locale; pl
                   <th key={p.code} className="px-5 py-4 text-center text-sm font-semibold text-ink">
                     {p.name}
                     <span className="block text-xs font-normal text-slate-500">
-                      {money(yearly ? p.yearlyMonthly : p.monthly, locale)} {t.common.perMonthHT}
+                      <PlanPrice plan={p} yearly={yearly} locale={locale} perLabel={t.common.perMonthHT} size="sm" />
                     </span>
                   </th>
                 ))}

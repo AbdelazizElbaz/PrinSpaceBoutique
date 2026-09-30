@@ -1,5 +1,6 @@
 "use client"
 
+import { PlanPrice } from "@/components/PlanPrice"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
@@ -113,8 +114,8 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
                   <span className="text-lg font-bold text-ink">{p.name}</span>
                   {plan === p.code ? <CheckCircle2 className="h-5 w-5 text-brand-600" /> : <Circle className="h-5 w-5 text-slate-300" />}
                 </div>
-                <p className="mt-2 text-2xl font-bold text-ink">
-                  {money(billing === "yearly" ? p.yearlyMonthly : p.monthly, locale)} <span className="text-xs font-normal text-slate-500">{t.common.perMonthHT}</span>
+                <p className="mt-2">
+                  <PlanPrice plan={p} yearly={billing === "yearly"} locale={locale} perLabel={t.common.perMonthHT} size="md" />
                 </p>
                 <ul className="mt-3 space-y-1 text-xs text-slate-600">
                   {p.limits.slice(0, 3).map((l) => (

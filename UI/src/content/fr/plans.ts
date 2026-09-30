@@ -9,8 +9,13 @@ export type Plan = {
   code: "starter" | "pro" | "business"
   name: string
   audience: string
-  monthly: number // DH HT / mois, facturation mensuelle
+  monthly: number // DH HT / mois, facturation mensuelle (prix payé, promo incluse)
   yearlyMonthly: number // DH HT / mois, facturation annuelle (10 mois payés)
+  // Prix « normal » barré quand une promo est en cours (ex. Starter 400 → 300).
+  listMonthly?: number
+  listYearlyMonthly?: number
+  promoLabel?: string // pastille affichée à côté du prix (ex. « Promo »)
+  pricePrefix?: string // ex. « À partir de » (Business, sur mesure)
   highlight?: boolean
   badge?: string
   description: string
@@ -27,11 +32,14 @@ export const plans: Plan[] = [
     audience: "Ateliers et petites imprimeries qui veulent sortir d'Excel et de WhatsApp.",
     monthly: 300,
     yearlyMonthly: 250,
+    listMonthly: 400,
+    listYearlyMonthly: 333,
+    promoLabel: "Promo de lancement",
     description: "Toute la solution, dimensionnée pour un petit atelier.",
     limits: [
-      { label: "Utilisateurs", value: "2" },
+      { label: "Utilisateurs", value: "4" },
       { label: "Commandes / mois", value: "300" },
-      { label: "Stockage fichiers", value: "5 Go" },
+      { label: "Stockage fichiers", value: "100 Go" },
       { label: "Points de vente", value: "1" },
       { label: "Transporteurs connectés", value: "1" },
     ],
@@ -49,15 +57,15 @@ export const plans: Plan[] = [
     code: "pro",
     name: "Pro",
     audience: "Imprimeries qui livrent tous les jours et veulent maîtriser le contre-remboursement.",
-    monthly: 690,
-    yearlyMonthly: 575,
+    monthly: 590,
+    yearlyMonthly: 492,
     highlight: true,
     badge: "Le plus choisi",
     description: "Pour une activité quotidienne avec livraison et plusieurs postes.",
     limits: [
       { label: "Utilisateurs", value: "Illimités" },
       { label: "Commandes / mois", value: "2 000" },
-      { label: "Stockage fichiers", value: "50 Go" },
+      { label: "Stockage fichiers", value: "250 Go" },
       { label: "Points de vente", value: "3" },
       { label: "Transporteurs connectés", value: "Tous (Ameex, Olivraison, Ozone Express + livreurs internes)" },
     ],
@@ -76,13 +84,14 @@ export const plans: Plan[] = [
     code: "business",
     name: "Business",
     audience: "Réseaux, franchises et imprimeries avec revendeurs externes.",
-    monthly: 1490,
-    yearlyMonthly: 1240,
+    monthly: 1000,
+    yearlyMonthly: 833,
+    pricePrefix: "À partir de",
     description: "Volume illimité, revendeurs externes et accompagnement dédié.",
     limits: [
       { label: "Utilisateurs", value: "Illimités" },
       { label: "Commandes / mois", value: "Illimitées" },
-      { label: "Stockage fichiers", value: "250 Go" },
+      { label: "Stockage fichiers", value: "À définir avec vous" },
       { label: "Points de vente", value: "Illimités" },
       { label: "Transporteurs connectés", value: "Tous" },
     ],
@@ -109,9 +118,9 @@ export const comparison: CompareGroup[] = [
   {
     title: "Capacités",
     rows: [
-      { feature: "Utilisateurs", starter: "2", pro: "Illimités", business: "Illimités" },
+      { feature: "Utilisateurs", starter: "4", pro: "Illimités", business: "Illimités" },
       { feature: "Commandes par mois", starter: "300", pro: "2 000", business: "Illimitées" },
-      { feature: "Stockage des fichiers d'impression", starter: "5 Go", pro: "50 Go", business: "250 Go" },
+      { feature: "Stockage des fichiers d'impression", starter: "100 Go", pro: "250 Go", business: "À définir avec vous" },
       { feature: "Points de vente", starter: "1", pro: "3", business: "Illimités" },
       { feature: "Postes avec PrintiosSync", starter: "1", pro: "Illimités", business: "Illimités" },
     ],

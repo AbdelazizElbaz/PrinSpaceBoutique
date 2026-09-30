@@ -10,8 +10,8 @@ return [
     // Forfaits proposés (miroir de UI/src/content/*/plans.ts)
     'plans' => [
         'starter' => ['name' => 'Starter', 'monthly' => 300, 'yearly' => 250],
-        'pro' => ['name' => 'Pro', 'monthly' => 690, 'yearly' => 575],
-        'business' => ['name' => 'Business', 'monthly' => 1490, 'yearly' => 1240],
+        'pro' => ['name' => 'Pro', 'monthly' => 590, 'yearly' => 492],
+        'business' => ['name' => 'Business', 'monthly' => 1000, 'yearly' => 833],
     ],
 
     // Où envoyer les notifications (leads, nouvelles inscriptions, échecs)

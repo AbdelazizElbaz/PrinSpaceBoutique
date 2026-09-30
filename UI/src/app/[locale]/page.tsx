@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { PlanPrice } from "@/components/PlanPrice"
 import { ArrowRight, Check, MessageCircle } from "lucide-react"
 import { Section, SectionHeading, CtaBand, Badge, FaqList } from "@/components/ui"
 import { Icon } from "@/components/Icon"
@@ -193,8 +194,7 @@ export default async function HomePage({ params }: LocaleParams) {
               <h3 className="text-lg font-semibold text-ink">{p.name}</h3>
               <p className="mt-1 text-sm text-slate-600">{p.description}</p>
               <p className="mt-5">
-                <span className="text-4xl font-bold text-ink">{money(p.monthly, locale)}</span>
-                <span className="text-sm text-slate-500"> {t.common.perMonthHT}</span>
+                <PlanPrice plan={p} locale={locale} perLabel={t.common.perMonthHT} />
               </p>
               <p className="text-xs text-slate-500">{t.common.orYearly(money(p.yearlyMonthly, locale))}</p>
               <ul className="mt-5 space-y-2 text-sm text-slate-700">
