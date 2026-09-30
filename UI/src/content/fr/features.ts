@@ -42,8 +42,10 @@ export const features: Feature[] = [
       "File de production par machine ou par opérateur",
       "Agent Windows, macOS et Linux en mode service",
       "Comptes de service dédiés (jamais un compte utilisateur)",
+      "Mode utilisateur : envoi des fichiers de conception et de montage sur les commandes à expédier, aperçu des fichiers, plusieurs envois en arrière-plan",
+      "Partage entre postes du magasin : un fichier envoyé depuis un PC est copié sur le réseau local au lieu d'être re-téléchargé",
       "Pilotage des postes depuis le web : pause, reprise, réglages",
-      "Historique et erreurs de synchronisation par poste",
+      "Historique et erreurs de synchronisation par poste, mise à jour automatique de l'agent",
     ],
     mockup: "agent",
     color: "bg-violet-600",
@@ -54,12 +56,13 @@ export const features: Feature[] = [
     title: "Livraison multi-transporteurs",
     short: "Ameex, Olivraison, Ozone Express ou vos propres livreurs.",
     description:
-      "Créez un ramassage, imprimez les bons et étiquettes, et laissez les statuts remonter automatiquement automatiquement. Chaque vendeur peut créer les ramassages de ses propres commandes ; on sait toujours qui a créé quoi.",
+      "Créez un ramassage, imprimez les bons et étiquettes, et laissez les statuts remonter automatiquement. Chaque vendeur peut créer les ramassages de ses propres commandes ; on sait toujours qui a créé quoi.",
     bullets: [
       "Bons de livraison et étiquettes PDF régénérables",
       "Statuts transporteur en temps réel",
       "Livreurs internes, tournées et zones de livraison",
       "Suppression bloquée dès que le colis est ramassé",
+      "Filtre par transporteur sur chaque onglet (à ramasser, expédiées, retournées…)",
       "Frais de livraison par zone, livraison offerte",
     ],
     mockup: "delivery",
@@ -125,7 +128,9 @@ export const features: Feature[] = [
     bullets: [
       "Indicateurs temps réel par période",
       "Rôles : admin, opérateur, vendeur interne, revendeur externe, livreur",
-      "Plusieurs points de vente dans un même espace",
+      "Prix d'achat et marges visibles par l'administrateur seulement ; chaque vendeur ne voit que ses chiffres",
+      "Fonctionnalités activables ou non par espace (livraison, matériaux, fidélité, onglets…), jusqu'à l'action",
+      "Plusieurs points de vente dans un même espace, mode sombre",
       "Journal des actions (qui a fait quoi, quand)",
     ],
     mockup: "dashboard",
@@ -141,6 +146,8 @@ export const features: Feature[] = [
     bullets: [
       "Base de données isolée par client",
       "Stockage de fichiers dédié et chiffré",
+      "Votre propre domaine (commandes.votre-marque.ma), votre logo et votre favicon",
+      "Export / import de la configuration (catalogue, machines, matériaux, réglages) en un fichier",
       "Sauvegardes automatiques",
       "Export complet (CSV, fichiers) sur demande",
       "Hébergé sur Amazon Web Services (AWS), connexion sécurisée",
@@ -154,7 +161,7 @@ export const featureBySlug = (slug: string) => features.find((f) => f.slug === s
 
 // Étapes « Comment ça marche » (accueil)
 export const steps = [
-  { n: 1, title: "Demandez votre espace", text: "Choisissez un forfait et écrivez-nous sur WhatsApp. Un conseiller crée votre espace sous un jour ouvré et vous envoie vos accès." },
+  { n: 1, title: "Demandez votre espace", text: "Choisissez un forfait et écrivez-nous sur WhatsApp. Votre espace est créé en quelques minutes et vos accès vous sont envoyés." },
   { n: 2, title: "Paramétrez", text: "Produits, options, matériaux, transporteurs, TVA. Importez vos clients depuis un fichier CSV." },
   { n: 3, title: "Vendez et produisez", text: "Prise de commande, avance, fichiers vers l'atelier, bon de livraison : tout s'enchaîne." },
   { n: 4, title: "Encaissez sans écart", text: "Le COD est rapproché du reste à payer ; le tableau de bord vous dit ce qui reste à récupérer." },
@@ -170,7 +177,7 @@ export const audiences = [
 
 // Chiffres mis en avant (accueil) — à ajuster avec vos vraies statistiques
 export const stats = [
-  { value: "24 h", label: "pour recevoir votre espace" },
+  { value: "Quelques minutes", label: "pour recevoir votre espace" },
   { value: "0 écart", label: "entre COD encaissé et reste à payer" },
   { value: "3", label: "transporteurs connectés + livreurs internes" },
   { value: "24/7", label: "PrintiosSync en mode service" },

@@ -20,7 +20,7 @@ export const features: Feature[] = [
     short: "Ready files arrive on the print workstations by themselves.",
     description:
       "When an order goes into production, its files are marked \"ready\". PrintiosSync installed on each workstation downloads them in the background into the right folder, even when nobody is logged in. No more USB sticks, no more files sent on WhatsApp.",
-    bullets: ["Production queue per machine or operator", "Windows, macOS and Linux agent in service mode", "Dedicated service accounts (never a user account)", "Workstation management from the web: pause, resume, settings", "Sync history and errors per workstation"],
+    bullets: ["Production queue per machine or operator", "Windows, macOS and Linux agent in service mode", "User mode: upload design and print-ready files on orders to ship, preview files, several uploads in the background", "Sharing between shop workstations: a file uploaded from one PC is copied over the LAN instead of re-downloaded", "Dedicated service accounts (never a user account)", "Workstation management from the web: pause, resume, settings", "Sync history and errors per workstation"],
     mockup: "agent",
     color: "bg-violet-600",
   },
@@ -31,7 +31,7 @@ export const features: Feature[] = [
     short: "Ameex, Olivraison, Ozone Express or your own couriers.",
     description:
       "Create a pickup, print notes and labels, and let statuses come back automatically automatically. Each salesperson can create pickups for their own orders; you always know who created what.",
-    bullets: ["Regenerable PDF delivery notes and labels", "Real-time carrier statuses", "In-house couriers, rounds and delivery zones", "Deletion blocked once the parcel is picked up", "Shipping fees per zone, free shipping"],
+    bullets: ["Regenerable PDF delivery notes and labels", "Real-time carrier statuses", "In-house couriers, rounds and delivery zones", "Deletion blocked once the parcel is picked up", "Filter by carrier on every tab (to pick up, shipped, returned…)", "Shipping fees per zone, free shipping"],
     mockup: "delivery",
     color: "bg-amber-500",
   },
@@ -75,7 +75,7 @@ export const features: Feature[] = [
     short: "What sells, what's late, what's still to collect.",
     description:
       "Revenue, orders by status, deliveries in progress, expected collections: one dashboard per point of sale and a consolidated view. Each user sees exactly what concerns them according to their role.",
-    bullets: ["Real-time indicators by period", "Roles: admin, operator, in-house salesperson, external reseller, courier", "Several points of sale in one workspace", "Action log (who did what, when)"],
+    bullets: ["Real-time indicators by period", "Roles: admin, operator, in-house salesperson, external reseller, courier", "Purchase prices and margins visible to the administrator only; each salesperson sees only their own figures", "Features can be enabled per workspace (delivery, materials, loyalty, tabs…), down to the action", "Several points of sale in one workspace", "Action log (who did what, when)"],
     mockup: "dashboard",
     color: "bg-slate-700",
   },
@@ -86,14 +86,14 @@ export const features: Feature[] = [
     short: "A dedicated database and storage for each customer.",
     description:
       "Each customer workspace has its own database and its own encrypted storage space for print files. Your data is never mixed with another customer's, and you can export everything at any time.",
-    bullets: ["Isolated database per customer", "Dedicated, encrypted file storage", "Automatic backups", "Full export (CSV, files) on request", "Hosted on Amazon Web Services (AWS), secure connection"],
+    bullets: ["Isolated database per customer", "Dedicated, encrypted file storage", "Your own domain (orders.your-brand.ma), your logo and favicon", "Export / import your configuration (catalog, machines, materials, settings) as one file", "Automatic backups", "Full export (CSV, files) on request", "Hosted on Amazon Web Services (AWS), secure connection"],
     mockup: "dashboard",
     color: "bg-slate-900",
   },
 ]
 
 export const steps: Step[] = [
-  { n: 1, title: "Request your workspace", text: "Choose a plan and write to us on WhatsApp. An advisor creates your workspace within one working day and sends you your access." },
+  { n: 1, title: "Request your workspace", text: "Choose a plan and write to us on WhatsApp. An advisor creates your workspace in a few minutes and sends you your access." },
   { n: 2, title: "Set up", text: "Products, options, materials, carriers, VAT. Import your customers from a CSV file." },
   { n: 3, title: "Sell and produce", text: "Order entry, deposit, files to the workshop, delivery note: everything flows." },
   { n: 4, title: "Collect without gaps", text: "COD is reconciled with the balance due; the dashboard tells you what remains to be collected." },
@@ -107,7 +107,7 @@ export const audiences: Audience[] = [
 ]
 
 export const stats: Stat[] = [
-  { value: "24 h", label: "to receive your workspace" },
+  { value: "A few minutes", label: "to receive your workspace" },
   { value: "0 gap", label: "between COD collected and balance due" },
   { value: "3", label: "connected carriers + in-house couriers" },
   { value: "24/7", label: "PrintiosSync in service mode" },

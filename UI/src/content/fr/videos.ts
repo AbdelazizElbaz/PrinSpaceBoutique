@@ -32,7 +32,7 @@ export const videos: Video[] = [
     summary: "De la demande d'essai (WhatsApp) à la première connexion avec les accès reçus.",
     script: [
       { screen: "Page Essai gratuit du site", say: "On choisit un forfait et on clique sur le bouton WhatsApp : le message est pré-rempli, il suffit de l'envoyer." },
-      { screen: "E-mail / WhatsApp reçu", say: "Sous un jour ouvré, on reçoit l'adresse de son espace et ses identifiants." },
+      { screen: "E-mail / WhatsApp reçu", say: "En quelques minutes, on reçoit l'adresse de son espace et ses identifiants." },
       { screen: "Redirection vers l'app, page de connexion", say: "On se connecte avec le mot de passe reçu par e-mail, puis on le change dans Mon compte." },
     ],
   },
