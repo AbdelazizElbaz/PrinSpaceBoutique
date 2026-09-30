@@ -31,8 +31,8 @@ export const site = {
     email: "contact@printios.ma", // À REMPLACER
     salesEmail: "commercial@printios.ma", // À REMPLACER
     supportEmail: "support@printios.ma", // À REMPLACER
-    phone: "+212 6 00 00 00 00", // À REMPLACER
-    whatsapp: "212600000000", // À REMPLACER (format international sans +)
+    phone: "+212 661-327865",
+    whatsapp: "212661327865", // format international sans +
     hours: "Lun–Ven 9h–18h, Sam 9h–13h",
     // Canaux affichés sur le site. Pour l'instant : téléphone et WhatsApp
     // uniquement — formulaires et adresses e-mail masqués (passer à true
