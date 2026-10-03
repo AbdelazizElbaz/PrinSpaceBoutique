@@ -1,11 +1,18 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { Inter, Cairo } from "next/font/google"
 import "../globals.css"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { site } from "@/content/site.config"
 import { dir, getDict, htmlLang, isLocale, locales, localePath, ogLocale, type Locale } from "@/i18n"
 import { pageAlternates, siteUrl } from "@/lib/seo"
+
+// Polices auto-hébergées au build (plus de feuille de style externe bloquant le rendu : rsms.me
+// et fonts.googleapis.com coûtaient ~0,8 s et un cache de 4 h). Cairo (arabe) n'est pas
+// préchargée pour le français/l'anglais.
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" })
+const cairo = Cairo({ subsets: ["arabic", "latin"], weight: ["400", "600", "700", "800"], display: "swap", variable: "--font-cairo", preload: false })
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -50,11 +57,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     inLanguage: htmlLang[locale],
   }
   return (
-    <html lang={htmlLang[locale]} dir={dir(locale)}>
+    <html lang={htmlLang[locale]} dir={dir(locale)} className={`${inter.variable} ${cairo.variable} ${inter.className}`}>
       <head>
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-        {locale === "ar" && <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" />}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className={locale === "ar" ? "font-arabic" : undefined}>

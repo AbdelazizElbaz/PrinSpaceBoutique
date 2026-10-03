@@ -39,7 +39,7 @@ export function Header({ locale }: { locale: Locale }) {
           onClick={() => setOpen(false)}
           aria-current={l === locale ? "true" : undefined}
           className={`rounded-full px-2.5 py-1 font-medium transition-colors ${
-            l === locale ? "bg-white text-ink shadow-sm" : "text-slate-500 hover:text-ink"
+            l === locale ? "bg-white text-ink shadow-sm" : "text-slate-700 hover:text-ink"
           }`}
         >
           {l.toUpperCase()}

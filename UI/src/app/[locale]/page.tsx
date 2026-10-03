@@ -30,7 +30,7 @@ export default async function HomePage({ params }: LocaleParams) {
         <div className="container-x grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
           <div>
             <div className="hero-in hero-in-1"><Badge>{t.home.badge}</Badge></div>
-            <h1 className="h1 hero-in hero-in-2 mt-5">
+            <h1 className="h1 mt-5">
               {t.home.h1a} <span className="text-shine">{t.home.h1b}</span>
             </h1>
             <p className="lead hero-in hero-in-3 mt-6">{t.home.lead(site.brand)}</p>
@@ -205,7 +205,7 @@ export default async function HomePage({ params }: LocaleParams) {
                   </li>
                 ))}
               </ul>
-              <Link href={p.code === "business" ? `${lp("/contact")}?sujet=business` : `${lp("/inscription")}?plan=${p.code}`} className={`mt-6 ${p.highlight ? "btn-primary btn-shine" : "btn-secondary"}`}>
+              <Link href={p.code === "business" ? `${lp("/contact")}?sujet=business` : `${lp("/inscription")}?plan=${p.code}`} className={`mt-6 ${p.highlight ? "btn-primary btn-shine" : "btn-secondary"}`} aria-label={`${p.cta} — ${p.name}`}>
                 {p.cta}
               </Link>
             </div>

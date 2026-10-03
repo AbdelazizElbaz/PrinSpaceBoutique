@@ -40,7 +40,7 @@ export function CtaBand({ locale, title, text }: { locale: Locale; title?: strin
           <p className="mt-2 text-brand-100">{text ?? t.common.ctaText(site.trialDays)}</p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Link href={localePath(locale, "/inscription")} className="btn-white">
+          <Link href={localePath(locale, "/inscription")} className="btn-white" aria-label={`${t.common.startTrial} — ${title ?? t.common.ctaTitle}`}>
             {t.common.startTrial}
           </Link>
           <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn border border-white/40 text-white hover:bg-white/10">

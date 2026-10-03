@@ -65,7 +65,7 @@ export function Footer({ locale }: { locale: Locale }) {
         </div>
         {cols.map((c) => (
           <div key={c.title}>
-            <h4 className="text-sm font-semibold text-ink">{c.title}</h4>
+            <h3 className="text-sm font-semibold text-ink">{c.title}</h3>
             <ul className="mt-4 space-y-2.5">
               {c.links.map((l) => (
                 <li key={l.href}>
