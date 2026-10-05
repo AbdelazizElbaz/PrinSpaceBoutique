@@ -9,7 +9,7 @@ export const features: Feature[] = [
     short: "Take an order in 30 seconds, from quote to delivery.",
     description:
       "Create an order with its items, options (format, paper weight, finish), materials and files. Generate a quote, get a mockup approved, collect a deposit: the balance due is calculated by itself, adjustments and shipping included.",
-    bullets: ["Items with options and material units", "PDF quotes and mockups to be approved by the customer", "Deposit, manual adjustment, free shipping", "Production statuses from \"New\" to \"Delivered\"", "Deleted orders trash with full details"],
+    bullets: ["Items with options and material units", "PDF quotes and mockups to be approved by the customer", "Deposit, manual adjustment, free shipping", "Production statuses from \"New\" to \"Delivered\"", "Deleted orders trash with full details", "Negotiated prices per reseller or salesperson: base price, or all-inclusive price with or without specific options", "Private orders: the administrator chooses who can see an order", "Bulk add: several identical items, one design file per item"],
     mockup: "orders",
     color: "bg-blue-600",
   },
@@ -20,9 +20,29 @@ export const features: Feature[] = [
     short: "Ready files arrive on the print workstations by themselves.",
     description:
       "When an order goes into production, its files are marked \"ready\". PrintiosSync installed on each workstation downloads them in the background into the right folder, even when nobody is logged in. No more USB sticks, no more files sent on WhatsApp.",
-    bullets: ["Production queue per machine or operator", "Windows, macOS and Linux agent in service mode", "User mode: upload design and print-ready files on orders to ship, preview files, several uploads in the background", "Sharing between shop workstations: a file uploaded from one PC is copied over the LAN instead of re-downloaded", "Dedicated service accounts (never a user account)", "Workstation management from the web: pause, resume, settings", "Sync history and errors per workstation"],
+    bullets: ["Production queue per machine or operator", "Windows, macOS and Linux agent in service mode", "User mode: upload design and print-ready files on orders to ship, preview files, several uploads in the background", "Sharing between shop workstations: a file uploaded from one PC is copied over the LAN instead of re-downloaded", "Dedicated service accounts (never a user account)", "Workstation management from the web: pause, resume, settings", "Sync history and errors per workstation", "Sync new files only, per workstation"],
     mockup: "agent",
     color: "bg-violet-600",
+  },
+  {
+    slug: "montage",
+    icon: "Layers",
+    title: "Grouped imposition and outsourcing",
+    short: "One sheet for items from several orders, or a direct hand-off to your print supplier.",
+    description:
+      "Items of the same print type are grouped on one sheet: the print run is computed from the quantities, and a large item can be split across several sheets. Once the sheet is full, your team takes it over, uploads the imposition file and sends it to a machine or to an external print supplier.",
+    bullets: [
+      "Automatic print run (greatest common divisor of the quantities), items split across several impositions when needed",
+      "Critical options (lamination, paper…): only compatible items are grouped together",
+      "Automatic or manual closing, a « To process » queue with claiming and assignment",
+      "ZIP of the design files, named your way (cv 1.pdf, cv 2.pdf…)",
+      "Send to a machine or to a print supplier, who receives the file in their own portal",
+      "Public share link for the imposition file, with open and download tracking",
+      "Imposition finished automatically when the supplier prints it or when the order ships",
+      "External resellers follow the impositions that contain their items, without seeing other orders",
+    ],
+    mockup: "workshop",
+    color: "bg-indigo-600",
   },
   {
     slug: "livraison",
@@ -75,7 +95,7 @@ export const features: Feature[] = [
     short: "What sells, what's late, what's still to collect.",
     description:
       "Revenue, orders by status, deliveries in progress, expected collections: one dashboard per point of sale and a consolidated view. Each user sees exactly what concerns them according to their role.",
-    bullets: ["Real-time indicators by period", "Roles: admin, operator, in-house salesperson, external reseller, courier", "Purchase prices and margins visible to the administrator only; each salesperson sees only their own figures", "Features can be enabled per workspace (delivery, materials, loyalty, tabs…), down to the action", "Several points of sale in one workspace", "Action log (who did what, when)"],
+    bullets: ["Real-time indicators by period", "Roles: admin, operator, in-house salesperson, external reseller, courier", "Purchase prices and margins visible to the administrator only; each salesperson sees only their own figures", "Features can be enabled per workspace (delivery, materials, loyalty, tabs…), down to the action", "Several points of sale in one workspace", "Action log (who did what, when)", "Alerts and notifications only for the people concerned by the order"],
     mockup: "dashboard",
     color: "bg-slate-700",
   },
@@ -86,7 +106,7 @@ export const features: Feature[] = [
     short: "A dedicated database and storage for each customer.",
     description:
       "Each customer workspace has its own database and its own encrypted storage space for print files. Your data is never mixed with another customer's, and you can export everything at any time.",
-    bullets: ["Isolated database per customer", "Dedicated, encrypted file storage", "Your own domain (orders.your-brand.ma), your logo and favicon", "Export / import your configuration (catalog, machines, materials, settings) as one file", "Automatic backups", "Full export (CSV, files) on request", "Hosted on Amazon Web Services (AWS), secure connection"],
+    bullets: ["Isolated database per customer", "Dedicated, encrypted file storage", "Your own domain (orders.your-brand.ma), your logo and favicon", "Export / import your configuration (catalog, machines, materials, settings) as one file", "Automatic backups", "All your files kept in your own storage folder (orders, impositions, delivery slips…)", "Full export (CSV, files) on request", "Hosted on Amazon Web Services (AWS), secure connection"],
     mockup: "dashboard",
     color: "bg-slate-900",
   },

@@ -1,6 +1,7 @@
 import {
   Banknote,
   ClipboardList,
+  Layers,
   LayoutDashboard,
   Printer,
   ShieldCheck,
@@ -10,7 +11,7 @@ import {
   type LucideProps,
 } from "lucide-react"
 
-const map = { Banknote, ClipboardList, LayoutDashboard, Printer, ShieldCheck, Store, Truck, Users }
+const map = { Banknote, ClipboardList, Layers, LayoutDashboard, Printer, ShieldCheck, Store, Truck, Users }
 
 export type IconName = keyof typeof map
 

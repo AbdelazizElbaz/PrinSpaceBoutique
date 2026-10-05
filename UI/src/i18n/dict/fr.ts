@@ -107,7 +107,7 @@ export const fr = {
   },
   pricing: {
     metaTitle: "Tarifs : Starter, Pro, Business — essai gratuit 7 jours",
-    metaDesc: (brand: string, d: number) => `Forfaits ${brand} à partir de 300 DH HT/mois. Même application pour tous, limites par volume. Essai gratuit ${d} jours sans carte bancaire.`,
+    metaDesc: (brand: string, d: number) => `Forfaits ${brand} à partir de 290 DH HT/mois. Même application pour tous, limites par volume. Essai gratuit ${d} jours sans carte bancaire.`,
     eyebrow: "Tarifs",
     title: "Toute la solution, à la taille de votre atelier",
     lead: "Les trois forfaits donnent accès à la même application. Ils diffèrent par le volume (utilisateurs, commandes, stockage, points de vente) et l'accompagnement. Prix HT, facturés au Maroc.",

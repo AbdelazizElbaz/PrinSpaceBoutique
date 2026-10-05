@@ -23,7 +23,13 @@ export function PlanPrice({
   const priceCls = size === "lg" ? "text-4xl" : size === "md" ? "text-2xl" : "text-sm"
   return (
     <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      {p.pricePrefix && <span className="text-sm font-medium text-slate-500">{p.pricePrefix}</span>}
+      {/* « À partir de » (Business, sur mesure) : sur sa propre ligne, en gras et en couleur, pour qu'on ne lise
+          jamais le prix comme un prix fixe. */}
+      {p.pricePrefix && (
+        <span className={size === "sm" ? "basis-full text-xs font-semibold text-brand-700" : "basis-full text-sm font-bold uppercase tracking-wider text-brand-700"}>
+          {p.pricePrefix}
+        </span>
+      )}
       {list && list > price && (
         <span className={`${size === "sm" ? "text-xs" : "text-lg"} font-semibold text-slate-400 line-through`}>{money(list, locale)}</span>
       )}

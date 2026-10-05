@@ -77,6 +77,7 @@ export const plans: Plan[] = [
       "Video-call onboarding (2 h) + data import",
       "Daily backups kept 30 days",
       "Dedicated account manager",
+      "Negotiated prices per reseller, with or without options",
     ],
     extras: ["Option: dedicated instance (isolated server) on quote"],
     cta: "Talk to an advisor",
@@ -104,6 +105,8 @@ export const comparison: CompareGroup[] = [
       { feature: "Loyalty programme (points earned on delivery)", starter: false, pro: true, business: true },
       { feature: "Public online store", starter: false, pro: true, business: true },
       { feature: "External resellers", starter: false, pro: false, business: true },
+      { feature: "Negotiated prices per reseller or salesperson, with options (all-inclusive)", starter: false, pro: true, business: true },
+      { feature: "Private orders (visibility chosen by the administrator)", starter: true, pro: true, business: true },
     ],
   },
   {
@@ -124,6 +127,9 @@ export const comparison: CompareGroup[] = [
       { feature: "Windows / macOS / Linux PrintiosSync", starter: true, pro: true, business: true },
       { feature: "Service mode (runs with session closed)", starter: false, pro: true, business: true },
       { feature: "Workstation management from the web", starter: true, pro: true, business: true },
+      { feature: "Grouped impositions (multi-order sheet, automatic print run)", starter: true, pro: true, business: true },
+      { feature: "Outsourcing: print suppliers with their own portal", starter: true, pro: true, business: true },
+      { feature: "Share link for the imposition file, with tracking", starter: true, pro: true, business: true },
     ],
   },
   {

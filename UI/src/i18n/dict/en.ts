@@ -106,7 +106,7 @@ export const en: Dict = {
   },
   pricing: {
     metaTitle: "Pricing: Starter, Pro, Business — 7-day free trial",
-    metaDesc: (brand, d) => `${brand} plans from 300 MAD excl. VAT/month. Same application for everyone, limits by volume. ${d}-day free trial, no credit card.`,
+    metaDesc: (brand, d) => `${brand} plans from 290 MAD excl. VAT/month. Same application for everyone, limits by volume. ${d}-day free trial, no credit card.`,
     eyebrow: "Pricing",
     title: "The whole solution, sized for your workshop",
     lead: "All three plans give access to the same application. They differ by volume (users, orders, storage, points of sale) and support. Prices excl. VAT, invoiced in Morocco.",

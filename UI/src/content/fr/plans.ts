@@ -102,6 +102,7 @@ export const plans: Plan[] = [
       "Formation d'onboarding en visio (2 h) + import de vos données",
       "Sauvegardes quotidiennes conservées 30 jours",
       "Gestionnaire de compte dédié",
+      "Prix négociés par revendeur, avec ou sans options",
     ],
     extras: ["Option : instance dédiée (serveur isolé) sur devis"],
     cta: "Parler à un conseiller",
@@ -135,6 +136,8 @@ export const comparison: CompareGroup[] = [
       { feature: "Programme de fidélité (points gagnés à la livraison)", starter: false, pro: true, business: true },
       { feature: "Boutique en ligne publique", starter: false, pro: true, business: true },
       { feature: "Revendeurs externes", starter: false, pro: false, business: true },
+      { feature: "Prix négociés par revendeur ou vendeur, avec options (tout compris)", starter: false, pro: true, business: true },
+      { feature: "Commandes privées (visibilité choisie par l'administrateur)", starter: true, pro: true, business: true },
     ],
   },
   {
@@ -155,6 +158,9 @@ export const comparison: CompareGroup[] = [
       { feature: "PrintiosSync Windows / macOS / Linux", starter: true, pro: true, business: true },
       { feature: "Mode service (tourne session fermée)", starter: false, pro: true, business: true },
       { feature: "Pilotage des postes depuis le web", starter: true, pro: true, business: true },
+      { feature: "Montages groupés (planche multi-commandes, tirage automatique)", starter: true, pro: true, business: true },
+      { feature: "Sous-traitance : fournisseurs d'impression avec portail dédié", starter: true, pro: true, business: true },
+      { feature: "Lien de partage du fichier de montage avec suivi", starter: true, pro: true, business: true },
     ],
   },
   {

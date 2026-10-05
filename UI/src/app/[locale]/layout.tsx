@@ -51,7 +51,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     name: site.brand,
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web, Windows, macOS, Linux",
-    offers: { "@type": "Offer", price: "300", priceCurrency: "MAD" },
+    offers: { "@type": "Offer", price: "290", priceCurrency: "MAD" },
     description: `${site.tagline}. ${t.meta.ogTitle}`,
     url: `${siteUrl}${localePath(locale, "/")}`,
     inLanguage: htmlLang[locale],

@@ -55,7 +55,7 @@ export const plans: Plan[] = [
       { label: "نقاط البيع", value: "غير محدودة" },
       { label: "الناقلون المرتبطون", value: "الكل" },
     ],
-    includes: ["كل ما في Pro، بالإضافة إلى:", "موزّعون خارجيون بفضاء وكتالوج مخصصين", "نطاق مخصص (commandes.votre-marque.ma)", "جلسة انطلاق عبر الفيديو (ساعتان) + استيراد بياناتك", "نسخ احتياطية يومية محفوظة 30 يوماً", "مدير حساب مخصص"],
+    includes: ["كل ما في Pro، بالإضافة إلى:", "موزّعون خارجيون بفضاء وكتالوج مخصصين", "نطاق مخصص (commandes.votre-marque.ma)", "جلسة انطلاق عبر الفيديو (ساعتان) + استيراد بياناتك", "نسخ احتياطية يومية محفوظة 30 يوماً", "مدير حساب مخصص", "أسعار تفاوضية لكل موزّع، مع الخيارات أو بدونها"],
     extras: ["خيار: نسخة مخصصة (خادم معزول) حسب عرض ثمن"],
     cta: "التحدث مع مستشار",
   },
@@ -82,6 +82,8 @@ export const comparison: CompareGroup[] = [
       { feature: "برنامج الولاء (نقاط عند التوصيل)", starter: false, pro: true, business: true },
       { feature: "متجر إلكتروني عمومي", starter: false, pro: true, business: true },
       { feature: "موزّعون خارجيون", starter: false, pro: false, business: true },
+      { feature: "أسعار تفاوضية لكل موزّع أو بائع، مع الخيارات (سعر شامل)", starter: false, pro: true, business: true },
+      { feature: "طلبيات خاصة (المدير يختار من يراها)", starter: true, pro: true, business: true },
     ],
   },
   {
@@ -102,6 +104,9 @@ export const comparison: CompareGroup[] = [
       { feature: "وكيل طباعة Windows / macOS / Linux", starter: true, pro: true, business: true },
       { feature: "وضع الخدمة (يعمل والجلسة مغلقة)", starter: false, pro: true, business: true },
       { feature: "التحكم في الأجهزة من الويب", starter: true, pro: true, business: true },
+      { feature: "تركيبات مجمّعة (لوحة لعدة طلبيات، سحب تلقائي)", starter: true, pro: true, business: true },
+      { feature: "المناولة: مورّدو طباعة ببوابة خاصة", starter: true, pro: true, business: true },
+      { feature: "رابط مشاركة لملف التركيب مع تتبّع", starter: true, pro: true, business: true },
     ],
   },
   {
