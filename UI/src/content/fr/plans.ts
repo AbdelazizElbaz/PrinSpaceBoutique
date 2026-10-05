@@ -11,7 +11,7 @@ export type Plan = {
   audience: string
   monthly: number // DH HT / mois, facturation mensuelle (prix payé, promo incluse)
   yearlyMonthly: number // DH HT / mois, facturation annuelle (10 mois payés)
-  // Prix « normal » barré quand une promo est en cours (ex. Starter 400 → 300).
+  // Prix « normal » barré quand une promo est en cours (ex. Starter 400 → 290).
   listMonthly?: number
   listYearlyMonthly?: number
   promoLabel?: string // pastille affichée à côté du prix (ex. « Promo »)
@@ -30,8 +30,8 @@ export const plans: Plan[] = [
     code: "starter",
     name: "Starter",
     audience: "Ateliers et petites imprimeries qui veulent sortir d'Excel et de WhatsApp.",
-    monthly: 300,
-    yearlyMonthly: 250,
+    monthly: 290,
+    yearlyMonthly: 242,
     listMonthly: 400,
     listYearlyMonthly: 333,
     promoLabel: "Promo de lancement",
@@ -84,8 +84,8 @@ export const plans: Plan[] = [
     code: "business",
     name: "Business",
     audience: "Réseaux, franchises et imprimeries avec revendeurs externes.",
-    monthly: 1000,
-    yearlyMonthly: 833,
+    monthly: 990,
+    yearlyMonthly: 825,
     pricePrefix: "À partir de",
     description: "Volume illimité, revendeurs externes et accompagnement dédié.",
     limits: [
