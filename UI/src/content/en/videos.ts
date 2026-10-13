@@ -73,6 +73,7 @@ export const videos: Video[] = [
   { id: "livreurs-internes", track: "livrer", title: "In-house couriers and rounds", duration: "4 min", youtubeId: "", summary: "Create your couriers, assign orders, record the collection.", script: [
     { screen: "Delivery → In-house couriers", say: "Courier accounts with a dedicated role; zones and fees." },
     { screen: "Assignment and round", say: "Assign the day's orders; the courier marks delivered and enters the amount collected." },
+    { screen: "Courier log", say: "Every action is recorded with the time, the courier and their message; you find it in the order history and on the tracking page." },
   ] },
   { id: "tableau-de-bord", track: "gerer", title: "Read the dashboard", duration: "4 min", youtubeId: "", summary: "Revenue, orders by status, deliveries in progress, expected collections.", script: [
     { screen: "Dashboard", say: "Indicators by period and by point of sale; what is \"awaiting delivery\" and what remains to be collected." },

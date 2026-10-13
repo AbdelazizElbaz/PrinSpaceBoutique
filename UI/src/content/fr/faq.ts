@@ -79,6 +79,10 @@ export const faq: FaqGroup[] = [
         a: "Ameex, Olivraison et Ozone Express sont intégrés nativement (création du colis, bon de livraison, étiquettes, suivi des statuts automatiquement). Vous pouvez aussi gérer vos propres livreurs avec des tournées et des zones. D'autres transporteurs sont ajoutés régulièrement ; dites-nous lequel vous utilisez.",
       },
       {
+        q: "Peut-on suivre ce que font les livreurs ?",
+        a: "Oui. Chaque action d'un livreur (colis récupéré, livré, échec, nouvelle tentative) est enregistrée avec la date, l'heure, le livreur, son message et le montant encaissé. Elle apparaît dans l'historique de la commande, et le nom du livreur s'affiche sur la page de suivi. Quand le bureau force un statut, on garde aussi la trace de qui l'a fait.",
+      },
+      {
         q: "Comment fonctionne le rapprochement COD ?",
         a: "Chaque commande a un « reste à payer » = prix (avec ajustements et livraison) – avance encaissée. À la livraison, le montant collecté par le transporteur est enregistré sur la commande. Si COD encaissé – reste à payer n'est pas égal à zéro, un badge d'écart apparaît dans la liste des commandes et dans l'export CSV, pour que vous le régliez avec le transporteur.",
       },

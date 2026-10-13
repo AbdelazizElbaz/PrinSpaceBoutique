@@ -85,6 +85,7 @@ export const features: Feature[] = [
       "Bons de livraison et étiquettes PDF régénérables",
       "Statuts transporteur en temps réel",
       "Livreurs internes, tournées et zones de livraison",
+      "Journal des livreurs : récupéré, livré, échec, nouvelle tentative — chaque action est horodatée avec le livreur, son message et l'encaissement",
       "Suppression bloquée dès que le colis est ramassé",
       "Filtre par transporteur sur chaque onglet (à ramasser, expédiées, retournées…)",
       "Frais de livraison par zone, livraison offerte",

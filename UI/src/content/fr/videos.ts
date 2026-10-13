@@ -188,6 +188,7 @@ export const videos: Video[] = [
     script: [
       { screen: "Livraison → Livreurs internes", say: "Comptes livreurs avec rôle dédié ; zones et frais." },
       { screen: "Affectation et tournée", say: "On affecte les commandes du jour ; le livreur marque livré et saisit le montant encaissé." },
+      { screen: "Journal des livreurs", say: "Chaque action est enregistrée avec l'heure, le livreur et son message ; on la retrouve dans l'historique de la commande et la page de suivi." },
     ],
   },
   {
