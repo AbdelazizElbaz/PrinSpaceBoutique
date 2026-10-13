@@ -35,8 +35,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: `${t.meta.ogTitle} ${t.meta.trial(site.trialDays)}`,
     },
     alternates: pageAlternates(locale, "/"),
-    robots: { index: true, follow: true },
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
     icons: { icon: "/favicon.svg" },
+    // Ciblage géographique Maroc (balises geo, lues par certains moteurs et annuaires).
+    other: { "geo.region": "MA", "geo.placename": site.company.city, "geo.country": "Maroc" },
   }
 }
 
@@ -45,17 +47,43 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   if (!isLocale(raw)) notFound()
   const locale = raw
   const t = getDict(locale)
-  const jsonLd = {
-    "@context": "https://schema.org",
+  // Données structurées (schema.org) : l'organisation basée à Casablanca (Maroc) — nom, téléphone,
+  // réseaux, zone desservie — le site et l'application. Google s'en sert pour le panneau de marque et
+  // le ciblage local « Maroc ».
+  const organization = {
+    "@type": "Organization",
+    "@id": `${siteUrl}/#organization`,
+    name: site.brand,
+    legalName: site.company.legalName,
+    url: siteUrl,
+    logo: `${siteUrl}/opengraph-image`, // PNG 1200x630 généré (Google n'indexe pas les logos SVG)
+    telephone: site.contact.phone,
+    address: { "@type": "PostalAddress", addressLocality: site.company.city, addressCountry: "MA" },
+    areaServed: { "@type": "Country", name: "Morocco" },
+    contactPoint: [{ "@type": "ContactPoint", telephone: site.contact.phone, contactType: "sales", areaServed: "MA", availableLanguage: ["fr", "ar", "en"] }],
+    // sameAs (réseaux sociaux) : à activer quand les vraies adresses seront dans site.config (encore « À REMPLACER »).
+  }
+  const website = {
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
+    url: siteUrl,
+    name: site.brand,
+    publisher: { "@id": `${siteUrl}/#organization` },
+    inLanguage: ["fr-MA", "ar-MA", "en"],
+  }
+  const application = {
     "@type": "SoftwareApplication",
     name: site.brand,
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web, Windows, macOS, Linux",
-    offers: { "@type": "Offer", price: "290", priceCurrency: "MAD" },
+    offers: { "@type": "Offer", price: "290", priceCurrency: "MAD", availability: "https://schema.org/InStock", areaServed: "MA" },
     description: `${site.tagline}. ${t.meta.ogTitle}`,
     url: `${siteUrl}${localePath(locale, "/")}`,
     inLanguage: htmlLang[locale],
+    publisher: { "@id": `${siteUrl}/#organization` },
+    areaServed: { "@type": "Country", name: "Morocco" },
   }
+  const jsonLd = { "@context": "https://schema.org", "@graph": [organization, website, application] }
   return (
     <html lang={htmlLang[locale]} dir={dir(locale)} className={`${inter.variable} ${cairo.variable} ${inter.className}`}>
       <head>

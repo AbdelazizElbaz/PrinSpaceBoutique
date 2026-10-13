@@ -10,10 +10,13 @@ const isTechnicalHost = (u?: string) => !!u && /amazonlightsail\.com|localhost|1
 export const siteUrl =
   envSiteUrl && !(process.env.NODE_ENV === "production" && isTechnicalHost(envSiteUrl)) ? envSiteUrl : site.url
 
+/** Codes hreflang d'une langue : générique + variante régionale Maroc (ciblage géographique Google). */
+export const hreflangCodes = (l: Locale): string[] => (l === "fr" ? ["fr", "fr-MA"] : l === "ar" ? ["ar", "ar-MA"] : ["en"])
+
 /** Canonical + hreflang pour une page (chemin sans préfixe de langue). */
 export const pageAlternates = (locale: Locale, path: string): NonNullable<Metadata["alternates"]> => {
   const languages: Record<string, string> = {}
-  for (const l of locales) languages[l] = `${siteUrl}${localePath(l, path)}`
+  for (const l of locales) for (const code of hreflangCodes(l)) languages[code] = `${siteUrl}${localePath(l, path)}`
   languages["x-default"] = `${siteUrl}${localePath("fr", path)}`
   return { canonical: `${siteUrl}${localePath(locale, path)}`, languages }
 }

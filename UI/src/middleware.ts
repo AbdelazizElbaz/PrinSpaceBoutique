@@ -1,10 +1,22 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { defaultLocale, locales } from "@/i18n/config"
+import { site } from "@/content/site.config"
 
 // /ar/... et /en/... passent tels quels ; tout le reste est réécrit vers /fr/...
 // (URL publique inchangée). /fr/... explicite est redirigé vers l'URL sans préfixe.
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
+
+  // www.<domaine> → <domaine> (308) : une seule version du site pour Google, pas de contenu dupliqué.
+  // Derrière le Worker Cloudflare, l'hôte public arrive dans X-Forwarded-Host.
+  const publicHost = (req.headers.get("x-forwarded-host") ?? req.nextUrl.hostname).toLowerCase()
+  if (publicHost === `www.${site.domain}`) {
+    const url = req.nextUrl.clone()
+    url.protocol = "https:"
+    url.host = site.domain
+    url.port = ""
+    return NextResponse.redirect(url, 308)
+  }
 
   if (pathname === `/${defaultLocale}` || pathname.startsWith(`/${defaultLocale}/`)) {
     const url = req.nextUrl.clone()

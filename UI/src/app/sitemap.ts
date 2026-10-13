@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 import { locales, localePath } from "@/i18n/config"
-import { siteUrl } from "@/lib/seo"
+import { hreflangCodes, siteUrl } from "@/lib/seo"
 
 const pages = ["", "/fonctionnalites", "/agent", "/tarifs", "/faq", "/formation", "/contact", "/inscription"]
 
@@ -9,7 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const out: MetadataRoute.Sitemap = []
   for (const p of pages) {
     const languages: Record<string, string> = {}
-    for (const l of locales) languages[l] = `${siteUrl}${localePath(l, p || "/")}`
+    for (const l of locales) for (const code of hreflangCodes(l)) languages[code] = `${siteUrl}${localePath(l, p || "/")}`
+    languages["x-default"] = `${siteUrl}${localePath("fr", p || "/")}`
     for (const l of locales) {
       out.push({
         url: `${siteUrl}${localePath(l, p || "/")}`,

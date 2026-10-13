@@ -2,8 +2,8 @@ import type { Dict } from "./fr"
 
 export const en: Dict = {
   meta: {
-    title: "Management software for print shops: orders, workshop, delivery, COD",
-    description: "manage orders, quotes, print workshop, multi-carrier delivery and cash on delivery in a single tool.",
+    title: "Print shop management software in Morocco: orders, workshop, delivery, COD",
+    description: "manage orders, quotes, print workshop, multi-carrier delivery and cash on delivery in a single tool built for print shops in Morocco.",
     ogTitle: "Orders, workshop, delivery and COD collection for print shops.",
     trial: (d) => `${d}-day free trial.`,
   },

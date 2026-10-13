@@ -3,8 +3,8 @@
 
 export const fr = {
   meta: {
-    title: "Logiciel de gestion pour imprimeries : commandes, atelier, livraison, COD",
-    description: "gérez commandes, devis, atelier d'impression, livraison multi-transporteurs et contre-remboursement dans un seul outil.",
+    title: "Logiciel de gestion pour imprimeries au Maroc : commandes, atelier, livraison, COD",
+    description: "gérez commandes, devis, atelier d'impression, livraison multi-transporteurs et contre-remboursement dans un seul outil pensé pour les imprimeries au Maroc.",
     ogTitle: "Commandes, atelier, livraison et encaissement COD pour les imprimeries.",
     trial: (d: number) => `Essai gratuit ${d} jours.`,
   },
