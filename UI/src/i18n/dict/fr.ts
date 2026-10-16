@@ -9,6 +9,7 @@ export const fr = {
     trial: (d: number) => `Essai gratuit ${d} jours.`,
   },
   nav: {
+    demo: "Essayer la démo",
     features: "Fonctionnalités",
     agent: "PrintiosSync",
     pricing: "Tarifs",
@@ -55,6 +56,8 @@ export const fr = {
     home: "Accueil",
   },
   home: {
+    demoCta: "Essayer la démo en ligne",
+    demoNote: "Démo partagée avec données fictives, sans inscription : n'y saisissez aucune donnée réelle, l'espace est remis à zéro régulièrement.",
     badge: "Pensé pour les imprimeries du Maroc",
     h1a: "Commandes, atelier, livraison et encaissement.",
     h1b: "Un seul outil.",

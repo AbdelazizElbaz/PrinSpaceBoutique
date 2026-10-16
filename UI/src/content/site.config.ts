@@ -55,6 +55,11 @@ export const site = {
     rib: "000 000 0000000000000000 00", // À REMPLACER
   },
 
+  // Démo en ligne partagée (tenant de démonstration de la plateforme, données fictives remises à zéro) :
+  // lien public généré par la console plateforme (fiche du tenant → « Démo publique partagée »). Un visiteur
+  // qui clique reçoit sa propre session, limitée dans le temps, sur le compte admin de démonstration.
+  demoUrl: process.env.NEXT_PUBLIC_DEMO_URL || "https://printiosapi.fh2kq4t074d8m.eu-west-3.cs.amazonlightsail.com/api/t/sendbox01/demo",
+
   trialDays: 7,
   currency: "DH",
   vatRate: 0.2,

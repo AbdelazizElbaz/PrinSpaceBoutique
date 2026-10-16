@@ -41,7 +41,11 @@ export default async function HomePage({ params }: LocaleParams) {
               <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn-secondary">
                 <MessageCircle className="h-4 w-4 text-[#25D366]" /> {t.common.whatsapp}
               </a>
+              <a href={site.demoUrl} target="_blank" rel="noreferrer" className="btn-secondary">
+                {t.home.demoCta} <Arrow className={arrowCls} />
+              </a>
             </div>
+            <p className="hero-in hero-in-4 mt-3 text-xs text-slate-500">{t.home.demoNote}</p>
             <ul className="hero-in hero-in-5 mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">
               {t.home.bullets(money(c.plans[0].monthly, locale)).map((b) => (
                 <li key={b} className="flex items-center gap-2">

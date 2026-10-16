@@ -8,6 +8,7 @@ export const en: Dict = {
     trial: (d) => `${d}-day free trial.`,
   },
   nav: {
+    demo: "Try the demo",
     features: "Features",
     agent: "PrintiosSync",
     pricing: "Pricing",
@@ -54,6 +55,8 @@ export const en: Dict = {
     home: "Home",
   },
   home: {
+    demoCta: "Try the online demo",
+    demoNote: "Shared demo with sample data, no sign-up: do not enter real data, the workspace is reset regularly.",
     badge: "Built for print shops in Morocco",
     h1a: "Orders, workshop, delivery and collection.",
     h1b: "One single tool.",
