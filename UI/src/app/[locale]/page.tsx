@@ -41,7 +41,7 @@ export default async function HomePage({ params }: LocaleParams) {
               <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn-secondary">
                 <MessageCircle className="h-4 w-4 text-[#25D366]" /> {t.common.whatsapp}
               </a>
-              <a href={site.demoUrl} target="_blank" rel="noreferrer" className="btn-secondary">
+              <a href={site.demoUrl} target="_blank" rel="noreferrer" className="btn-demo btn-shine">
                 {t.home.demoCta} <Arrow className={arrowCls} />
               </a>
             </div>
