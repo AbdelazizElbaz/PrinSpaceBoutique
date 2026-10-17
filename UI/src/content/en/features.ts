@@ -48,7 +48,7 @@ export const features: Feature[] = [
     slug: "livraison",
     icon: "Truck",
     title: "Multi-carrier delivery",
-    short: "Ameex, Olivraison, Ozone Express or your own couriers.",
+    short: "Ameex, Olivraison, Ozone Express, Sendit or your own couriers.",
     description:
       "Create a pickup, print notes and labels, and let statuses come back automatically automatically. Each salesperson can create pickups for their own orders; you always know who created what.",
     bullets: ["Regenerable PDF delivery notes and labels", "Real-time carrier statuses", "In-house couriers, rounds and delivery zones", "Courier log: picked up, delivered, failed, new attempt — every action is time-stamped with the courier, their message and the amount collected", "Deletion blocked once the parcel is picked up", "Filter by carrier on every tab (to pick up, shipped, returned…)", "Shipping fees per zone, free shipping"],
@@ -129,7 +129,7 @@ export const audiences: Audience[] = [
 export const stats: Stat[] = [
   { value: "A few minutes", label: "to receive your workspace" },
   { value: "0 gap", label: "between COD collected and balance due" },
-  { value: "3", label: "connected carriers + in-house couriers" },
+  { value: "4", label: "connected carriers + in-house couriers" },
   { value: "24/7", label: "PrintiosSync in service mode" },
 ]
 

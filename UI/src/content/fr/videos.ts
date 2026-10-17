@@ -65,7 +65,7 @@ export const videos: Video[] = [
   {
     id: "transporteurs",
     track: "demarrer",
-    title: "Connecter un transporteur (Ameex, Olivraison, Ozone Express)",
+    title: "Connecter un transporteur (Ameex, Olivraison, Ozone Express, Sendit)",
     duration: "5 min",
     youtubeId: "",
     summary: "Saisir les identifiants du transporteur, définir les frais par zone et tester la création d'un colis.",

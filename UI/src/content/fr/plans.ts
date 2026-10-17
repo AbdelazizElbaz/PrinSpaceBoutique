@@ -67,7 +67,7 @@ export const plans: Plan[] = [
       { label: "Commandes / mois", value: "2 000" },
       { label: "Stockage fichiers", value: "250 Go" },
       { label: "Points de vente", value: "3" },
-      { label: "Transporteurs connectés", value: "Tous (Ameex, Olivraison, Ozone Express + livreurs internes)" },
+      { label: "Transporteurs connectés", value: "Tous (Ameex, Olivraison, Ozone Express, Sendit + livreurs internes)" },
     ],
     includes: [
       "Tout Starter, plus :",
@@ -144,7 +144,7 @@ export const comparison: CompareGroup[] = [
     title: "Livraison et encaissement",
     rows: [
       { feature: "Bons de livraison et étiquettes PDF", starter: true, pro: true, business: true },
-      { feature: "Transporteurs (Ameex, Olivraison, Ozone Express)", starter: "1 au choix", pro: "Tous", business: "Tous" },
+      { feature: "Transporteurs (Ameex, Olivraison, Ozone Express, Sendit)", starter: "1 au choix", pro: "Tous", business: "Tous" },
       { feature: "Livreurs internes et tournées", starter: true, pro: true, business: true },
       { feature: "Suivi automatique des statuts", starter: true, pro: true, business: true },
       { feature: "Rapprochement COD avec alerte d'écart", starter: false, pro: true, business: true },

@@ -42,7 +42,7 @@ export const plans: Plan[] = [
       { label: "Orders / month", value: "2,000" },
       { label: "File storage", value: "250 GB" },
       { label: "Points of sale", value: "3" },
-      { label: "Connected carriers", value: "All (Ameex, Olivraison, Ozone Express + in-house couriers)" },
+      { label: "Connected carriers", value: "All (Ameex, Olivraison, Ozone Express, Sendit + in-house couriers)" },
     ],
     includes: [
       "Everything in Starter, plus:",
@@ -113,7 +113,7 @@ export const comparison: CompareGroup[] = [
     title: "Delivery and collection",
     rows: [
       { feature: "PDF delivery notes and labels", starter: true, pro: true, business: true },
-      { feature: "Carriers (Ameex, Olivraison, Ozone Express)", starter: "1 of your choice", pro: "All", business: "All" },
+      { feature: "Carriers (Ameex, Olivraison, Ozone Express, Sendit)", starter: "1 of your choice", pro: "All", business: "All" },
       { feature: "In-house couriers and rounds", starter: true, pro: true, business: true },
       { feature: "Automatic status tracking", starter: true, pro: true, business: true },
       { feature: "COD reconciliation with gap alert", starter: false, pro: true, business: true },

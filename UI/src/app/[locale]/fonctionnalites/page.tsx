@@ -4,6 +4,7 @@ import { Check } from "lucide-react"
 import { Section, SectionHeading, CtaBand } from "@/components/ui"
 import { Icon } from "@/components/Icon"
 import { Mockup } from "@/components/mockups/Mockup"
+import { CarriersRow } from "@/components/CarriersBand"
 import { getContent } from "@/content"
 import { getDict, isLocale, localePath } from "@/i18n"
 import { pageAlternates, type LocaleParams } from "@/lib/seo"
@@ -48,6 +49,7 @@ export default async function FeaturesPage({ params }: LocaleParams) {
                   </li>
                 ))}
               </ul>
+              {f.slug === "livraison" && <CarriersRow locale={locale} />}
               {f.slug === "atelier" && (
                 <Link href={localePath(locale, "/agent")} className="btn-secondary mt-6">
                   {t.features.agentLink}

@@ -35,7 +35,7 @@ export const plans: Plan[] = [
       { label: "الطلبيات / شهرياً", value: "2 000" },
       { label: "تخزين الملفات", value: "250 GB" },
       { label: "نقاط البيع", value: "3" },
-      { label: "الناقلون المرتبطون", value: "الكل (Ameex، Olivraison، Ozone Express + موزّعون داخليون)" },
+      { label: "الناقلون المرتبطون", value: "الكل (Ameex، Olivraison، Ozone Express، Sendit + موزّعون داخليون)" },
     ],
     includes: ["كل ما في Starter، بالإضافة إلى:", "مطابقة تلقائية للدفع عند الاستلام مع تنبيه بالفرق", "برنامج الولاء وأكواد الخصم", "متجر إلكتروني عمومي متزامن", "PrintiosSync على أجهزة غير محدودة (وضع الخدمة)", "تصدير CSV محاسبي", "دعم ذو أولوية بالهاتف + واتساب"],
     cta: "ابدأ التجربة المجانية",
@@ -90,7 +90,7 @@ export const comparison: CompareGroup[] = [
     title: "التوصيل والتحصيل",
     rows: [
       { feature: "وصولات توصيل وملصقات PDF", starter: true, pro: true, business: true },
-      { feature: "الناقلون (Ameex، Olivraison، Ozone Express)", starter: "واحد حسب الاختيار", pro: "الكل", business: "الكل" },
+      { feature: "الناقلون (Ameex، Olivraison، Ozone Express، Sendit)", starter: "واحد حسب الاختيار", pro: "الكل", business: "الكل" },
       { feature: "موزّعون داخليون وجولات", starter: true, pro: true, business: true },
       { feature: "تتبع تلقائي للحالات", starter: true, pro: true, business: true },
       { feature: "مطابقة الدفع عند الاستلام مع تنبيه بالفرق", starter: false, pro: true, business: true },

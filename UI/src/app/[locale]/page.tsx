@@ -4,6 +4,7 @@ import { ArrowRight, Check, MessageCircle } from "lucide-react"
 import { Section, SectionHeading, CtaBand, Badge, FaqList } from "@/components/ui"
 import { Icon } from "@/components/Icon"
 import { Mockup } from "@/components/mockups/Mockup"
+import { CarriersBand } from "@/components/CarriersBand"
 import { Reveal, Stagger, Tilt, CountUp } from "@/components/motion"
 import { site, money, whatsappLink } from "@/content/site.config"
 import { getContent } from "@/content"
@@ -73,6 +74,8 @@ export default async function HomePage({ params }: LocaleParams) {
           ))}
         </div>
       </div>
+
+      <CarriersBand locale={locale} />
 
       <Section tone="gray">
         <Reveal><SectionHeading eyebrow={t.home.whyEyebrow} title={t.home.whyTitle} lead={t.home.whyLead} /></Reveal>

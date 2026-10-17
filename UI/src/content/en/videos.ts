@@ -26,7 +26,7 @@ export const videos: Video[] = [
     { screen: "Users → New", say: "Username, password, role. The in-house salesperson only sees their orders; the external reseller sees neither promos, nor delivery, nor mockups/quotes." },
     { screen: "Login with a salesperson account", say: "Show concretely what a salesperson sees compared to the administrator." },
   ] },
-  { id: "transporteurs", track: "demarrer", title: "Connect a carrier (Ameex, Olivraison, Ozone Express)", duration: "5 min", youtubeId: "", summary: "Enter the carrier credentials, define fees per zone and test creating a parcel.", script: [
+  { id: "transporteurs", track: "demarrer", title: "Connect a carrier (Ameex, Olivraison, Ozone Express, Sendit)", duration: "5 min", youtubeId: "", summary: "Enter the carrier credentials, define fees per zone and test creating a parcel.", script: [
     { screen: "Delivery → Settings → Carriers", say: "Enter the credentials provided by the carrier and the label type." },
     { screen: "Zones and fees", say: "Shipping fees per city/zone; free shipping option above an amount." },
     { screen: "Test order → Create a pickup", say: "Check that the delivery note is generated and the status comes back." },

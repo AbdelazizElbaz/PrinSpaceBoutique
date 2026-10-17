@@ -78,7 +78,7 @@ export const features: Feature[] = [
     slug: "livraison",
     icon: "Truck",
     title: "Livraison multi-transporteurs",
-    short: "Ameex, Olivraison, Ozone Express ou vos propres livreurs.",
+    short: "Ameex, Olivraison, Ozone Express, Sendit ou vos propres livreurs.",
     description:
       "Créez un ramassage, imprimez les bons et étiquettes, et laissez les statuts remonter automatiquement. Chaque vendeur peut créer les ramassages de ses propres commandes ; on sait toujours qui a créé quoi.",
     bullets: [
@@ -206,7 +206,7 @@ export const audiences = [
 export const stats = [
   { value: "Quelques minutes", label: "pour recevoir votre espace" },
   { value: "0 écart", label: "entre COD encaissé et reste à payer" },
-  { value: "3", label: "transporteurs connectés + livreurs internes" },
+  { value: "4", label: "transporteurs connectés + livreurs internes" },
   { value: "24/7", label: "PrintiosSync en mode service" },
 ]
 
