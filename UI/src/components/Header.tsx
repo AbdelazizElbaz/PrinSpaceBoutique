@@ -65,15 +65,17 @@ export function Header({ locale }: { locale: Locale }) {
             </Link>
           ))}
         </nav>
-        <div className="hidden items-center gap-1 lg:flex">
+        {/* Barre d'actions : boutons compacts, sur une ligne (le bouton bleu passait sur deux lignes et débordait de
+            l'en-tête à côté du bouton démo) ; WhatsApp en icône seule pour garder la place. */}
+        <div className="hidden items-center gap-2 lg:flex">
           <LangSwitch />
-          <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn-ghost" title={t.common.whatsapp}>
-            <MessageCircle className="h-4 w-4 text-[#25D366]" /> WhatsApp
+          <a href={whatsappLink(t.common.whatsappMsg(site.brand))} target="_blank" rel="noreferrer" className="btn-ghost !px-2.5 !py-2" title={t.common.whatsapp} aria-label={t.common.whatsapp}>
+            <MessageCircle className="h-5 w-5 text-[#25D366]" />
           </a>
-          <a href={site.demoUrl} target="_blank" rel="noreferrer" className="btn-demo" title={t.home.demoNote}>
+          <a href={site.demoUrl} target="_blank" rel="noreferrer" className="btn-demo !px-4 !py-2" title={t.home.demoNote}>
             {t.nav.demo}
           </a>
-          <Link href={localePath(locale, "/inscription")} className="btn-primary">
+          <Link href={localePath(locale, "/inscription")} className="btn-primary whitespace-nowrap !px-4 !py-2">
             {t.nav.trial(site.trialDays)}
           </Link>
         </div>
