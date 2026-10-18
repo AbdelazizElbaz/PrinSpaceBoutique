@@ -4,6 +4,8 @@ import { Inter, Cairo } from "next/font/google"
 import "../globals.css"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
+import { ChatWidget } from "@/components/chat/ChatWidget"
+import { VisitorTracker } from "@/components/chat/VisitorTracker"
 import { site } from "@/content/site.config"
 import { dir, getDict, htmlLang, isLocale, locales, localePath, ogLocale, type Locale } from "@/i18n"
 import { pageAlternates, siteUrl } from "@/lib/seo"
@@ -93,6 +95,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <Header locale={locale} />
         <main>{children}</main>
         <Footer locale={locale} />
+        {/* Chat en direct + présence des visiteurs (console : /admin/messages), voir components/chat. */}
+        <VisitorTracker locale={locale} />
+        <ChatWidget locale={locale} />
       </body>
     </html>
   )

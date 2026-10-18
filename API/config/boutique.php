@@ -16,4 +16,8 @@ return [
 
     // Où envoyer les notifications (leads, nouvelles inscriptions, échecs)
     'notify_email' => env('NOTIFY_EMAIL', 'commercial@printios.ma'),
+
+    // Console admin du chat du site (/admin/messages) : mot de passe unique → jeton Bearer
+    // (voir Admin\AdminAuthController). Vide = console désactivée.
+    'admin_password' => env('ADMIN_PASSWORD', ''),
 ];

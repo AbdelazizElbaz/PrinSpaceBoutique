@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // Derrière nginx (conteneur unique) puis le load balancer Lightsail :
         // X-Forwarded-Proto/For sont fiables → URLs https correctes.
         $middleware->trustProxies(at: '*');
+        // Console admin du chat (jeton Bearer, voir App\Http\Middleware\AuthenticateAdmin).
+        $middleware->alias(['admin.auth' => \App\Http\Middleware\AuthenticateAdmin::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
