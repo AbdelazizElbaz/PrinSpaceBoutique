@@ -20,12 +20,23 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   plans: {},
 }
 
+/** « +212 661-327865 » / « 0661 32 78 65 » / « 00212… » → « 212661327865 » (format wa.me, indicatif Maroc par défaut). */
+export function whatsappFromPhone(phone: string): string {
+  const digits = phone.replace(/\D+/g, "")
+  if (digits.startsWith("00")) return digits.slice(2)
+  if (digits.startsWith("0")) return `212${digits.slice(1)}`
+  return digits
+}
+
 export function mergeSettings(o: SiteOverrides | null | undefined): SiteSettings {
   if (!o) return DEFAULT_SITE_SETTINGS
+  // WhatsApp vide = même numéro que le téléphone réglé (un seul champ change les deux, voir SiteOverrides côté API).
+  const phone = o.contact?.phone || DEFAULT_SITE_SETTINGS.contact.phone
+  const whatsapp = o.contact?.whatsapp || (o.contact?.phone ? whatsappFromPhone(o.contact.phone) : "") || DEFAULT_SITE_SETTINGS.contact.whatsapp
   return {
     contact: {
-      phone: o.contact?.phone || DEFAULT_SITE_SETTINGS.contact.phone,
-      whatsapp: (o.contact?.whatsapp || DEFAULT_SITE_SETTINGS.contact.whatsapp).replace(/\D+/g, ""),
+      phone,
+      whatsapp: whatsapp.replace(/\D+/g, ""),
       hours: o.contact?.hours || DEFAULT_SITE_SETTINGS.contact.hours,
       email: o.contact?.email || DEFAULT_SITE_SETTINGS.contact.email,
     },
@@ -83,6 +94,8 @@ export function applySettings(content: Content, s: SiteSettings): Content {
     [site.contact.whatsapp, s.contact.whatsapp],
     [site.contact.hours, s.contact.hours],
     [site.contact.salesEmail, s.contact.email],
+    // L'e-mail de contact des pages légales suit aussi le champ « E-mail » de la console.
+    [site.contact.email, s.contact.email],
   ]
   const replaced = deepReplace({ faq: content.faq, legal: content.legal }, pairs)
   return { ...content, faq: replaced.faq, legal: replaced.legal, plans: applyPlans(content.plans, s) }

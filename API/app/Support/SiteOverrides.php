@@ -58,6 +58,20 @@ class SiteOverrides
         return $plans;
     }
 
+    /** « +212 661-327865 » / « 0661 32 78 65 » / « 00212… » → « 212661327865 » (format wa.me, indicatif Maroc par défaut). */
+    public static function whatsappFromPhone(string $phone): string
+    {
+        $digits = preg_replace('/\D+/', '', $phone) ?? '';
+        if (str_starts_with($digits, '00')) {
+            return substr($digits, 2);
+        }
+        if (str_starts_with($digits, '0')) {
+            return '212'.substr($digits, 1);
+        }
+
+        return $digits;
+    }
+
     /** Ne garde que les champs connus, les nombres valides et les chaînes non vides. */
     private static function normalize(array $data): array
     {
@@ -66,6 +80,14 @@ class SiteOverrides
             $v = trim((string) ($data['contact'][$f] ?? ''));
             if ($v !== '') {
                 $contact[$f] = $f === 'whatsapp' ? preg_replace('/\D+/', '', $v) : $v;
+            }
+        }
+        // WhatsApp vide = même numéro que le téléphone (demande utilisateur du 19/10/2026 : « modifier partout le
+        // téléphone de contact, inclut WhatsApp ») : un seul champ suffit pour changer les deux.
+        if (empty($contact['whatsapp']) && !empty($contact['phone'])) {
+            $wa = self::whatsappFromPhone($contact['phone']);
+            if ($wa !== '') {
+                $contact['whatsapp'] = $wa;
             }
         }
         $plans = [];

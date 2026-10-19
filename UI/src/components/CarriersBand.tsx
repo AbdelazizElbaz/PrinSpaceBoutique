@@ -43,9 +43,10 @@ export function CarriersBand({ locale }: { locale: Locale }) {
               <Truck className="h-7 w-7" />
             </span>
             <p className="text-base font-semibold text-ink">{t.carriersInternal}</p>
-            <ul className="space-y-1 text-xs text-slate-600">
+            {/* Liste alignee a gauche (texte sur deux lignes possible) : coche calee en haut, texte en start. */}
+            <ul className="mx-auto w-fit space-y-1.5 text-xs text-slate-600">
               {t.carriersInternalPoints.map((x) => (
-                <li key={x} className="flex items-center justify-center gap-1.5"><Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" /> {x}</li>
+                <li key={x} className="flex items-start gap-1.5 text-start"><Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-600" /><span>{x}</span></li>
               ))}
             </ul>
           </div>,

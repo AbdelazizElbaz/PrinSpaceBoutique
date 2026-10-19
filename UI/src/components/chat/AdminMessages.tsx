@@ -761,7 +761,7 @@ function SiteSettingsDialog({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <p className="text-xs text-slate-500">
-          Appliqué sur printios.ma dans la minute qui suit (pages régénérées toutes les 60 s) et transmis à l&apos;assistant IA. Laisser un champ vide pour revenir à la valeur par défaut.
+          Appliqué sur printios.ma dans la minute qui suit (pages régénérées toutes les 60 s) et transmis à l&apos;assistant IA. Le téléphone change partout : en-tête, pied de page, contact, FAQ, pages légales, chat et liens WhatsApp. Laisser un champ vide pour revenir à la valeur par défaut.
           {data.updated_at && <> Dernière modification : {fmtTime(data.updated_at)}.</>}
         </p>
 
@@ -770,7 +770,7 @@ function SiteSettingsDialog({ onClose }: { onClose: () => void }) {
           <label className="label text-xs">Téléphone affiché
             <input value={data.contact.phone || ""} onChange={(e) => setContact("phone", e.target.value)} className="input mt-1 !py-1.5 text-xs" placeholder="+212 661-327865" dir="ltr" />
           </label>
-          <label className="label text-xs">WhatsApp (international, sans +)
+          <label className="label text-xs">WhatsApp (vide = même numéro que le téléphone)
             <input value={data.contact.whatsapp || ""} onChange={(e) => setContact("whatsapp", e.target.value)} className="input mt-1 !py-1.5 text-xs" placeholder="212661327865" dir="ltr" />
           </label>
           <label className="label text-xs">Horaires
