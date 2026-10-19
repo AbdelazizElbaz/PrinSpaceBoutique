@@ -3,6 +3,7 @@ import { Section, SectionHeading, CtaBand, FaqList } from "@/components/ui"
 import { PricingTable } from "./PricingTable"
 import { site } from "@/content/site.config"
 import { getContent } from "@/content"
+import { applySettings, getSiteSettings } from "@/lib/siteSettings"
 import { getDict, isLocale } from "@/i18n"
 import { pageAlternates, type LocaleParams } from "@/lib/seo"
 
@@ -17,7 +18,7 @@ export default async function PricingPage({ params }: LocaleParams) {
   const { locale: raw } = await params
   const locale = isLocale(raw) ? raw : "fr"
   const t = getDict(locale)
-  const c = getContent(locale)
+  const c = applySettings(getContent(locale), await getSiteSettings())
   const abo = c.faq.find((g) => g.id === "abonnement")!
   return (
     <>

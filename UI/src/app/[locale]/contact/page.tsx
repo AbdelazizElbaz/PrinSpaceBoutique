@@ -6,6 +6,7 @@ import { getDict, isLocale } from "@/i18n"
 import { pageAlternates, type LocaleParams } from "@/lib/seo"
 import { ContactForm } from "./ContactForm"
 import { ContactCards } from "./ContactCards"
+import { getSiteSettings } from "@/lib/siteSettings"
 
 export async function generateMetadata({ params }: LocaleParams): Promise<Metadata> {
   const { locale: raw } = await params
@@ -18,6 +19,7 @@ export default async function ContactPage({ params }: LocaleParams) {
   const { locale: raw } = await params
   const locale = isLocale(raw) ? raw : "fr"
   const t = getDict(locale)
+  const settings = await getSiteSettings()
   return (
     <Section>
       <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} lead={t.contact.lead} />
@@ -26,7 +28,7 @@ export default async function ContactPage({ params }: LocaleParams) {
           <div className="lg:col-span-2">
             <ContactCards locale={locale} />
             <p className="mt-6 text-sm text-slate-500">
-              {site.contact.hours}. {site.company.legalName}, {site.company.city}.
+              {settings.contact.hours}. {site.company.legalName}, {site.company.city}.
             </p>
           </div>
           <div className="card lg:col-span-3">
@@ -40,7 +42,7 @@ export default async function ContactPage({ params }: LocaleParams) {
         <div className="mx-auto mt-12 max-w-xl">
           <ContactCards locale={locale} />
           <p className="mt-6 text-center text-sm text-slate-500">
-            {site.contact.hours}. {site.company.legalName}, {site.company.city}.
+            {settings.contact.hours}. {site.company.legalName}, {site.company.city}.
           </p>
         </div>
       )}

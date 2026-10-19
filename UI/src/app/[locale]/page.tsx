@@ -6,7 +6,8 @@ import { Icon } from "@/components/Icon"
 import { Mockup } from "@/components/mockups/Mockup"
 import { CarriersBand } from "@/components/CarriersBand"
 import { Reveal, Stagger, Tilt, CountUp } from "@/components/motion"
-import { site, money, whatsappLink } from "@/content/site.config"
+import { site, money } from "@/content/site.config"
+import { applySettings, getSiteSettings, waLink } from "@/lib/siteSettings"
 import { getContent } from "@/content"
 import { getDict, isLocale, localePath, isRtl } from "@/i18n"
 import type { LocaleParams } from "@/lib/seo"
@@ -15,7 +16,9 @@ export default async function HomePage({ params }: LocaleParams) {
   const { locale: raw } = await params
   const locale = isLocale(raw) ? raw : "fr"
   const t = getDict(locale)
-  const c = getContent(locale)
+  const settings = await getSiteSettings()
+  const c = applySettings(getContent(locale), settings)
+  const whatsappLink = (msg: string) => waLink(settings, msg)
   const lp = (p: string) => localePath(locale, p)
   const Arrow = ArrowRight
   const arrowCls = `h-4 w-4 ${isRtl(locale) ? "rotate-180" : ""}`

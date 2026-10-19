@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState, type ReactNode } from "react"
-import { site, whatsappLink } from "@/content/site.config"
+import { useSiteSettings } from "@/components/SiteSettingsProvider"
+import { telHref, waLink } from "@/lib/siteSettings"
 
 // Numéro de téléphone cliquable :
 //   - sur mobile : `tel:` → lance un appel ;
@@ -20,19 +21,21 @@ export function useIsMobile() {
 
 export function PhoneLink({ className = "", children, message }: { className?: string; children?: ReactNode; message?: string }) {
   const mobile = useIsMobile()
-  const tel = `tel:${site.contact.phone.replace(/[^+\d]/g, "")}`
-  const wa = whatsappLink(message ?? "")
+  const settings = useSiteSettings()
+  const tel = telHref(settings)
+  const wa = waLink(settings, message ?? "")
   return (
     <a href={mobile ? tel : wa} target={mobile ? undefined : "_blank"} rel={mobile ? undefined : "noreferrer"} dir="ltr" className={className}>
-      {children ?? site.contact.phone}
+      {children ?? settings.contact.phone}
     </a>
   )
 }
 
 /** Lien WhatsApp (wa.me) : ouvre l'application sur mobile, WhatsApp Web/Desktop sur PC. */
 export function WhatsAppLink({ className = "", children, message, title }: { className?: string; children: ReactNode; message: string; title?: string }) {
+  const settings = useSiteSettings()
   return (
-    <a href={whatsappLink(message)} target="_blank" rel="noreferrer" className={className} title={title}>
+    <a href={waLink(settings, message)} target="_blank" rel="noreferrer" className={className} title={title}>
       {children}
     </a>
   )

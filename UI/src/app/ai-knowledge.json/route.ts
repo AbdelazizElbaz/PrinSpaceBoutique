@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { site } from "@/content/site.config"
 import { getContent } from "@/content"
 import { getDict } from "@/i18n"
+import { applySettings, getSiteSettings } from "@/lib/siteSettings"
 
 // Base de connaissances de l'assistant IA du chat (demande utilisateur du 19/10/2026 : « comment donner les
 // informations de mon site à l'IA pour répondre aux clients »). Tout le contenu public du site, aplati en
@@ -9,7 +10,8 @@ import { getDict } from "@/i18n"
 // 24 h et l'ajoute aux instructions du modèle. Le chemin porte une extension (.json) pour ne pas passer par le
 // middleware de langue ; il est généré au build et reste à jour avec le contenu du site.
 
-export const dynamic = "force-static"
+// Régénéré au plus toutes les heures : reflète les prix et coordonnées réglés depuis la console.
+export const revalidate = 3600
 
 type Section = { title: string; text: string }
 
@@ -28,9 +30,10 @@ function flatten(value: unknown, depth = 0): string {
   return ""
 }
 
-export function GET() {
+export async function GET() {
   const t = getDict("fr")
-  const c = getContent("fr")
+  const settings = await getSiteSettings()
+  const c = applySettings(getContent("fr"), settings)
   const sections: Section[] = []
 
   sections.push({
@@ -39,7 +42,7 @@ export function GET() {
       `${site.brand} — ${site.tagline}. Site : ${site.url}. Espaces clients : <atelier>.${site.appDomain}.`,
       `${t.meta.title}. ${t.meta.description}`,
       `Essai gratuit ${site.trialDays} jours, sans carte bancaire. Démo en ligne sans inscription : ${site.demoUrl}.`,
-      `Contact : téléphone ${site.contact.phone}, WhatsApp https://wa.me/${site.contact.whatsapp}, horaires ${site.contact.hours}.`,
+      `Contact : téléphone ${settings.contact.phone}, WhatsApp https://wa.me/${settings.contact.whatsapp}, horaires ${settings.contact.hours}.`,
       `Agent d'atelier : ${site.agentName}.`,
     ].join("\n"),
   })

@@ -8,8 +8,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { Archive, ArchiveRestore, Globe, Loader2, LogOut, MessageSquareText, Radio, RefreshCw, Send, Settings2, Trash2, Users, X, Zap } from "lucide-react"
-import { adminApi, ADMIN_HINT_KEY, ADMIN_TOKEN_KEY, ChatApiError, playNotificationSound, setNotificationTitle, type AdminConversation, type AdminThread, type AdminVisitor, type CannedResponse, type ChatAiKnowledge, type ChatAiSettings, type ChatMessage } from "@/lib/chatApi"
+import { Archive, ArchiveRestore, Globe, Loader2, LogOut, MessageSquareText, Radio, RefreshCw, Send, Settings2, Store, Trash2, Users, X, Zap } from "lucide-react"
+import { adminApi, ADMIN_HINT_KEY, ADMIN_TOKEN_KEY, ChatApiError, playNotificationSound, setNotificationTitle, type AdminConversation, type AdminThread, type AdminVisitor, type CannedResponse, type ChatAiKnowledge, type ChatAiSettings, type ChatMessage, type SiteOverridesPayload } from "@/lib/chatApi"
 
 const DEFAULT_POLL_MS = 2000
 const VISITORS_POLL_MS = 10000
@@ -114,6 +114,7 @@ function Console({ onLogout }: { onLogout: () => void }) {
   const [canned, setCanned] = useState<CannedResponse[]>([])
   const [showCanned, setShowCanned] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
+  const [showSite, setShowSite] = useState(false)
   const [showInfo, setShowInfo] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const lastUnreadRef = useRef<number | null>(null)
@@ -293,8 +294,11 @@ function Console({ onLogout }: { onLogout: () => void }) {
           <button type="button" onClick={() => loadList()} className="btn-ghost !px-3 !py-2" title="Actualiser">
             <RefreshCw className="h-4 w-4" />
           </button>
-          <button type="button" onClick={() => setShowSettings(true)} className="btn-ghost !px-3 !py-2" title="Réglages">
+          <button type="button" onClick={() => setShowSettings(true)} className="btn-ghost !px-3 !py-2" title="Réglages du chat">
             <Settings2 className="h-4 w-4" />
+          </button>
+          <button type="button" onClick={() => setShowSite(true)} className="btn-ghost !px-3 !py-2" title="Paramètres du site (prix, coordonnées)">
+            <Store className="h-4 w-4" />
           </button>
           <button type="button" onClick={logout} className="btn-ghost !px-3 !py-2" title="Se déconnecter">
             <LogOut className="h-4 w-4" />
@@ -466,6 +470,7 @@ function Console({ onLogout }: { onLogout: () => void }) {
       </div>
 
       {showSettings && <SettingsDialog onClose={() => setShowSettings(false)} onSaved={(ms) => setPollMs(ms)} />}
+      {showSite && <SiteSettingsDialog onClose={() => setShowSite(false)} />}
     </div>
   )
 }
@@ -701,6 +706,119 @@ function SettingsDialog({ onClose, onSaved }: { onClose: () => void; onSaved: (p
           <button type="button" onClick={onClose} className="btn-secondary !py-2">
             Annuler
           </button>
+          <button type="button" onClick={save} disabled={busy} className="btn-primary !py-2">
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : done ? "Enregistré" : "Enregistrer"}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Paramètres du site : prix des forfaits et coordonnées, appliqués sur le site public sous 60 s (ISR) —
+// demande utilisateur du 19/10/2026. Un champ vide = valeur par défaut du code du site.
+const PLAN_LABELS: Record<string, string> = { starter: "Starter", pro: "Pro", business: "Business" }
+function SiteSettingsDialog({ onClose }: { onClose: () => void }) {
+  const [data, setData] = useState<SiteOverridesPayload>({ contact: {}, plans: {} })
+  const [defaults, setDefaults] = useState<Record<string, { name: string; monthly: number; yearly: number }>>({})
+  const [busy, setBusy] = useState(false)
+  const [done, setDone] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  useEffect(() => {
+    adminApi
+      .siteSettings()
+      .then((r) => {
+        setData({ contact: r.overrides.contact || {}, plans: r.overrides.plans || {}, updated_at: r.overrides.updated_at })
+        setDefaults(r.defaults.plans || {})
+      })
+      .catch((err) => setError(err instanceof Error ? err.message : "Chargement impossible"))
+  }, [])
+  const setContact = (k: keyof SiteOverridesPayload["contact"], v: string) => setData((d) => ({ ...d, contact: { ...d.contact, [k]: v } }))
+  const setPlan = (code: string, k: keyof SiteOverridesPayload["plans"][string], v: string) =>
+    setData((d) => ({ ...d, plans: { ...d.plans, [code]: { ...(d.plans[code] || {}), [k]: v === "" ? null : k === "promo_label" ? v : Number(v) } } }))
+  const num = (v: number | null | undefined) => (v === null || v === undefined ? "" : String(v))
+  const save = async () => {
+    setBusy(true)
+    setError(null)
+    try {
+      const r = await adminApi.saveSiteSettings(data)
+      setData({ contact: r.overrides.contact || {}, plans: r.overrides.plans || {}, updated_at: r.overrides.updated_at })
+      setDone(true)
+      setTimeout(() => setDone(false), 2500)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Enregistrement impossible")
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4" onClick={onClose}>
+      <div className="card max-h-[90vh] w-full max-w-2xl overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-base font-semibold text-ink">Paramètres du site</h2>
+          <button type="button" onClick={onClose} className="text-slate-400 hover:text-ink" aria-label="Fermer">
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        <p className="text-xs text-slate-500">
+          Appliqué sur printios.ma dans la minute qui suit (pages régénérées toutes les 60 s) et transmis à l&apos;assistant IA. Laisser un champ vide pour revenir à la valeur par défaut.
+          {data.updated_at && <> Dernière modification : {fmtTime(data.updated_at)}.</>}
+        </p>
+
+        <h3 className="mt-4 text-sm font-semibold text-ink">Coordonnées</h3>
+        <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <label className="label text-xs">Téléphone affiché
+            <input value={data.contact.phone || ""} onChange={(e) => setContact("phone", e.target.value)} className="input mt-1 !py-1.5 text-xs" placeholder="+212 661-327865" dir="ltr" />
+          </label>
+          <label className="label text-xs">WhatsApp (international, sans +)
+            <input value={data.contact.whatsapp || ""} onChange={(e) => setContact("whatsapp", e.target.value)} className="input mt-1 !py-1.5 text-xs" placeholder="212661327865" dir="ltr" />
+          </label>
+          <label className="label text-xs">Horaires
+            <input value={data.contact.hours || ""} onChange={(e) => setContact("hours", e.target.value)} className="input mt-1 !py-1.5 text-xs" placeholder="Lun–Ven 9h–18h, Sam 9h–13h" />
+          </label>
+          <label className="label text-xs">E-mail commercial
+            <input value={data.contact.email || ""} onChange={(e) => setContact("email", e.target.value)} className="input mt-1 !py-1.5 text-xs" placeholder="commercial@printios.ma" dir="ltr" />
+          </label>
+        </div>
+
+        <h3 className="mt-5 text-sm font-semibold text-ink">Forfaits (DH HT par mois)</h3>
+        <div className="mt-2 overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="text-start text-[11px] uppercase tracking-wide text-slate-500">
+                <th className="py-1 pe-2 text-start">Forfait</th>
+                <th className="py-1 pe-2 text-start">Mensuel</th>
+                <th className="py-1 pe-2 text-start">Annuel (par mois)</th>
+                <th className="py-1 pe-2 text-start">Prix barré mensuel</th>
+                <th className="py-1 pe-2 text-start">Prix barré annuel</th>
+                <th className="py-1 text-start">Pastille promo</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(PLAN_LABELS).map((code) => (
+                <tr key={code} className="border-t border-slate-100">
+                  <td className="py-1.5 pe-2 font-medium text-ink">
+                    {PLAN_LABELS[code]}
+                    {defaults[code] && <span className="block text-[10px] font-normal text-slate-400">défaut {defaults[code].monthly} / {defaults[code].yearly}</span>}
+                  </td>
+                  {(["monthly", "yearly_monthly", "list_monthly", "list_yearly_monthly"] as const).map((k) => (
+                    <td key={k} className="py-1.5 pe-2">
+                      <input type="number" min={0} value={num(data.plans[code]?.[k])} onChange={(e) => setPlan(code, k, e.target.value)} className="input !w-24 !py-1 text-xs" />
+                    </td>
+                  ))}
+                  <td className="py-1.5">
+                    <input value={data.plans[code]?.promo_label || ""} onChange={(e) => setPlan(code, "promo_label", e.target.value)} className="input !w-36 !py-1 text-xs" placeholder="Promo de lancement" maxLength={60} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-1 text-[11px] text-slate-500">Le prix barré ne s&apos;affiche que s&apos;il est supérieur au prix payé. Business garde son préfixe « À partir de ».</p>
+
+        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        <div className="mt-4 flex justify-end gap-2">
+          <button type="button" onClick={onClose} className="btn-secondary !py-2">Fermer</button>
           <button type="button" onClick={save} disabled={busy} className="btn-primary !py-2">
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : done ? "Enregistré" : "Enregistrer"}
           </button>

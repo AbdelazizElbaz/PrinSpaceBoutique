@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Section, SectionHeading, CtaBand } from "@/components/ui"
 import { getContent } from "@/content"
+import { applySettings, getSiteSettings } from "@/lib/siteSettings"
 import { getDict, isLocale } from "@/i18n"
 import { pageAlternates, type LocaleParams } from "@/lib/seo"
 import { FaqSearch } from "./FaqSearch"
@@ -16,7 +17,7 @@ export default async function FaqPage({ params }: LocaleParams) {
   const { locale: raw } = await params
   const locale = isLocale(raw) ? raw : "fr"
   const t = getDict(locale)
-  const { faq } = getContent(locale)
+  const { faq } = applySettings(getContent(locale), await getSiteSettings())
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

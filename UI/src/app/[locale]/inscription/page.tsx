@@ -3,6 +3,7 @@ import { Suspense } from "react"
 import { Section } from "@/components/ui"
 import { site } from "@/content/site.config"
 import { getContent } from "@/content"
+import { applyPlans, getSiteSettings } from "@/lib/siteSettings"
 import { getDict, isLocale } from "@/i18n"
 import { pageAlternates, type LocaleParams } from "@/lib/seo"
 import { SignupWizard } from "./SignupWizard"
@@ -20,7 +21,7 @@ export default async function SignupPage({ params }: LocaleParams) {
   return (
     <Section className="py-10 sm:py-14">
       <Suspense>
-        <SignupWizard locale={locale} plans={getContent(locale).plans} />
+        <SignupWizard locale={locale} plans={applyPlans(getContent(locale).plans, await getSiteSettings())} />
       </Suspense>
     </Section>
   )

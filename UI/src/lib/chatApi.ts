@@ -157,6 +157,10 @@ export type AdminThread = {
 
 export type CannedResponse = { id: number; title: string; body: string }
 
+// Paramètres du site (prix, coordonnées) — voir API App\Support\SiteOverrides et UI lib/siteSettings.ts.
+export type SitePlanOverride = { monthly?: number | null; yearly_monthly?: number | null; list_monthly?: number | null; list_yearly_monthly?: number | null; promo_label?: string | null }
+export type SiteOverridesPayload = { contact: { phone?: string; whatsapp?: string; hours?: string; email?: string }; plans: Record<string, SitePlanOverride>; updated_at?: string | null }
+
 const t = () => (typeof window === "undefined" ? null : window.localStorage.getItem(ADMIN_TOKEN_KEY))
 
 export const adminApi = {
@@ -176,6 +180,8 @@ export const adminApi = {
   settings: () => request<ChatSettings>("/admin/chat/settings", { token: t() }),
   saveSettings: (payload: { poll_interval_ms?: number; welcome_message?: string | null; ai?: Partial<Omit<ChatAiSettings, "api_key_set">> & { api_key?: string } }) =>
     request<ChatSettings>("/admin/chat/settings", { method: "POST", body: JSON.stringify(payload), token: t() }),
+  siteSettings: () => request<{ overrides: SiteOverridesPayload; defaults: { plans: Record<string, { name: string; monthly: number; yearly: number }> } }>("/admin/site-settings", { token: t() }),
+  saveSiteSettings: (payload: SiteOverridesPayload) => request<{ overrides: SiteOverridesPayload }>("/admin/site-settings", { method: "POST", body: JSON.stringify(payload), token: t() }),
   aiKnowledgeRefresh: () => request<{ knowledge: ChatAiKnowledge; preview: string }>("/admin/chat/ai-knowledge/refresh", { method: "POST", token: t() }),
   aiTest: (payload: { base_url: string; model: string; api_key?: string; system_prompt?: string; question?: string }) =>
     request<{ reply: string; ms: number }>("/admin/chat/ai-test", { method: "POST", body: JSON.stringify(payload), token: t() }),

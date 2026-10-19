@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/ping', fn () => response()->json(['ok' => true, 'app' => config('boutique.brand'), 'time' => now()->toIso8601String()]));
 
 Route::get('/plans', [PlanController::class, 'index']);
+// Réglages du site (prix, coordonnées) modifiés depuis la console, relus par le site toutes les 60 s (ISR).
+Route::get('/site-settings', fn () => response()->json(\App\Support\SiteOverrides::get()));
 
 Route::middleware('throttle:10,1')->group(function () {
     Route::post('/leads', [LeadController::class, 'store']);
@@ -46,6 +48,8 @@ Route::prefix('admin')->withoutMiddleware('throttle:api')->group(function () {
         Route::post('/chat/settings', [AdminChatController::class, 'updateSettings']);
         Route::post('/chat/ai-test', [AdminChatController::class, 'aiTest']);
         Route::post('/chat/ai-knowledge/refresh', [AdminChatController::class, 'aiKnowledgeRefresh']);
+        Route::get('/site-settings', [\App\Http\Controllers\Admin\AdminSiteSettingsController::class, 'show']);
+        Route::post('/site-settings', [\App\Http\Controllers\Admin\AdminSiteSettingsController::class, 'update']);
         Route::get('/chat/conversations', [AdminChatController::class, 'index']);
         Route::get('/chat/conversations/{conversation}', [AdminChatController::class, 'show'])->whereNumber('conversation');
         Route::delete('/chat/conversations/{conversation}', [AdminChatController::class, 'destroy'])->whereNumber('conversation');

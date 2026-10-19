@@ -1,7 +1,8 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { Check, MessageCircle, Minus } from "lucide-react"
-import { site, whatsappLink } from "@/content/site.config"
+import { site } from "@/content/site.config"
+import { getSiteSettings, waLink } from "@/lib/siteSettings"
 import { getDict, localePath, type Locale } from "@/i18n"
 
 export function Section({ children, className = "", id, tone = "white" }: { children: ReactNode; className?: string; id?: string; tone?: "white" | "gray" | "dark" | "brand" }) {
@@ -30,8 +31,10 @@ export function Cell({ v, locale }: { v: string | boolean; locale: Locale }) {
   return <span className="text-sm text-slate-700">{v}</span>
 }
 
-export function CtaBand({ locale, title, text }: { locale: Locale; title?: string; text?: string }) {
+export async function CtaBand({ locale, title, text }: { locale: Locale; title?: string; text?: string }) {
   const t = getDict(locale)
+  const settings = await getSiteSettings()
+  const whatsappLink = (msg: string) => waLink(settings, msg)
   return (
     <Section tone="brand">
       <div className="flex flex-col items-center justify-between gap-6 lg:flex-row">

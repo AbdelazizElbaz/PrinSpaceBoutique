@@ -9,6 +9,7 @@ import type { Plan } from "@/content/types"
 import { site, money } from "@/content/site.config"
 import { api, ApiError } from "@/lib/api"
 import { getDict, localePath, type Locale } from "@/i18n"
+import { useSiteSettings } from "@/components/SiteSettingsProvider"
 
 // Parcours « Essai gratuit » : 1) choix du forfait, 2) contact — WhatsApp en
 // premier (message pré-rempli), ou formulaire court qui crée une demande côté
@@ -34,7 +35,8 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
 
   const selected = useMemo(() => plans.find((p) => p.code === plan)!, [plan, plans])
   const billingLabel = billing === "yearly" ? t.pricing.yearly : t.pricing.monthly
-  const whatsappUrl = `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(t.signup.whatsappMsg(site.brand, selected.name, billingLabel))}`
+  const settings = useSiteSettings()
+  const whatsappUrl = `https://wa.me/${settings.contact.whatsapp}?text=${encodeURIComponent(t.signup.whatsappMsg(site.brand, selected.name, billingLabel))}`
 
   async function submit() {
     setError("")

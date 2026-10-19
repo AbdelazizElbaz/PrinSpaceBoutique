@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation"
 import { Check, Loader2, MessageCircle, Pencil, Send, X } from "lucide-react"
 import { chatApi, getGuestToken, GUEST_NAME_KEY, GUEST_PHONE_KEY, playNotificationSound, setNotificationTitle, type ChatMessage } from "@/lib/chatApi"
 import { getDict, isRtl, type Locale } from "@/i18n"
-import { site } from "@/content/site.config"
+import { useSiteSettings } from "@/components/SiteSettingsProvider"
 
 const AUTO_OPEN_KEY = "printios-chat-auto-opened"
 const DESKTOP_PX = 1024
@@ -25,6 +25,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
   const pathname = usePathname() || "/"
   const t = getDict(locale).chat
   const rtl = isRtl(locale)
+  const settings = useSiteSettings()
 
   const [open, setOpen] = useState(false)
   const [teaser, setTeaser] = useState(false)
@@ -266,7 +267,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
           </form>
           <p className="border-t border-slate-100 bg-white px-4 py-1.5 text-center text-[10px] text-slate-400">
             {t.offlineNote}{" "}
-            <a href={`https://wa.me/${site.contact.whatsapp}`} target="_blank" rel="noreferrer" className="font-medium text-[#128C7E] hover:underline">
+            <a href={`https://wa.me/${settings.contact.whatsapp}`} target="_blank" rel="noreferrer" className="font-medium text-[#128C7E] hover:underline">
               WhatsApp
             </a>
           </p>

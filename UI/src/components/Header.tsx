@@ -5,11 +5,15 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Menu, MessageCircle, X } from "lucide-react"
 import { Logo } from "./Logo"
-import { site, whatsappLink } from "@/content/site.config"
+import { site } from "@/content/site.config"
+import { useSiteSettings } from "@/components/SiteSettingsProvider"
+import { waLink } from "@/lib/siteSettings"
 import { getDict, localePath, locales, stripLocale, type Locale } from "@/i18n"
 
 export function Header({ locale }: { locale: Locale }) {
   const t = getDict(locale)
+  const settings = useSiteSettings()
+  const whatsappLink = (text: string) => waLink(settings, text)
   const pathname = usePathname()
   const { path: current } = stripLocale(pathname)
   const [open, setOpen] = useState(false)

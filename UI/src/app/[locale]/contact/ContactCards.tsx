@@ -1,7 +1,9 @@
 "use client"
 
 import { Mail, MessageCircle, Phone } from "lucide-react"
-import { site, whatsappLink } from "@/content/site.config"
+import { site } from "@/content/site.config"
+import { useSiteSettings } from "@/components/SiteSettingsProvider"
+import { telHref, waLink } from "@/lib/siteSettings"
 import { getDict, type Locale } from "@/i18n"
 import { useIsMobile } from "@/components/PhoneLink"
 
@@ -10,12 +12,13 @@ import { useIsMobile } from "@/components/PhoneLink"
 export function ContactCards({ locale }: { locale: Locale }) {
   const t = getDict(locale)
   const mobile = useIsMobile()
+  const settings = useSiteSettings()
   const msg = t.contact.whatsappMsg(site.brand)
-  const tel = `tel:${site.contact.phone.replace(/[^+\d]/g, "")}`
+  const tel = telHref(settings)
   const cards = [
-    { icon: Mail, t: t.contact.email, v: site.contact.salesEmail, href: `mailto:${site.contact.salesEmail}`, ext: false },
-    { icon: Phone, t: t.contact.phone, v: site.contact.phone, href: mobile ? tel : whatsappLink(msg), ext: !mobile },
-    { icon: MessageCircle, t: t.contact.whatsapp, v: t.contact.writeWhatsapp, href: whatsappLink(msg), ext: true },
+    { icon: Mail, t: t.contact.email, v: settings.contact.email, href: `mailto:${settings.contact.email}`, ext: false },
+    { icon: Phone, t: t.contact.phone, v: settings.contact.phone, href: mobile ? tel : waLink(settings, msg), ext: !mobile },
+    { icon: MessageCircle, t: t.contact.whatsapp, v: t.contact.writeWhatsapp, href: waLink(settings, msg), ext: true },
   ].filter((c) => site.contact.showEmail || c.icon !== Mail)
   return (
     <div className="space-y-6">
