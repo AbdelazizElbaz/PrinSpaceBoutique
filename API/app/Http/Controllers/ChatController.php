@@ -6,6 +6,8 @@ use App\Mail\NewChatMessageMail;
 use App\Models\ChatConversation;
 use App\Models\ChatMessage;
 use App\Models\SiteSetting;
+use App\Jobs\ChatAiReplyJob;
+use App\Support\ChatAi;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
@@ -39,7 +41,7 @@ class ChatController extends Controller
             return response()->json(['conversation_id' => null, 'messages' => [], 'admin_typing' => false, 'unread_count' => 0]);
         }
         $since = (int) ($data['since'] ?? 0);
-        $messages = $conversation->messages()->when($since > 0, fn ($q) => $q->where('id', '>', $since))->get(['id', 'sender', 'body', 'created_at']);
+        $messages = $conversation->messages()->when($since > 0, fn ($q) => $q->where('id', '>', $since))->get(['id', 'sender', 'source', 'body', 'created_at']);
         // Marqués lus seulement quand le widget est réellement déplié (sinon le badge survit au rechargement).
         if ($request->boolean('open')) {
             $conversation->messages()->where('sender', ChatMessage::SENDER_ADMIN)->whereNull('read_at')->update(['read_at' => now()]);
@@ -79,8 +81,12 @@ class ChatController extends Controller
         $conversation->visitor_typing_at = null;
         $this->notifyTeam($conversation, $message);
         $conversation->save();
+        // Assistant IA (voir App\Support\ChatAi) : répond après un délai si l'équipe n'a pas pris la main.
+        if (ChatAi::enabled()) {
+            ChatAiReplyJob::dispatch($message->id)->delay(now()->addSeconds(ChatAi::settings()['delay_seconds']));
+        }
 
-        return response()->json(['conversation_id' => $conversation->id, 'message' => $message->only(['id', 'sender', 'body', 'created_at'])], 201);
+        return response()->json(['conversation_id' => $conversation->id, 'message' => $message->only(['id', 'sender', 'source', 'body', 'created_at'])], 201);
     }
 
     /** POST /chat/guest-info — nom / téléphone enregistrés sans envoyer de message (vide = effacer). */

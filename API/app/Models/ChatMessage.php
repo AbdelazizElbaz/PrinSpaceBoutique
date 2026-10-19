@@ -10,7 +10,7 @@ class ChatMessage extends Model
     public const SENDER_VISITOR = 'visitor';
     public const SENDER_ADMIN = 'admin';
 
-    protected $fillable = ['conversation_id', 'sender', 'body', 'read_at'];
+    protected $fillable = ['conversation_id', 'sender', 'source', 'body', 'read_at']; // source : human | ai
 
     protected $casts = ['read_at' => 'datetime'];
 

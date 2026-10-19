@@ -6,6 +6,7 @@ use App\Models\ChatConversation;
 use App\Models\ChatMessage;
 use App\Models\SiteSetting;
 use App\Models\VisitorSession;
+use App\Support\ChatAi;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -53,7 +54,7 @@ class AdminChatController extends Controller
     {
         $since = (int) $request->query('since', 0);
         $conversation->messages()->where('sender', ChatMessage::SENDER_VISITOR)->whereNull('read_at')->update(['read_at' => now()]);
-        $messages = $conversation->messages()->when($since > 0, fn ($q) => $q->where('id', '>', $since))->get(['id', 'sender', 'body', 'created_at', 'read_at']);
+        $messages = $conversation->messages()->when($since > 0, fn ($q) => $q->where('id', '>', $since))->get(['id', 'sender', 'source', 'body', 'created_at', 'read_at']);
         $session = $conversation->session;
 
         return response()->json([
@@ -92,7 +93,7 @@ class AdminChatController extends Controller
         $data = $request->validate(['body' => 'required|string|max:2000']);
         $message = $conversation->messages()->create(['sender' => ChatMessage::SENDER_ADMIN, 'body' => $data['body']]);
         $conversation->forceFill(['last_message_at' => $message->created_at, 'admin_typing_at' => null])->save();
-        return response()->json(['message' => $message->only(['id', 'sender', 'body', 'created_at', 'read_at'])], 201);
+        return response()->json(['message' => $message->only(['id', 'sender', 'source', 'body', 'created_at', 'read_at'])], 201);
     }
 
     public function typing(ChatConversation $conversation)
@@ -134,7 +135,40 @@ class AdminChatController extends Controller
         return response()->json([
             'poll_interval_ms' => SiteSetting::chatPollIntervalMs(),
             'welcome_message' => SiteSetting::get(SiteSetting::KEY_CHAT_WELCOME_MESSAGE),
+            // Assistant IA (voir App\Support\ChatAi) ; la clé n'est jamais renvoyée, seulement « définie ou non ».
+            'ai' => ChatAi::settings(),
+            'ai_default_system_prompt' => ChatAi::DEFAULT_SYSTEM_PROMPT,
+            'ai_knowledge' => collect(ChatAi::knowledge())->except('text'),
         ]);
+    }
+
+    /** POST /admin/chat/ai-knowledge/refresh — relit le contenu du site (cache vidé) et renvoie son état. */
+    public function aiKnowledgeRefresh()
+    {
+        $kb = ChatAi::knowledge(true);
+        return response()->json(['knowledge' => collect($kb)->except('text'), 'preview' => mb_substr($kb['text'], 0, 1500)]);
+    }
+
+    /** POST /admin/chat/ai-test — appelle le fournisseur avec les réglages du formulaire (clé saisie ou enregistrée). */
+    public function aiTest(Request $request)
+    {
+        $data = $request->validate([
+            'base_url' => 'required|url|max:300',
+            'model' => 'required|string|max:100',
+            'api_key' => 'nullable|string|max:300',
+            'system_prompt' => 'nullable|string|max:8000',
+            'question' => 'nullable|string|max:500',
+        ]);
+        $key = trim((string) ($data['api_key'] ?? '')) ?: ChatAi::apiKey();
+        if (!$key) {
+            return response()->json(['message' => 'Aucune clé API : saisissez-la ou enregistrez-la d\'abord.'], 422);
+        }
+        $started = microtime(true);
+        $reply = ChatAi::test($data['base_url'], $data['model'], $key, trim((string) ($data['system_prompt'] ?? '')) ?: ChatAi::DEFAULT_SYSTEM_PROMPT, trim((string) ($data['question'] ?? '')) ?: 'Bonjour, combien coûte PrintIOS ?');
+        if ($reply === null) {
+            return response()->json(['message' => 'Le fournisseur n\'a pas répondu (clé, modèle ou URL incorrects ? voir les logs).'], 502);
+        }
+        return response()->json(['reply' => $reply, 'ms' => (int) round((microtime(true) - $started) * 1000)]);
     }
 
     public function updateSettings(Request $request)
@@ -142,12 +176,32 @@ class AdminChatController extends Controller
         $data = $request->validate([
             'poll_interval_ms' => 'sometimes|integer|min:' . SiteSetting::MIN_CHAT_POLL_INTERVAL_MS . '|max:' . SiteSetting::MAX_CHAT_POLL_INTERVAL_MS,
             'welcome_message' => 'sometimes|nullable|string|max:500',
+            'ai' => 'sometimes|array',
+            'ai.enabled' => 'sometimes|boolean',
+            'ai.base_url' => 'sometimes|nullable|url|max:300',
+            'ai.model' => 'sometimes|nullable|string|max:100',
+            'ai.api_key' => 'sometimes|nullable|string|max:300', // absent = inchangée, vide = effacée
+            'ai.system_prompt' => 'sometimes|nullable|string|max:8000',
+            'ai.delay_seconds' => 'sometimes|integer|min:0|max:600',
+            'ai.handoff_minutes' => 'sometimes|integer|min:0|max:1440',
+            'ai.use_site_knowledge' => 'sometimes|boolean',
         ]);
         if (array_key_exists('poll_interval_ms', $data)) {
             SiteSetting::set(SiteSetting::KEY_CHAT_POLL_INTERVAL_MS, (string) $data['poll_interval_ms']);
         }
         if (array_key_exists('welcome_message', $data)) {
             SiteSetting::set(SiteSetting::KEY_CHAT_WELCOME_MESSAGE, trim((string) $data['welcome_message']) ?: null);
+        }
+        $ai = $data['ai'] ?? null;
+        if (is_array($ai)) {
+            if (array_key_exists('enabled', $ai)) SiteSetting::set(ChatAi::KEY_ENABLED, $ai['enabled'] ? '1' : '0');
+            if (array_key_exists('base_url', $ai)) SiteSetting::set(ChatAi::KEY_BASE_URL, rtrim(trim((string) $ai['base_url']), '/') ?: null);
+            if (array_key_exists('model', $ai)) SiteSetting::set(ChatAi::KEY_MODEL, trim((string) $ai['model']) ?: null);
+            if (array_key_exists('api_key', $ai)) ChatAi::storeApiKey($ai['api_key']);
+            if (array_key_exists('system_prompt', $ai)) SiteSetting::set(ChatAi::KEY_SYSTEM_PROMPT, trim((string) $ai['system_prompt']) ?: null);
+            if (array_key_exists('delay_seconds', $ai)) SiteSetting::set(ChatAi::KEY_DELAY_SECONDS, (string) (int) $ai['delay_seconds']);
+            if (array_key_exists('handoff_minutes', $ai)) SiteSetting::set(ChatAi::KEY_HANDOFF_MINUTES, (string) (int) $ai['handoff_minutes']);
+            if (array_key_exists('use_site_knowledge', $ai)) SiteSetting::set(ChatAi::KEY_USE_SITE_KNOWLEDGE, $ai['use_site_knowledge'] ? '1' : '0');
         }
         return $this->getSettings();
     }

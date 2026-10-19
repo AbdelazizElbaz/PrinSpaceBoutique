@@ -44,6 +44,8 @@ Route::prefix('admin')->withoutMiddleware('throttle:api')->group(function () {
         Route::get('/chat/stats', [AdminChatController::class, 'stats']);
         Route::get('/chat/settings', [AdminChatController::class, 'getSettings']);
         Route::post('/chat/settings', [AdminChatController::class, 'updateSettings']);
+        Route::post('/chat/ai-test', [AdminChatController::class, 'aiTest']);
+        Route::post('/chat/ai-knowledge/refresh', [AdminChatController::class, 'aiKnowledgeRefresh']);
         Route::get('/chat/conversations', [AdminChatController::class, 'index']);
         Route::get('/chat/conversations/{conversation}', [AdminChatController::class, 'show'])->whereNumber('conversation');
         Route::delete('/chat/conversations/{conversation}', [AdminChatController::class, 'destroy'])->whereNumber('conversation');

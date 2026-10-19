@@ -234,7 +234,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
             <div className="flex flex-col gap-2">
               <Bubble sender="admin" label={t.team} body={welcomeText} />
               {messages.map((m) => (
-                <Bubble key={m.id} sender={m.sender} label={m.sender === "visitor" ? t.you : t.team} body={m.body} />
+                <Bubble key={m.id} sender={m.sender} label={m.sender === "visitor" ? t.you : m.source === "ai" ? t.assistant : t.team} body={m.body} />
               ))}
               {adminTyping && (
                 <div className="me-auto flex items-center gap-1 rounded-2xl rounded-bl-sm bg-white px-3 py-2 text-sm text-slate-500 shadow-sm ring-1 ring-slate-200" aria-label={t.typing}>

@@ -20,4 +20,8 @@ return [
     // Console admin du chat du site (/admin/messages) : mot de passe unique → jeton Bearer
     // (voir Admin\AdminAuthController). Vide = console désactivée.
     'admin_password' => env('ADMIN_PASSWORD', ''),
+
+    // Base de connaissances de l'assistant IA : page /ai-knowledge.json générée par le site Next.js (même
+    // conteneur, port 3100) ; repli sur SITE_URL si l'adresse interne ne répond pas. Voir App\Support\ChatAi.
+    'site_internal_url' => env('SITE_INTERNAL_URL', 'http://127.0.0.1:3100'),
 ];

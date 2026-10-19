@@ -287,6 +287,7 @@ export const ar: Dict = {
     contactHint: "اترك اسماً ورقم هاتف لنتمكن من معاودة الاتصال بك.",
     typing: "PrintIOS يكتب…",
     offlineNote: "نرد أيضاً على",
+    assistant: "مساعد PrintIOS",
     teaser: "مرحباً 👋 عندك سؤال؟",
     unread: (n: number) => (n > 1 ? `${n} رسائل جديدة` : `رسالة جديدة`),
   },

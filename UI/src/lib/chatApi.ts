@@ -12,7 +12,12 @@ export const ADMIN_TOKEN_KEY = "printios-admin-token"
 // Posé par la console admin dans ce navigateur : ses propres visites ne comptent pas comme des visiteurs.
 export const ADMIN_HINT_KEY = "printios-admin-hint"
 
-export type ChatMessage = { id: number; sender: "visitor" | "admin"; body: string; created_at: string; read_at?: string | null }
+export type ChatMessage = { id: number; sender: "visitor" | "admin"; source?: "human" | "ai"; body: string; created_at: string; read_at?: string | null }
+
+// Assistant IA (fournisseur compatible OpenAI « chat completions », ex. DeepSeek), voir API App\Support\ChatAi.
+export type ChatAiSettings = { enabled: boolean; base_url: string; model: string; api_key_set: boolean; system_prompt: string; delay_seconds: number; handoff_minutes: number; use_site_knowledge: boolean }
+export type ChatAiKnowledge = { chars: number; sections: number; fetched_at: string | null; source: string | null; error: string | null }
+export type ChatSettings = { poll_interval_ms: number; welcome_message: string | null; ai: ChatAiSettings; ai_default_system_prompt: string; ai_knowledge: ChatAiKnowledge }
 
 export class ChatApiError extends Error {
   status: number
@@ -168,9 +173,12 @@ export const adminApi = {
   remove: (id: number) => request<{ ok: true }>(`/admin/chat/conversations/${id}`, { method: "DELETE", token: t() }),
   visitors: () => request<AdminVisitor[]>("/admin/visitors", { token: t() }),
   startChat: (sessionId: number) => request<{ conversation_id: number }>(`/admin/visitors/${sessionId}/start-chat`, { method: "POST", token: t() }),
-  settings: () => request<{ poll_interval_ms: number; welcome_message: string | null }>("/admin/chat/settings", { token: t() }),
-  saveSettings: (payload: { poll_interval_ms?: number; welcome_message?: string | null }) =>
-    request<{ poll_interval_ms: number; welcome_message: string | null }>("/admin/chat/settings", { method: "POST", body: JSON.stringify(payload), token: t() }),
+  settings: () => request<ChatSettings>("/admin/chat/settings", { token: t() }),
+  saveSettings: (payload: { poll_interval_ms?: number; welcome_message?: string | null; ai?: Partial<Omit<ChatAiSettings, "api_key_set">> & { api_key?: string } }) =>
+    request<ChatSettings>("/admin/chat/settings", { method: "POST", body: JSON.stringify(payload), token: t() }),
+  aiKnowledgeRefresh: () => request<{ knowledge: ChatAiKnowledge; preview: string }>("/admin/chat/ai-knowledge/refresh", { method: "POST", token: t() }),
+  aiTest: (payload: { base_url: string; model: string; api_key?: string; system_prompt?: string; question?: string }) =>
+    request<{ reply: string; ms: number }>("/admin/chat/ai-test", { method: "POST", body: JSON.stringify(payload), token: t() }),
   canned: () => request<CannedResponse[]>("/admin/canned-responses", { token: t() }),
   addCanned: (payload: { title: string; body: string }) => request<CannedResponse>("/admin/canned-responses", { method: "POST", body: JSON.stringify(payload), token: t() }),
   removeCanned: (id: number) => request<{ ok: true }>(`/admin/canned-responses/${id}`, { method: "DELETE", token: t() }),

@@ -9,7 +9,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { Archive, ArchiveRestore, Globe, Loader2, LogOut, MessageSquareText, Radio, RefreshCw, Send, Settings2, Trash2, Users, X, Zap } from "lucide-react"
-import { adminApi, ADMIN_HINT_KEY, ADMIN_TOKEN_KEY, ChatApiError, playNotificationSound, setNotificationTitle, type AdminConversation, type AdminThread, type AdminVisitor, type CannedResponse, type ChatMessage } from "@/lib/chatApi"
+import { adminApi, ADMIN_HINT_KEY, ADMIN_TOKEN_KEY, ChatApiError, playNotificationSound, setNotificationTitle, type AdminConversation, type AdminThread, type AdminVisitor, type CannedResponse, type ChatAiKnowledge, type ChatAiSettings, type ChatMessage } from "@/lib/chatApi"
 
 const DEFAULT_POLL_MS = 2000
 const VISITORS_POLL_MS = 10000
@@ -418,10 +418,10 @@ function Console({ onLogout }: { onLogout: () => void }) {
                       {thread.messages.map((m) => (
                         <div key={m.id} className={`flex max-w-[80%] flex-col gap-0.5 ${m.sender === "admin" ? "ms-auto items-end" : "me-auto items-start"}`}>
                           <span className="px-1 text-[10px] uppercase tracking-wide text-slate-400">
-                            {m.sender === "admin" ? "Vous" : thread.conversation.display_name} · {fmtTime(m.created_at)}
+                            {m.sender === "admin" ? (m.source === "ai" ? "Assistant IA" : "Vous") : thread.conversation.display_name} · {fmtTime(m.created_at)}
                             {m.sender === "admin" && m.read_at ? " · lu" : ""}
                           </span>
-                          <div className={`whitespace-pre-wrap break-words rounded-2xl px-3 py-2 text-sm ${m.sender === "admin" ? "rounded-ee-sm bg-brand-600 text-white" : "rounded-es-sm bg-white text-ink shadow-sm ring-1 ring-slate-200"}`}>{m.body}</div>
+                          <div className={`whitespace-pre-wrap break-words rounded-2xl px-3 py-2 text-sm ${m.sender === "admin" ? (m.source === "ai" ? "rounded-ee-sm bg-violet-600 text-white" : "rounded-ee-sm bg-brand-600 text-white") : "rounded-es-sm bg-white text-ink shadow-sm ring-1 ring-slate-200"}`}>{m.body}</div>
                         </div>
                       ))}
                       {thread.visitor_typing && <p className="me-auto rounded-2xl bg-white px-3 py-2 text-xs italic text-slate-500 ring-1 ring-slate-200">{thread.conversation.display_name} écrit…</p>}
@@ -566,19 +566,57 @@ function SettingsDialog({ onClose, onSaved }: { onClose: () => void; onSaved: (p
   const [welcome, setWelcome] = useState("")
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState(false)
+  // Assistant IA (voir API App\Support\ChatAi) : fournisseur compatible OpenAI, ex. DeepSeek.
+  const [ai, setAi] = useState<ChatAiSettings>({ enabled: false, base_url: "https://api.deepseek.com", model: "deepseek-chat", api_key_set: false, system_prompt: "", delay_seconds: 20, handoff_minutes: 30, use_site_knowledge: true })
+  const [knowledge, setKnowledge] = useState<ChatAiKnowledge | null>(null)
+  const [kbBusy, setKbBusy] = useState(false)
+  const [kbPreview, setKbPreview] = useState<string | null>(null)
+  const [aiKey, setAiKey] = useState("")
+  const [aiDefaultPrompt, setAiDefaultPrompt] = useState("")
+  const [aiTest, setAiTest] = useState<{ busy: boolean; reply?: string; error?: string; ms?: number }>({ busy: false })
   useEffect(() => {
     adminApi
       .settings()
       .then((s) => {
         setPollMs(s.poll_interval_ms)
         setWelcome(s.welcome_message || "")
+        if (s.ai) setAi(s.ai)
+        setAiDefaultPrompt(s.ai_default_system_prompt || "")
+        setKnowledge(s.ai_knowledge || null)
       })
       .catch(() => {})
   }, [])
+  const refreshKnowledge = async () => {
+    setKbBusy(true)
+    try {
+      const r = await adminApi.aiKnowledgeRefresh()
+      setKnowledge(r.knowledge)
+      setKbPreview(r.preview)
+    } catch {
+      /* ignoré */
+    } finally {
+      setKbBusy(false)
+    }
+  }
+  const runAiTest = async () => {
+    setAiTest({ busy: true })
+    try {
+      const r = await adminApi.aiTest({ base_url: ai.base_url, model: ai.model, api_key: aiKey || undefined, system_prompt: ai.system_prompt || undefined })
+      setAiTest({ busy: false, reply: r.reply, ms: r.ms })
+    } catch (err) {
+      setAiTest({ busy: false, error: err instanceof Error ? err.message : "Échec du test" })
+    }
+  }
   const save = async () => {
     setBusy(true)
     try {
-      const s = await adminApi.saveSettings({ poll_interval_ms: pollMs, welcome_message: welcome.trim() || null })
+      const s = await adminApi.saveSettings({
+        poll_interval_ms: pollMs,
+        welcome_message: welcome.trim() || null,
+        ai: { enabled: ai.enabled, base_url: ai.base_url, model: ai.model, system_prompt: ai.system_prompt, delay_seconds: ai.delay_seconds, handoff_minutes: ai.handoff_minutes, use_site_knowledge: ai.use_site_knowledge, ...(aiKey ? { api_key: aiKey } : {}) },
+      })
+      if (s.ai) setAi(s.ai)
+      setAiKey("")
       onSaved(s.poll_interval_ms)
       setDone(true)
       setTimeout(onClose, 600)
@@ -590,7 +628,7 @@ function SettingsDialog({ onClose, onSaved }: { onClose: () => void; onSaved: (p
   }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4" onClick={onClose}>
-      <div className="card w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+      <div className="card max-h-[90vh] w-full max-w-2xl overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-base font-semibold text-ink">Réglages du chat</h2>
           <button type="button" onClick={onClose} className="text-slate-400 hover:text-ink" aria-label="Fermer">
@@ -601,6 +639,64 @@ function SettingsDialog({ onClose, onSaved }: { onClose: () => void; onSaved: (p
         <textarea value={welcome} onChange={(e) => setWelcome(e.target.value)} className="input mt-1" rows={3} maxLength={500} placeholder="Bonjour 👋 Bienvenue sur PrintIOS ! Une question ? Écrivez-nous ici." />
         <label className="label mt-3">Intervalle de rafraîchissement (ms, 1000 à 60000)</label>
         <input type="number" min={1000} max={60000} step={500} value={pollMs} onChange={(e) => setPollMs(Number(e.target.value))} className="input mt-1 w-40" />
+
+        <div className="mt-5 rounded-xl border border-violet-200 bg-violet-50/40 p-3">
+          <label className="flex items-center gap-2 text-sm font-semibold text-ink">
+            <input type="checkbox" checked={ai.enabled} onChange={(e) => setAi({ ...ai, enabled: e.target.checked })} />
+            Assistant IA (répond aux visiteurs quand personne ne prend la main)
+          </label>
+          <p className="mt-1 text-[11px] text-slate-500">
+            Tout fournisseur compatible avec l&apos;API « chat completions » d&apos;OpenAI : DeepSeek (https://api.deepseek.com, modèle deepseek-chat), OpenAI (https://api.openai.com/v1, gpt-4o-mini), Mistral (https://api.mistral.ai/v1)… Dès qu&apos;un conseiller répond dans un fil, l&apos;assistant s&apos;efface pendant la durée indiquée.
+          </p>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            <label className="label text-xs">URL de base
+              <input value={ai.base_url} onChange={(e) => setAi({ ...ai, base_url: e.target.value })} className="input mt-1 !py-1.5 text-xs" placeholder="https://api.deepseek.com" />
+            </label>
+            <label className="label text-xs">Modèle
+              <input value={ai.model} onChange={(e) => setAi({ ...ai, model: e.target.value })} className="input mt-1 !py-1.5 text-xs" placeholder="deepseek-chat" />
+            </label>
+            <label className="label text-xs sm:col-span-2">Clé API {ai.api_key_set ? <span className="font-normal text-emerald-700">(enregistrée, laisser vide pour la conserver)</span> : <span className="font-normal text-red-600">(aucune)</span>}
+              <input type="password" value={aiKey} onChange={(e) => setAiKey(e.target.value)} className="input mt-1 !py-1.5 text-xs" placeholder="sk-…" autoComplete="off" />
+            </label>
+            <label className="label text-xs">Délai avant réponse (s, 0 = immédiat)
+              <input type="number" min={0} max={600} value={ai.delay_seconds} onChange={(e) => setAi({ ...ai, delay_seconds: Number(e.target.value) })} className="input mt-1 !py-1.5 text-xs" />
+            </label>
+            <label className="label text-xs">Silence après une réponse humaine (min)
+              <input type="number" min={0} max={1440} value={ai.handoff_minutes} onChange={(e) => setAi({ ...ai, handoff_minutes: Number(e.target.value) })} className="input mt-1 !py-1.5 text-xs" />
+            </label>
+          </div>
+          <div className="mt-3 rounded-lg bg-white px-3 py-2 ring-1 ring-violet-200">
+            <label className="flex items-center gap-2 text-xs font-medium text-ink">
+              <input type="checkbox" checked={ai.use_site_knowledge} onChange={(e) => setAi({ ...ai, use_site_knowledge: e.target.checked })} />
+              Donner à l&apos;assistant le contenu du site (fonctionnalités, tarifs, FAQ, formation, PrintiosSync, coordonnées)
+            </label>
+            <p className="mt-1 text-[11px] text-slate-500">
+              Le site publie son contenu sur /ai-knowledge.json ; l&apos;API le relit toutes les 24 h et l&apos;ajoute aux instructions. Après une mise à jour du site, cliquez « Actualiser ».
+              {knowledge && (
+                <>
+                  {" "}
+                  {knowledge.chars > 0 ? `Base actuelle : ${knowledge.sections} sections, ${knowledge.chars.toLocaleString("fr-FR")} caractères, relue le ${fmtTime(knowledge.fetched_at)}.` : `Base indisponible${knowledge.error ? ` : ${knowledge.error}` : ""}.`}
+                </>
+              )}
+            </p>
+            <button type="button" onClick={refreshKnowledge} disabled={kbBusy} className="btn-secondary mt-2 !px-2.5 !py-1 text-xs">
+              {kbBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null} Actualiser la base de connaissances
+            </button>
+            {kbPreview && <pre className="mt-2 max-h-40 overflow-y-auto whitespace-pre-wrap rounded bg-slate-50 p-2 text-[10px] text-slate-600">{kbPreview}…</pre>}
+          </div>
+          <label className="label mt-2 text-xs">Instructions complémentaires (ton, consignes, promotions en cours…)
+            <textarea value={ai.system_prompt} onChange={(e) => setAi({ ...ai, system_prompt: e.target.value })} className="input mt-1 !py-1.5 text-xs" rows={6} maxLength={8000} />
+          </label>
+          <div className="mt-1 flex flex-wrap items-center gap-2">
+            <button type="button" onClick={() => setAi({ ...ai, system_prompt: aiDefaultPrompt })} className="btn-secondary !px-2.5 !py-1 text-xs">Remettre le texte par défaut</button>
+            <button type="button" onClick={runAiTest} disabled={aiTest.busy || !ai.base_url || !ai.model || (!aiKey && !ai.api_key_set)} className="btn-secondary !px-2.5 !py-1 text-xs">
+              {aiTest.busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null} Tester (« Combien coûte PrintIOS ? »)
+            </button>
+          </div>
+          {aiTest.reply && <p className="mt-2 whitespace-pre-wrap rounded-lg bg-white px-3 py-2 text-xs text-ink ring-1 ring-violet-200">{aiTest.reply}<span className="ms-2 text-slate-400">({aiTest.ms} ms)</span></p>}
+          {aiTest.error && <p className="mt-2 text-xs text-red-600">{aiTest.error}</p>}
+        </div>
+
         <div className="mt-4 flex justify-end gap-2">
           <button type="button" onClick={onClose} className="btn-secondary !py-2">
             Annuler
