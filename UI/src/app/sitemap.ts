@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next"
 import { locales, localePath } from "@/i18n/config"
 import { hreflangCodes, siteUrl } from "@/lib/seo"
+import { features } from "@/content/fr/features"
 
-const pages = ["", "/fonctionnalites", "/agent", "/tarifs", "/faq", "/formation", "/contact", "/inscription"]
+// + une page par module (/fonctionnalites/<slug>, voir app/[locale]/fonctionnalites/[slug]/page.tsx).
+const pages = ["", "/fonctionnalites", ...features.map((f) => `/fonctionnalites/${f.slug}`), "/agent", "/tarifs", "/faq", "/formation", "/contact", "/inscription"]
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()

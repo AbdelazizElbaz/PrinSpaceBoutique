@@ -3,8 +3,9 @@
 
 export const fr = {
   meta: {
-    title: "Logiciel de gestion pour imprimeries au Maroc : commandes, atelier, livraison, COD",
-    description: "gérez commandes, devis, atelier d'impression, livraison multi-transporteurs et contre-remboursement dans un seul outil pensé pour les imprimeries au Maroc.",
+    // Titre et description orientés mots-clés (ERP, devis, facturation ICE, Maroc) — recommandations SEO du 19/10/2026.
+    title: "Logiciel de gestion d'imprimerie au Maroc | ERP, devis & facturation",
+    description: "logiciel ERP complet pour imprimeries et ateliers au Maroc. Devis express, factures conformes (ICE), commandes, suivi d'atelier, livraison multi-transporteurs et contre-remboursement.",
     ogTitle: "Commandes, atelier, livraison et encaissement COD pour les imprimeries.",
     trial: (d: number) => `Essai gratuit ${d} jours.`,
   },
@@ -116,6 +117,11 @@ export const fr = {
     title: "Un module par métier, un seul dossier de commande",
     lead: "Chaque fonctionnalité ci-dessous existe parce qu'un atelier en avait besoin. Rien de théorique.",
     agentLink: "Tout savoir sur PrintiosSync",
+    // Sous-pages par module (SEO, 19/10/2026).
+    subMetaTitle: (title: string) => `${title} — logiciel d'imprimerie au Maroc`,
+    backToAll: "Toutes les fonctionnalités",
+    moreLink: (title: string) => `En savoir plus sur ${title}`,
+    otherModules: "Les autres modules",
   },
   pricing: {
     metaTitle: "Tarifs : Starter, Pro, Business — essai gratuit 7 jours",

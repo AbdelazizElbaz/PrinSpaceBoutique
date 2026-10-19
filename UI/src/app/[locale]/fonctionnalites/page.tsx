@@ -55,6 +55,12 @@ export default async function FeaturesPage({ params }: LocaleParams) {
                   {t.features.agentLink}
                 </Link>
               )}
+              {/* Page dédiée au module (SEO : une URL indexable par fonctionnalité). */}
+              <p className="mt-5">
+                <Link href={localePath(locale, `/fonctionnalites/${f.slug}`)} className="text-sm font-semibold text-brand-700 hover:text-brand-800">
+                  {t.features.moreLink(f.title)}
+                </Link>
+              </p>
             </div>
             <div className={i % 2 ? "lg:order-1" : ""} dir="ltr">
               <Mockup kind={f.mockup} locale={locale} className="shadow-xl ring-1 ring-slate-200" />

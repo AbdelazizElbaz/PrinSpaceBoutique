@@ -2,8 +2,8 @@ import type { Dict } from "./fr"
 
 export const en: Dict = {
   meta: {
-    title: "Print shop management software in Morocco: orders, workshop, delivery, COD",
-    description: "manage orders, quotes, print workshop, multi-carrier delivery and cash on delivery in a single tool built for print shops in Morocco.",
+    title: "Print shop management software in Morocco | ERP, quotes & invoicing",
+    description: "complete ERP for print shops and workshops in Morocco. Fast quotes, compliant invoices (ICE), orders, workshop tracking, multi-carrier delivery and cash on delivery.",
     ogTitle: "Orders, workshop, delivery and COD collection for print shops.",
     trial: (d) => `${d}-day free trial.`,
   },
@@ -115,6 +115,10 @@ export const en: Dict = {
     title: "One module per job, one order file",
     lead: "Every feature below exists because a workshop needed it. Nothing theoretical.",
     agentLink: "Everything about PrintiosSync",
+    subMetaTitle: (title: string) => `${title} — print shop software in Morocco`,
+    backToAll: "All features",
+    moreLink: (title: string) => `Learn more about ${title}`,
+    otherModules: "Other modules",
   },
   pricing: {
     metaTitle: "Pricing: Starter, Pro, Business — 7-day free trial",
