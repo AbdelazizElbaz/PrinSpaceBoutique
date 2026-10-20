@@ -37,9 +37,10 @@ export function PricingTable({ locale, plans, comparison }: { locale: Locale; pl
               <h3 className="text-xl font-bold text-ink">{p.name}</h3>
               <p className="mt-1 min-h-10 text-sm text-slate-600">{p.audience}</p>
               <p className="mt-5">
-                <PlanPrice plan={p} yearly={yearly} locale={locale} perLabel={t.common.perMonthHT} yearlyTotalLabel={t.pricing.yearlyTotal} />
+                <PlanPrice plan={p} yearly={yearly} locale={locale} perLabel={t.common.perMonthHT} perYearLabel={t.common.perYearHT} monthlyEquivalentLabel={t.pricing.monthlyEquivalent} />
               </p>
-              <p className="text-xs text-slate-500">{yearly ? t.pricing.yearlyTotal(money(p.yearlyMonthly * 12, locale)) : t.common.orYearly(money(p.yearlyMonthly, locale))}</p>
+              {/* En annuel, le total de l'année est déjà le prix principal (PlanPrice) : on ne le répète pas. */}
+              {!yearly && <p className="text-xs text-slate-500">{t.common.orYearly(money(p.yearlyMonthly, locale))}</p>}
               <Link href={p.code === "business" ? `${lp("/contact")}?sujet=business` : `${lp("/inscription")}?plan=${p.code}&billing=${yearly ? "yearly" : "monthly"}`} className={`mt-6 ${p.highlight ? "btn-primary" : "btn-secondary"}`}>
                 {p.cta}
               </Link>
@@ -81,7 +82,7 @@ export function PricingTable({ locale, plans, comparison }: { locale: Locale; pl
                   <th key={p.code} className="px-5 py-4 text-center text-sm font-semibold text-ink">
                     {p.name}
                     <span className="block text-xs font-normal text-slate-500">
-                      <PlanPrice plan={p} yearly={yearly} locale={locale} perLabel={t.common.perMonthHT} size="sm" yearlyTotalLabel={t.pricing.yearlyTotal} />
+                      <PlanPrice plan={p} yearly={yearly} locale={locale} perLabel={t.common.perMonthHT} size="sm" perYearLabel={t.common.perYearHT} monthlyEquivalentLabel={t.pricing.monthlyEquivalent} />
                     </span>
                   </th>
                 ))}

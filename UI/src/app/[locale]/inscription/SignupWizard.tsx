@@ -117,7 +117,7 @@ export function SignupWizard({ locale, plans }: { locale: Locale; plans: Plan[] 
                   {plan === p.code ? <CheckCircle2 className="h-5 w-5 text-brand-600" /> : <Circle className="h-5 w-5 text-slate-300" />}
                 </div>
                 <p className="mt-2">
-                  <PlanPrice plan={p} yearly={billing === "yearly"} locale={locale} perLabel={t.common.perMonthHT} size="md" yearlyTotalLabel={t.pricing.yearlyTotal} />
+                  <PlanPrice plan={p} yearly={billing === "yearly"} locale={locale} perLabel={t.common.perMonthHT} size="md" perYearLabel={t.common.perYearHT} monthlyEquivalentLabel={t.pricing.monthlyEquivalent} />
                 </p>
                 <ul className="mt-3 space-y-1 text-xs text-slate-600">
                   {p.limits.slice(0, 3).map((l) => (

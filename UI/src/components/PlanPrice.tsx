@@ -11,18 +11,23 @@ export function PlanPrice({
   locale,
   perLabel,
   size = "lg",
-  yearlyTotalLabel,
+  perYearLabel,
+  monthlyEquivalentLabel,
 }: {
   plan: Plan
   yearly?: boolean
   locale: "fr" | "ar" | "en"
   perLabel: string
   size?: "lg" | "md" | "sm"
-  /** Formule annuelle : libellé du montant complet de l'année (demande du 20/10/2026 « donner le prix complet »). */
-  yearlyTotalLabel?: (amount: string) => string
+  /** Formule annuelle (demande du 20/10/2026 « donner le prix complet ») : le prix principal est le montant de
+      l'année (« 4 200 DH HT / an »), l'équivalent mensuel passe en petit dessous. */
+  perYearLabel?: string
+  monthlyEquivalentLabel?: (amount: string) => string
 }) {
-  const price = yearly ? p.yearlyMonthly : p.monthly
-  const list = yearly ? p.listYearlyMonthly : p.listMonthly
+  const yearlyMode = yearly && !!perYearLabel
+  const price = yearlyMode ? p.yearlyMonthly * 12 : yearly ? p.yearlyMonthly : p.monthly
+  const listMonthlyRef = yearly ? p.listYearlyMonthly : p.listMonthly
+  const list = yearlyMode ? (listMonthlyRef ? listMonthlyRef * 12 : undefined) : listMonthlyRef
   const priceCls = size === "lg" ? "text-4xl" : size === "md" ? "text-2xl" : "text-sm"
   return (
     <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
@@ -37,15 +42,12 @@ export function PlanPrice({
         <span className={`${size === "sm" ? "text-xs" : "text-lg"} font-semibold text-slate-400 line-through`}>{money(list, locale)}</span>
       )}
       <span className={`${priceCls} font-bold text-ink`}>{money(price, locale)}</span>
-      <span className="text-xs font-normal text-slate-500">{perLabel}</span>
+      <span className="text-xs font-normal text-slate-500">{yearlyMode ? perYearLabel : perLabel}</span>
       {p.promoLabel && list && list > price && size !== "sm" && (
         <span className="rounded-full bg-rose-100 px-2 py-0.5 text-[11px] font-semibold text-rose-700">{p.promoLabel}</span>
       )}
-      {yearly && yearlyTotalLabel && (
-        <span className={`basis-full ${size === "sm" ? "text-[11px]" : "text-xs"} text-slate-600`}>
-          {list && list > price && <span className="me-1 text-slate-400 line-through">{money(list * 12, locale)}</span>}
-          {yearlyTotalLabel(money(price * 12, locale))}
-        </span>
+      {yearlyMode && monthlyEquivalentLabel && (
+        <span className={`basis-full ${size === "sm" ? "text-[11px]" : "text-xs"} text-slate-600`}>{monthlyEquivalentLabel(money(p.yearlyMonthly, locale))}</span>
       )}
     </span>
   )
