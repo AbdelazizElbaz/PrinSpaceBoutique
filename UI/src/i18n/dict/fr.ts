@@ -11,17 +11,55 @@ export const fr = {
     trial: (d: number) => `Essai gratuit ${d} jours.`,
   },
   // Page « Logiciel d'imprimerie tout-en-un au Maroc » (/logiciel-imprimerie-maroc) — référencement, 20/10/2026.
-  // Schéma animé « écosystème » (components/Ecosystem.tsx), 20/10/2026.
+  // Schémas animés (components/Ecosystem.tsx, OrderFlow.tsx, Diagrams.tsx), 20/10/2026.
   ecosystem: {
     title: "Tout l'atelier autour d'un seul dossier de commande",
+    views: { ecosystem: "Vue écosystème", order: "Créer une commande" },
+    hint: "Survolez un module pour voir le détail de ce qu'il couvre.",
     modules: [
-      { title: "Catalogue et devis", items: ["Grand format au m²", "Cartes, flyers, affiches", "Étiquettes et packaging"] },
-      { title: "Commandes et atelier", items: ["Maquettes à valider", "Montage groupé", "PrintiosSync vers les machines"] },
-      { title: "Livraison et COD", items: ["Ameex, Olivraison, Ozone, Sendit", "Livreurs internes", "Rapprochement COD"] },
-      { title: "Stocks et finance", items: ["Matières premières", "Factures et bons de livraison", "Tableau de bord"] },
-      { title: "Clients et revendeurs", items: ["Fidélité et codes promo", "Prix négociés", "Relevés par revendeur"] },
-      { title: "Boutique en ligne", items: ["Catalogue synchronisé", "Commandes web", "Suivi client"] },
+      {
+        title: "Catalogue et devis",
+        items: ["Grand format au m²", "Cartes, flyers, affiches", "Étiquettes et packaging"],
+        summary: "Un catalogue par métier avec les prix calculés automatiquement, du devis PDF à la maquette validée.",
+        details: ["Bâches, vinyle, panneaux calculés au m² ou au mètre linéaire", "Cartes, flyers, affiches : paliers de quantité et options de finition", "Étiquettes et packaging : quantités imposées, prix par lot", "Devis PDF et maquette à valider en un clic"],
+      },
+      {
+        title: "Commandes et atelier",
+        items: ["Fichiers de conception et montage", "Suivi de production en temps réel", "PrintiosSync vers les machines"],
+        summary: "Chaque commande porte ses fichiers de conception et son montage, puis avance d'atelier en atelier jusqu'à la machine.",
+        details: ["Fichiers de conception rattachés à la commande, maquette (BAT) validée par le client", "Montage et imposition, y compris le montage groupé de plusieurs commandes", "Suivi de production en temps réel par atelier, par poste et par machine", "Tickets d'atelier et de livraison générés automatiquement", "PrintiosSync : les fichiers prêts arrivent automatiquement sur les postes et les machines"],
+      },
+      {
+        title: "Livraison et COD",
+        items: ["Ameex, Olivraison, Ozone, Sendit", "Ramassage transporteur", "Livreurs internes"],
+        summary: "Transporteurs intégrés et livreurs internes, du ramassage à l'encaissement contre remboursement.",
+        details: ["Étiquette et numéro de suivi créés automatiquement chez le transporteur", "Demande de ramassage transporteur planifiée depuis la commande", "Livreurs internes : espace livreur, tournées, ticket de livraison", "Rapprochement COD : montants collectés et versés par transporteur"],
+      },
+      {
+        title: "Finance et stocks",
+        items: ["Factures, tickets et devis", "Encaissements, avances et relevés", "Stocks de matières premières"],
+        summary: "Toute la finance de l'atelier par sous-rubrique, du ticket généré à la commande jusqu'au tableau de bord, avec les stocks décomptés.",
+        details: ["Facturation : factures, devis, bons de livraison PDF avec TVA", "Tickets de caisse, d'atelier et de livraison générés automatiquement", "Encaissements : avances, reste à payer, COD, relevés par client et revendeur", "Tableau de bord : chiffre d'affaires, marges, impayés", "Stocks : rouleaux, feuilles et consommables suivis par unité (QR code), décompte automatique et alerte de stock bas"],
+      },
+      {
+        title: "Clients, vendeurs et revendeurs",
+        items: ["Vendeurs et revendeurs", "Prix négociés", "Fidélité et codes promo"],
+        summary: "Vendeurs, revendeurs et clients finaux avec leurs prix négociés, leurs relevés et leurs programmes de fidélité.",
+        details: ["Vendeurs : commandes et chiffre par vendeur", "Revendeurs : prix négociés par client ou revendeur, relevés et encours", "Fidélité : points, codes promo et campagnes", "Historique, fichiers et adresses de chaque client"],
+      },
+      {
+        title: "Boutique en ligne",
+        items: ["Catalogue synchronisé", "Commandes web", "Suivi client"],
+        summary: "Votre site de vente branché sur l'atelier : mêmes produits, mêmes prix, commandes qui arrivent directement.",
+        details: ["Catalogue, prix et quantités synchronisés avec l'atelier", "Commandes web créées directement dans PrintIOS", "Notification dès qu'un panier arrive, même non finalisé", "Suivi client : statut, numéro de suivi, paiement à la livraison"],
+      },
     ],
+  },
+  orderFlow: {
+    choose: { title: "Le client choisit", pick: "Choisir le produit", products: ["Cartes de visite", "Flyers", "Bâche grand format", "Stickers"], upload: "Déposer la maquette", quantityLabel: "Quantité", quantities: ["100", "250", "500", "1000"] },
+    flow: { title: "Parcours de la commande", steps: ["Devis", "Maquette validée", "Avance et ticket", "Atelier en temps réel", "Livraison", "COD encaissé"] },
+    ship: { title: "Atelier et expédition", sources: ["Fichiers de conception", "Montage", "Machines"], sync: "Suivi de production en temps réel par atelier et machine, tickets générés, fichiers envoyés par PrintiosSync", mockTitle: "Suivi en temps réel", mockSteps: ["Fichier prêt", "En production", "Ramassée par le transporteur", "Livrée"], cod: "COD encaissé" },
+    integrations: { title: "Connecté à votre atelier", extras: ["WhatsApp", "PrintiosSync", "Boutique en ligne", "PDF / Excel"] },
   },
   allInOne: {
     metaTitle: "Logiciel d'imprimerie tout-en-un au Maroc : devis, atelier, stocks, facturation, livraison",

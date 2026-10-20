@@ -4,10 +4,13 @@
 // centre, six modules en orbite reliés par des pointillés animés, chaque module rayonnant vers ses sous-fonctions.
 // Tout en SVG (viewBox fixe, donc réactif), textes passés par le dictionnaire (FR/AR/EN). L'animation démarre quand
 // le schéma entre dans l'écran (IntersectionObserver) et respecte prefers-reduced-motion (voir globals.css, .eco*).
+// Survol / tap d'un module (« quand on passe la souris on aura plus de détails ») : les autres modules s'estompent
+// et une carte sous le schéma détaille le module (résumé + liste). Seconde vue « créer une commande » : OrderFlow.tsx.
 
 import { useEffect, useRef, useState } from "react"
+import { Tilt } from "@/components/motion"
 
-export type EcoModule = { title: string; items: string[] }
+export type EcoModule = { title: string; items: string[]; summary: string; details: string[] }
 
 const COLORS = ["#e11d2e", "#db2777", "#0d9488", "#d97706", "#16a34a", "#2547e9"]
 // Largeur 1100 : les libellés les plus à gauche et à droite (ITEM_RX + demi-largeur du texte) restent dans le cadre.
@@ -25,9 +28,10 @@ function polar(angleDeg: number, rx: number, ry: number) {
   return { x: CX + rx * Math.cos(a), y: CY + ry * Math.sin(a) }
 }
 
-export function Ecosystem({ center, modules, rtl = false }: { center: string; modules: EcoModule[]; rtl?: boolean }) {
+export function Ecosystem({ center, modules, hint, rtl = false }: { center: string; modules: EcoModule[]; hint: string; rtl?: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
   const [on, setOn] = useState(false)
+  const [active, setActive] = useState<number | null>(null)
 
   useEffect(() => {
     const el = ref.current
@@ -49,13 +53,22 @@ export function Ecosystem({ center, modules, rtl = false }: { center: string; mo
     return () => io.disconnect()
   }, [])
 
-  // Six modules répartis en ellipse, en commençant en haut ; les sous-fonctions s'écartent de ±16° autour de l'axe.
+  // Six modules répartis en ellipse, en commençant en haut ; les sous-fonctions s'écartent de ±22° autour de l'axe.
   const angles = [-90, -30, 30, 90, 150, 210]
   const list = modules.slice(0, 6)
+  const current = active === null ? null : list[active]
 
   return (
-    <div ref={ref} className={`eco mx-auto w-full max-w-4xl ${on ? "eco-on" : ""}`} dir="ltr">
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={center}>
+    <div
+      ref={ref}
+      className={`eco mx-auto w-full max-w-4xl ${on ? "eco-on" : ""} ${active !== null ? "eco-has-active" : ""}`}
+      dir="ltr"
+      onMouseLeave={() => setActive(null)}
+    >
+      {/* 3D (demande du 20/10/2026 « plus d'animation 3D ») : le schéma s'incline en suivant la souris (Tilt) et oscille
+          lentement en perspective au repos ; la carte de détail flotte au-dessus du plan (translateZ). */}
+      <Tilt max={7} glare={false}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="eco-svg h-auto w-full" role="img" aria-label={center}>
         <defs>
           <radialGradient id="eco-glow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#2547e9" stopOpacity="0.18" />
@@ -71,18 +84,30 @@ export function Ecosystem({ center, modules, rtl = false }: { center: string; mo
           const color = COLORS[i % COLORS.length]
           const mod = polar(angles[i], MODULE_RX, MODULE_RY)
           const spread = m.items.length === 1 ? [0] : m.items.length === 2 ? [-14, 14] : [-22, 0, 22]
+          const isActive = active === i
           return (
-            <g key={m.title} className="eco-module" style={{ ["--d" as string]: `${0.15 + i * 0.12}s` }}>
+            <g
+              key={m.title}
+              className={`eco-module ${isActive ? "eco-active" : ""}`}
+              style={{ ["--d" as string]: `${0.15 + i * 0.12}s` }}
+              onMouseEnter={() => setActive(i)}
+              onFocus={() => setActive(i)}
+              onClick={() => setActive(isActive ? null : i)}
+              tabIndex={0}
+              role="button"
+              aria-pressed={isActive}
+              aria-label={m.title}
+            >
               {/* centre → module */}
-              <line x1={CX} y1={CY} x2={mod.x} y2={mod.y} className="eco-line" stroke={color} strokeWidth="1.5" strokeDasharray="5 6" />
+              <line x1={CX} y1={CY} x2={mod.x} y2={mod.y} className="eco-line" stroke={color} strokeWidth={isActive ? 2.5 : 1.5} strokeDasharray="5 6" />
               {/* module → sous-fonctions */}
               {m.items.slice(0, 3).map((item, j) => {
                 const pt = polar(angles[i] + spread[j], ITEM_RX, ITEM_RY)
                 return (
                   <g key={item} className="eco-item" style={{ ["--d" as string]: `${0.55 + i * 0.12 + j * 0.08}s` }}>
-                    <line x1={mod.x} y1={mod.y} x2={pt.x} y2={pt.y} className="eco-line eco-line-sub" stroke="#94a3b8" strokeWidth="1.2" strokeDasharray="3 6" />
+                    <line x1={mod.x} y1={mod.y} x2={pt.x} y2={pt.y} className="eco-line eco-line-sub" stroke={isActive ? color : "#94a3b8"} strokeWidth="1.2" strokeDasharray="3 6" />
                     <foreignObject x={pt.x - 85} y={pt.y - 22} width="170" height="44">
-                      <div className="flex h-full items-center justify-center text-center text-[13px] font-medium leading-tight text-slate-700" dir={rtl ? "rtl" : "ltr"}>
+                      <div className={`flex h-full items-center justify-center text-center text-[13px] leading-tight ${isActive ? "font-semibold text-slate-900" : "font-medium text-slate-700"}`} dir={rtl ? "rtl" : "ltr"}>
                         {item}
                       </div>
                     </foreignObject>
@@ -91,9 +116,9 @@ export function Ecosystem({ center, modules, rtl = false }: { center: string; mo
               })}
               {/* le module lui-même */}
               <g className="eco-node" style={{ ["--d" as string]: `${0.35 + i * 0.12}s`, transformOrigin: `${mod.x}px ${mod.y}px` }}>
-                <rect x={mod.x - 78} y={mod.y - 27} width="156" height="54" rx="10" fill="#fff" stroke={color} strokeWidth="2" />
+                <rect x={mod.x - 78} y={mod.y - 27} width="156" height="54" rx="10" fill={isActive ? color : "#fff"} stroke={color} strokeWidth="2" style={{ transition: "fill 0.2s" }} />
                 <foreignObject x={mod.x - 76} y={mod.y - 25} width="152" height="50">
-                  <div className="flex h-full items-center justify-center px-2 text-center text-[15px] font-bold leading-tight" style={{ color }} dir={rtl ? "rtl" : "ltr"}>
+                  <div className="flex h-full cursor-pointer items-center justify-center px-2 text-center text-[15px] font-bold leading-tight" style={{ color: isActive ? "#fff" : color }} dir={rtl ? "rtl" : "ltr"}>
                     {m.title}
                   </div>
                 </foreignObject>
@@ -116,6 +141,32 @@ export function Ecosystem({ center, modules, rtl = false }: { center: string; mo
           </text>
         </g>
       </svg>
+
+      {/* Carte de détail du module survolé (ou consigne tant qu'aucun module n'est survolé). */}
+      <div
+        key={active ?? "hint"}
+        className="eco-details mx-auto mt-2 min-h-[8.5rem] max-w-3xl rounded-2xl border border-slate-200 bg-white p-4 shadow-lg"
+        dir={rtl ? "rtl" : "ltr"}
+        aria-live="polite"
+      >
+        {current === null ? (
+          <p className="flex h-full min-h-[6.5rem] items-center justify-center text-center text-sm text-slate-500">{hint}</p>
+        ) : (
+          <>
+            <p className="text-base font-bold" style={{ color: COLORS[active! % COLORS.length] }}>{current.title}</p>
+            <p className="mt-1 text-sm text-slate-600">{current.summary}</p>
+            <ul className="mt-3 grid gap-x-6 gap-y-1.5 text-sm text-slate-700 sm:grid-cols-2">
+              {current.details.map((d) => (
+                <li key={d} className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: COLORS[active! % COLORS.length] }} />
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+      </Tilt>
     </div>
   )
 }

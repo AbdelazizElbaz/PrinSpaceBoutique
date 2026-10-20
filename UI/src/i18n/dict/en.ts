@@ -10,14 +10,52 @@ export const en: Dict = {
   },
   ecosystem: {
     title: "The whole workshop around one order file",
+    views: { ecosystem: "Ecosystem view", order: "Create an order" },
+    hint: "Hover a module to see what it covers.",
     modules: [
-      { title: "Catalogue and quotes", items: ["Large format per m²", "Cards, flyers, posters", "Labels and packaging"] },
-      { title: "Orders and workshop", items: ["Mockup approval", "Grouped imposition", "PrintiosSync to the machines"] },
-      { title: "Delivery and COD", items: ["Ameex, Olivraison, Ozone, Sendit", "In-house couriers", "COD reconciliation"] },
-      { title: "Stock and finance", items: ["Raw materials", "Invoices and delivery notes", "Dashboard"] },
-      { title: "Customers and resellers", items: ["Loyalty and promo codes", "Negotiated prices", "Statements per reseller"] },
-      { title: "Online store", items: ["Synchronised catalogue", "Web orders", "Customer tracking"] },
+      {
+        title: "Catalogue and quotes",
+        items: ["Large format per m²", "Cards, flyers, posters", "Labels and packaging"],
+        summary: "A catalogue per trade with automatically computed prices, from the PDF quote to the approved mockup.",
+        details: ["Banners, vinyl, panels priced per m² or linear metre", "Cards, flyers, posters: quantity tiers and finishing options", "Labels and packaging: fixed quantities, price per lot", "PDF quote and mockup approval in one click"],
+      },
+      {
+        title: "Orders and workshop",
+        items: ["Design files and imposition", "Real-time production tracking", "PrintiosSync to the machines"],
+        summary: "Each order carries its design files and imposition, then moves from workshop to workshop up to the machine.",
+        details: ["Design files attached to the order, mockup approved by the customer", "Imposition, including grouped imposition of several orders", "Real-time production tracking per workshop, station and machine", "Workshop and delivery tickets generated automatically", "PrintiosSync: ready files land automatically on stations and machines"],
+      },
+      {
+        title: "Delivery and COD",
+        items: ["Ameex, Olivraison, Ozone, Sendit", "Carrier pickup", "In-house couriers"],
+        summary: "Integrated carriers and in-house couriers, from pickup to cash-on-delivery collection.",
+        details: ["Label and tracking number created automatically at the carrier", "Carrier pickup request scheduled from the order", "In-house couriers: courier space, rounds, delivery ticket", "COD reconciliation: amounts collected and paid out per carrier"],
+      },
+      {
+        title: "Finance and stock",
+        items: ["Invoices, tickets and quotes", "Collections, advances and statements", "Raw-material stock"],
+        summary: "All the workshop's finance by sub-heading, from the ticket generated at order time to the dashboard, with stock deducted.",
+        details: ["Invoicing: invoices, quotes, PDF delivery notes with VAT", "Receipt, workshop and delivery tickets generated automatically", "Collections: advances, balance due, COD, statements per customer and reseller", "Dashboard: revenue, margins, unpaid amounts", "Stock: rolls, sheets and consumables tracked per unit (QR code), automatic deduction and low-stock alert"],
+      },
+      {
+        title: "Customers, sellers and resellers",
+        items: ["Sellers and resellers", "Negotiated prices", "Loyalty and promo codes"],
+        summary: "Sellers, resellers and end customers with their negotiated prices, statements and loyalty programmes.",
+        details: ["Sellers: orders and revenue per seller", "Resellers: negotiated prices per customer or reseller, statements and balances", "Loyalty: points, promo codes and campaigns", "History, files and addresses of every customer"],
+      },
+      {
+        title: "Online store",
+        items: ["Synchronised catalogue", "Web orders", "Customer tracking"],
+        summary: "Your sales website wired to the workshop: same products, same prices, orders arriving directly.",
+        details: ["Catalogue, prices and quantities synchronised with the workshop", "Web orders created directly in PrintIOS", "Notification as soon as a cart arrives, even unfinished", "Customer tracking: status, tracking number, cash on delivery"],
+      },
     ],
+  },
+  orderFlow: {
+    choose: { title: "The customer chooses", pick: "Pick the product", products: ["Business cards", "Flyers", "Large-format banner", "Stickers"], upload: "Upload the artwork", quantityLabel: "Quantity", quantities: ["100", "250", "500", "1000"] },
+    flow: { title: "Order journey", steps: ["Quote", "Mockup approved", "Advance and ticket", "Workshop in real time", "Delivery", "COD collected"] },
+    ship: { title: "Workshop and shipping", sources: ["Design files", "Imposition", "Machines"], sync: "Real-time production tracking per workshop and machine, tickets generated, files sent by PrintiosSync", mockTitle: "Real-time tracking", mockSteps: ["File ready", "In production", "Picked up by the carrier", "Delivered"], cod: "COD collected" },
+    integrations: { title: "Connected to your workshop", extras: ["WhatsApp", "PrintiosSync", "Online store", "PDF / Excel"] },
   },
   allInOne: {
     metaTitle: "All-in-one print shop software in Morocco: quotes, workshop, stock, invoicing, delivery",

@@ -5,16 +5,9 @@ import { Section, SectionHeading } from "@/components/ui"
 import { Reveal, Stagger } from "@/components/motion"
 import { getDict, isRtl, localePath, type Locale } from "@/i18n"
 
-// Transporteurs intégrés nativement dans l'application (demande utilisateur du 17/10/2026 : « mettre en valeur
-// le fait que notre app intègre déjà Ozone Express, Olivraison, Sendit, Ameex… avec leurs logos »). Les logos
-// viennent de l'application (ui/public/providers) ; les marques appartiennent à leurs propriétaires (voir mentions
-// légales). Ajouter un transporteur = une entrée ici + son logo dans public/carriers.
-export const CARRIERS = [
-  { key: "ameex", name: "Ameex", logo: "/carriers/ameex.png", w: 450, h: 130, wordmark: true },
-  { key: "olivraison", name: "Olivraison", logo: "/carriers/olivraison.png", w: 512, h: 512, wordmark: false },
-  { key: "ozoneexpress", name: "Ozone Express", logo: "/carriers/ozoneexpress.png", w: 536, h: 466, wordmark: false },
-  { key: "sendit", name: "Sendit", logo: "/carriers/sendit.png", w: 180, h: 208, wordmark: false },
-] as const
+// Liste des transporteurs : src/lib/carriers.ts (partagée avec les schémas animés, OrderFlow.tsx).
+import { CARRIERS } from "@/lib/carriers"
+export { CARRIERS }
 
 /** Bande complète (page d'accueil) : titre, une carte par transporteur, livreurs internes, appel « autre transporteur ? ». */
 export function CarriersBand({ locale }: { locale: Locale }) {
