@@ -14,7 +14,7 @@ class VisitorSession extends Model
 
     protected $fillable = [
         'guest_token', 'current_path', 'referrer', 'locale', 'user_agent', 'ip_address', 'xff_header',
-        'city', 'country', 'country_code', 'geo_error', 'viewed_pages', 'first_seen_at', 'last_seen_at',
+        'city', 'country', 'country_code', 'geo_error', 'viewed_pages', 'page_views', 'first_seen_at', 'last_seen_at',
     ];
 
     protected $casts = ['viewed_pages' => 'array', 'first_seen_at' => 'datetime', 'last_seen_at' => 'datetime'];

@@ -9,6 +9,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { Archive, ArchiveRestore, Globe, Loader2, LogOut, MessageSquareText, Radio, RefreshCw, Send, Settings2, Store, Trash2, Users, X, Zap } from "lucide-react"
+import { VisitorsDialog } from "@/components/chat/VisitorsDialog"
 import { adminApi, ADMIN_HINT_KEY, ADMIN_TOKEN_KEY, ChatApiError, playNotificationSound, setNotificationTitle, type AdminConversation, type AdminThread, type AdminVisitor, type CannedResponse, type ChatAiKnowledge, type ChatAiSettings, type ChatMessage, type SiteOverridesPayload } from "@/lib/chatApi"
 
 const DEFAULT_POLL_MS = 2000
@@ -115,6 +116,8 @@ function Console({ onLogout }: { onLogout: () => void }) {
   const [showCanned, setShowCanned] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [showSite, setShowSite] = useState(false)
+  // Visiteurs et statistiques (demande du 20/10/2026), voir VisitorsDialog.
+  const [showVisitors, setShowVisitors] = useState(false)
   const [showInfo, setShowInfo] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const lastUnreadRef = useRef<number | null>(null)
@@ -300,6 +303,9 @@ function Console({ onLogout }: { onLogout: () => void }) {
           <button type="button" onClick={() => setShowSite(true)} className="btn-ghost !px-3 !py-2" title="Paramètres du site (prix, coordonnées)">
             <Store className="h-4 w-4" />
           </button>
+          <button type="button" onClick={() => setShowVisitors(true)} className="btn-ghost !px-3 !py-2" title="Visiteurs et statistiques (IP, ville, pages vues)">
+            <Users className="h-4 w-4" />
+          </button>
           <button type="button" onClick={logout} className="btn-ghost !px-3 !py-2" title="Se déconnecter">
             <LogOut className="h-4 w-4" />
           </button>
@@ -471,6 +477,15 @@ function Console({ onLogout }: { onLogout: () => void }) {
 
       {showSettings && <SettingsDialog onClose={() => setShowSettings(false)} onSaved={(ms) => setPollMs(ms)} />}
       {showSite && <SiteSettingsDialog onClose={() => setShowSite(false)} />}
+      {showVisitors && (
+        <VisitorsDialog
+          onClose={() => setShowVisitors(false)}
+          onOpenVisitor={(v) => {
+            setShowVisitors(false)
+            openVisitor(v)
+          }}
+        />
+      )}
     </div>
   )
 }

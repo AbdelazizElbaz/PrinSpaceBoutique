@@ -34,13 +34,18 @@ class VisitorController extends Controller
         }
 
         $session = VisitorSession::firstOrNew(['guest_token' => $data['guest_token']]);
+        // Pages vues (statistiques de la console) : +1 à chaque changement de page d'un visiteur connu.
+        $newPath = $data['current_path'] ?? null;
+        if ($session->exists && $newPath && $newPath !== $session->current_path) {
+            $session->page_views = (int) $session->page_views + 1;
+        }
         $ip = VisitorGeo::clientIp($request);
         $geo = VisitorGeo::resolve($ip, $request->header('CF-IPCountry'));
         $session->fill([
             'current_path' => $data['current_path'] ?? $session->current_path,
             'referrer' => $session->referrer ?: ($data['referrer'] ?? null),
             'locale' => $data['locale'] ?? $session->locale,
-            'user_agent' => substr((string) $request->userAgent(), 0, 250),
+            'user_agent' => $request->userAgent() ? substr((string) $request->userAgent(), 0, 250) : $session->user_agent,
             'ip_address' => $ip,
             'xff_header' => substr((string) $request->header('X-Forwarded-For'), 0, 500) ?: null,
             // Une valeur déjà connue n'est jamais écrasée par un échec de géolocalisation.
@@ -53,6 +58,7 @@ class VisitorController extends Controller
         ]);
         if (!$session->exists) {
             $session->first_seen_at = now();
+            $session->page_views = 1;
         }
         $session->save();
 

@@ -116,9 +116,29 @@ export type AdminConversation = {
   archived_at: string | null
 }
 
+export type VisitorStats = {
+  days: number
+  online: number
+  today: { visitors: number; new: number }
+  period: { visitors: number; new: number; page_views: number; returning: number }
+  by_day: { date: string; visitors: number; new: number; page_views: number }[]
+  top_cities: { city: string; country: string | null; country_code: string | null; count: number }[]
+  top_countries: { country: string; country_code: string | null; count: number }[]
+  top_pages: { path: string; count: number }[]
+  sources: { source: string; count: number }[]
+  locales: { locale: string; count: number }[]
+  devices: { mobile: number; desktop: number }
+}
+export type VisitorsPage = { data: AdminVisitor[]; total: number; page: number; last_page: number; days: number }
+
 export type AdminVisitor = {
   id: number
   display_name: string
+  // Champs des listes complètes (/admin/visitors/all), absents de la liste « en ligne ».
+  source?: string
+  page_views?: number
+  device?: string
+  online?: boolean
   conversation_id: number | null
   current_path: string | null
   referrer: string | null
@@ -176,6 +196,9 @@ export const adminApi = {
   unarchive: (id: number) => request<{ archived_at: null }>(`/admin/chat/conversations/${id}/unarchive`, { method: "POST", token: t() }),
   remove: (id: number) => request<{ ok: true }>(`/admin/chat/conversations/${id}`, { method: "DELETE", token: t() }),
   visitors: () => request<AdminVisitor[]>("/admin/visitors", { token: t() }),
+  // Statistiques de fréquentation + liste complète des visiteurs (demande du 20/10/2026).
+  visitorStats: (days: number) => request<VisitorStats>(`/admin/visitors/stats?days=${days}`, { token: t() }),
+  visitorsAll: (days: number, q: string, page: number) => request<VisitorsPage>(`/admin/visitors/all?days=${days}&q=${encodeURIComponent(q)}&page=${page}`, { token: t() }),
   startChat: (sessionId: number) => request<{ conversation_id: number }>(`/admin/visitors/${sessionId}/start-chat`, { method: "POST", token: t() }),
   settings: () => request<ChatSettings>("/admin/chat/settings", { token: t() }),
   saveSettings: (payload: { poll_interval_ms?: number; welcome_message?: string | null; ai?: Partial<Omit<ChatAiSettings, "api_key_set">> & { api_key?: string } }) =>

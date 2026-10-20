@@ -59,6 +59,9 @@ Route::prefix('admin')->withoutMiddleware('throttle:api')->group(function () {
         Route::post('/chat/conversations/{conversation}/unarchive', [AdminChatController::class, 'unarchive'])->whereNumber('conversation');
 
         Route::get('/visitors', [AdminVisitorController::class, 'index']);
+        // Statistiques de fréquentation + liste complète (demande du 20/10/2026), voir AdminVisitorController.
+        Route::get('/visitors/stats', [AdminVisitorController::class, 'stats']);
+        Route::get('/visitors/all', [AdminVisitorController::class, 'all']);
         Route::post('/visitors/{session}/start-chat', [AdminVisitorController::class, 'startChat'])->whereNumber('session');
 
         Route::get('/canned-responses', [AdminCannedResponseController::class, 'index']);
