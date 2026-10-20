@@ -356,3 +356,27 @@ body {
 [dir="rtl"] .h2 {
   letter-spacing: 0;
 }
+
+/* Schéma animé « écosystème » (components/Ecosystem.tsx) : pointillés qui défilent, modules qui apparaissent en
+   séquence (délai --d), anneau pulsé au centre, flottement lent ; tout est figé si l'utilisateur préfère moins
+   d'animations. L'animation ne démarre qu'avec .eco-on (schéma visible à l'écran). */
+@keyframes eco-dash { to { stroke-dashoffset: -44; } }
+@keyframes eco-pop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: scale(1); } }
+@keyframes eco-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes eco-pulse { 0% { transform: scale(0.9); opacity: 0.7; } 70% { transform: scale(1.9); opacity: 0; } 100% { transform: scale(1.9); opacity: 0; } }
+.eco .eco-line { opacity: 0; }
+.eco .eco-node, .eco .eco-item { opacity: 0; }
+.eco .eco-ring { opacity: 0; transform-origin: 550px 330px; }
+.eco-on .eco-line { animation: eco-fade 0.6s ease-out var(--d, 0s) both, eco-dash 1.6s linear infinite; }
+.eco-on .eco-line-sub { animation: eco-fade 0.6s ease-out calc(var(--d, 0s) + 0.25s) both, eco-dash 2.4s linear infinite; }
+.eco-on .eco-node { animation: eco-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both; }
+.eco-on .eco-item { animation: eco-fade 0.6s ease-out var(--d, 0s) both; }
+.eco-on .eco-ring { animation: eco-pulse 2.8s ease-out 0.6s infinite; }
+.eco-on svg { animation: float 7s ease-in-out 1.5s infinite; }
+.eco .eco-module { transition: transform 0.25s ease; }
+.eco .eco-module:hover rect { filter: drop-shadow(0 6px 14px rgba(37, 71, 233, 0.25)); }
+@media (prefers-reduced-motion: reduce) {
+  .eco .eco-line, .eco .eco-node, .eco .eco-item { opacity: 1; animation: none !important; }
+  .eco .eco-ring { display: none; }
+  .eco-on svg { animation: none; }
+}

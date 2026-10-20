@@ -8,6 +8,17 @@ export const en: Dict = {
     ogTitle: "Orders, workshop, delivery and COD collection for print shops.",
     trial: (d) => `${d}-day free trial.`,
   },
+  ecosystem: {
+    title: "The whole workshop around one order file",
+    modules: [
+      { title: "Catalogue and quotes", items: ["Large format per m²", "Cards, flyers, posters", "Labels and packaging"] },
+      { title: "Orders and workshop", items: ["Mockup approval", "Grouped imposition", "PrintiosSync to the machines"] },
+      { title: "Delivery and COD", items: ["Ameex, Olivraison, Ozone, Sendit", "In-house couriers", "COD reconciliation"] },
+      { title: "Stock and finance", items: ["Raw materials", "Invoices and delivery notes", "Dashboard"] },
+      { title: "Customers and resellers", items: ["Loyalty and promo codes", "Negotiated prices", "Statements per reseller"] },
+      { title: "Online store", items: ["Synchronised catalogue", "Web orders", "Customer tracking"] },
+    ],
+  },
   allInOne: {
     metaTitle: "All-in-one print shop software in Morocco: quotes, workshop, stock, invoicing, delivery",
     metaDesc: "PrintIOS, the all-in-one software for print shops in Morocco: quotes per m² and per linear metre, orders, workshop and imposition, raw-material stock, invoices and delivery notes, multi-carrier delivery and cash on delivery, online store. Free trial.",

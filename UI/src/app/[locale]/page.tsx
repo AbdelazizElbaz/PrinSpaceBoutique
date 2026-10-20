@@ -5,6 +5,7 @@ import { Section, SectionHeading, CtaBand, Badge, FaqList } from "@/components/u
 import { Icon } from "@/components/Icon"
 import { Mockup } from "@/components/mockups/Mockup"
 import { CarriersBand } from "@/components/CarriersBand"
+import { Ecosystem } from "@/components/Ecosystem"
 import { Reveal, Stagger, Tilt, CountUp } from "@/components/motion"
 import { site, money } from "@/content/site.config"
 import { applySettings, getSiteSettings, waLink } from "@/lib/siteSettings"
@@ -83,6 +84,8 @@ export default async function HomePage({ params }: LocaleParams) {
       <Section id="tout-en-un">
         <Reveal><SectionHeading eyebrow={t.allInOne.eyebrow} title={t.allInOne.title} lead={t.allInOne.lead} /></Reveal>
         <Reveal delay={100}><p className="mx-auto mt-4 max-w-3xl text-center text-sm text-slate-600">{t.allInOne.audiences}</p></Reveal>
+        {/* Schéma animé de l'écosystème (modules en orbite autour de la marque), 20/10/2026. */}
+        <Reveal delay={150} className="mt-10"><Ecosystem center={site.brand} modules={t.ecosystem.modules} rtl={isRtl(locale)} /></Reveal>
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Stagger step={80}>
             {t.allInOne.pillars.map((p) => (

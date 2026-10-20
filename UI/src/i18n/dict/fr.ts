@@ -11,6 +11,18 @@ export const fr = {
     trial: (d: number) => `Essai gratuit ${d} jours.`,
   },
   // Page « Logiciel d'imprimerie tout-en-un au Maroc » (/logiciel-imprimerie-maroc) — référencement, 20/10/2026.
+  // Schéma animé « écosystème » (components/Ecosystem.tsx), 20/10/2026.
+  ecosystem: {
+    title: "Tout l'atelier autour d'un seul dossier de commande",
+    modules: [
+      { title: "Catalogue et devis", items: ["Grand format au m²", "Cartes, flyers, affiches", "Étiquettes et packaging"] },
+      { title: "Commandes et atelier", items: ["Maquettes à valider", "Montage groupé", "PrintiosSync vers les machines"] },
+      { title: "Livraison et COD", items: ["Ameex, Olivraison, Ozone, Sendit", "Livreurs internes", "Rapprochement COD"] },
+      { title: "Stocks et finance", items: ["Matières premières", "Factures et bons de livraison", "Tableau de bord"] },
+      { title: "Clients et revendeurs", items: ["Fidélité et codes promo", "Prix négociés", "Relevés par revendeur"] },
+      { title: "Boutique en ligne", items: ["Catalogue synchronisé", "Commandes web", "Suivi client"] },
+    ],
+  },
   allInOne: {
     metaTitle: "Logiciel d'imprimerie tout-en-un au Maroc : devis, atelier, stocks, facturation, livraison",
     metaDesc: "PrintIOS, le logiciel tout-en-un des imprimeries au Maroc : devis au m² et au mètre linéaire, commandes, atelier et montage, stocks de matières premières, factures et bons de livraison, livraison multi-transporteurs et contre-remboursement, boutique en ligne. Essai gratuit.",

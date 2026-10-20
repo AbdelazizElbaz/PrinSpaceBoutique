@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ArrowRight, Check } from "lucide-react"
 import { Section, SectionHeading, CtaBand, FaqList } from "@/components/ui"
 import { Reveal, Stagger } from "@/components/motion"
+import { Ecosystem } from "@/components/Ecosystem"
 import { getContent } from "@/content"
 import { site } from "@/content/site.config"
 import { getDict, isLocale, isRtl, localePath } from "@/i18n"
@@ -54,6 +55,7 @@ export default async function AllInOnePage({ params }: LocaleParams) {
           <p className="lead mx-auto mt-6 max-w-3xl text-center">{t.allInOne.lead}</p>
           <p className="mx-auto mt-4 max-w-3xl text-center text-sm text-slate-600">{t.allInOne.audiences}</p>
         </Reveal>
+        <Reveal delay={150} className="mt-10"><Ecosystem center={site.brand} modules={t.ecosystem.modules} rtl={isRtl(locale)} /></Reveal>
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Stagger step={80}>
             {t.allInOne.pillars.map((p) => (
