@@ -81,7 +81,7 @@ export const en: Dict = {
     notIncluded: "Not included",
     perMonthHT: "excl. VAT / month",
     perYearHT: "excl. VAT / year",
-    orYearly: (p) => `or ${p} / month billed yearly`,
+    orYearly: (total, perMonth) => `or ${total} excl. VAT / year billed yearly (i.e. ${perMonth} / month)`,
     ctaTitle: "Ready to simplify your workshop?",
     ctaText: (d) => `${d}-day free trial, no credit card. Your workspace is delivered within a few minutes.`,
     mostPopular: "Most popular",

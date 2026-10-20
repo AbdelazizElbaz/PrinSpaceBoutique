@@ -240,10 +240,12 @@ export default async function HomePage({ params }: LocaleParams) {
               )}
               <h3 className="text-lg font-semibold text-ink">{p.name}</h3>
               <p className="mt-1 text-sm text-slate-600">{p.description}</p>
-              <p className="mt-5">
-                <PlanPrice plan={p} locale={locale} perLabel={t.common.perMonthHT} />
-              </p>
-              <p className="text-xs text-slate-500">{t.common.orYearly(money(p.yearlyMonthly, locale))}</p>
+              <div className="mt-5 min-h-[6.5rem]">
+                <p>
+                  <PlanPrice plan={p} locale={locale} perLabel={t.common.perMonthHT} />
+                </p>
+                <p className="text-xs text-slate-500">{t.common.orYearly(money(p.yearlyMonthly * 12, locale), money(p.yearlyMonthly, locale))}</p>
+              </div>
               <ul className="mt-5 space-y-2 text-sm text-slate-700">
                 {p.limits.slice(0, 3).map((l) => (
                   <li key={l.label} className="flex justify-between border-b border-slate-100 pb-2">
@@ -252,7 +254,7 @@ export default async function HomePage({ params }: LocaleParams) {
                   </li>
                 ))}
               </ul>
-              <Link href={p.code === "business" ? `${lp("/contact")}?sujet=business` : `${lp("/inscription")}?plan=${p.code}`} className={`mt-6 ${p.highlight ? "btn-primary btn-shine" : "btn-secondary"}`} aria-label={`${p.cta} — ${p.name}`}>
+              <Link href={p.code === "business" ? `${lp("/contact")}?sujet=business` : `${lp("/inscription")}?plan=${p.code}`} className={`mt-auto pt-6 ${p.highlight ? "btn-primary btn-shine" : "btn-secondary"}`} aria-label={`${p.cta} — ${p.name}`}>
                 {p.cta}
               </Link>
             </div>

@@ -36,11 +36,14 @@ export function PricingTable({ locale, plans, comparison }: { locale: Locale; pl
               )}
               <h3 className="text-xl font-bold text-ink">{p.name}</h3>
               <p className="mt-1 min-h-10 text-sm text-slate-600">{p.audience}</p>
-              <p className="mt-5">
-                <PlanPrice plan={p} yearly={yearly} locale={locale} perLabel={t.common.perMonthHT} perYearLabel={t.common.perYearHT} monthlyEquivalentLabel={t.pricing.monthlyEquivalent} />
-              </p>
-              {/* En annuel, le total de l'année est déjà le prix principal (PlanPrice) : on ne le répète pas. */}
-              {!yearly && <p className="text-xs text-slate-500">{t.common.orYearly(money(p.yearlyMonthly, locale))}</p>}
+              {/* Hauteur minimale commune du bloc prix pour que les boutons des trois cartes soient alignés. */}
+              <div className="mt-5 min-h-[7.75rem]">
+                <p>
+                  <PlanPrice plan={p} yearly={yearly} locale={locale} perLabel={t.common.perMonthHT} perYearLabel={t.common.perYearHT} monthlyEquivalentLabel={t.pricing.monthlyEquivalent} />
+                </p>
+                {/* En annuel, le total de l'année est déjà le prix principal (PlanPrice) : on ne le répète pas. */}
+                {!yearly && <p className="text-xs text-slate-500">{t.common.orYearly(money(p.yearlyMonthly * 12, locale), money(p.yearlyMonthly, locale))}</p>}
+              </div>
               <Link href={p.code === "business" ? `${lp("/contact")}?sujet=business` : `${lp("/inscription")}?plan=${p.code}&billing=${yearly ? "yearly" : "monthly"}`} className={`mt-6 ${p.highlight ? "btn-primary" : "btn-secondary"}`}>
                 {p.cta}
               </Link>

@@ -85,7 +85,7 @@ export const fr = {
     notIncluded: "Non inclus",
     perMonthHT: "HT / mois",
     perYearHT: "HT / an",
-    orYearly: (p: string) => `ou ${p} / mois en annuel`,
+    orYearly: (total: string, perMonth: string) => `ou ${total} HT / an en annuel (soit ${perMonth} / mois)`,
     ctaTitle: "Prêt à simplifier votre atelier ?",
     ctaText: (d: number) => `Essai gratuit ${d} jours, sans carte bancaire. Votre espace vous est remis en quelques minutes.`,
     mostPopular: "Le plus choisi",
