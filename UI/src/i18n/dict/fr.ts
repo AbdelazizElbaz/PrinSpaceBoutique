@@ -14,7 +14,7 @@ export const fr = {
   // Schémas animés (components/Ecosystem.tsx, OrderFlow.tsx, Diagrams.tsx), 20/10/2026.
   ecosystem: {
     title: "Tout l'atelier autour d'un seul dossier de commande",
-    views: { ecosystem: "Vue écosystème", order: "Créer une commande", reseller: "Vue revendeurs", file: "Trajet du fichier" },
+    views: { intro: "Présentation", ecosystem: "Vue écosystème", order: "Créer une commande", reseller: "Vue revendeurs", file: "Trajet du fichier" },
     hint: "Survolez un module pour voir le détail de ce qu'il couvre.",
     modules: [
       {

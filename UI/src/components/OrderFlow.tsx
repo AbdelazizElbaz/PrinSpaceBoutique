@@ -134,8 +134,8 @@ export function OrderFlow({ center, t, rtl = false }: { center: string; t: Order
               <text x={FCX} y={FCY + 46} textAnchor="middle" fontSize="13" fontWeight="700" fill="#0f172a">{center}</text>
               {t.flow.steps.slice(0, 6).map((label, i) => {
                 const a = (angles[i] * Math.PI) / 180
-                const x = FCX + FRX * Math.cos(a)
-                const y = FCY + FRY * Math.sin(a)
+                const x = Math.round((FCX + FRX * Math.cos(a)) * 100) / 100
+                const y = Math.round((FCY + FRY * Math.sin(a)) * 100) / 100
                 const Icon = STEP_ICONS[i]
                 const color = STEP_COLORS[i]
                 // libellé : au-dessus pour l'étape du haut, dessous pour les autres (évite le centre)

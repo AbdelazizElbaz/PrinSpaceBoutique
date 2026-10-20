@@ -33,8 +33,20 @@ export default async function HomePage({ params }: LocaleParams) {
           <span /><span /><span />
         </div>
         <div className="absolute inset-x-0 top-0 -z-10 h-[480px] bg-gradient-to-b from-brand-50/80 to-transparent" />
-        <div className="container-x grid items-center gap-12 py-16 lg:grid-cols-12 lg:py-24">
-          <div className="lg:col-span-5">
+        {/* Carrousel du hero (demande utilisateur du 20/10/2026) : diapo 1 = presentation (texte + maquette), puis un
+            schema anime par diapo (ecosysteme, creer une commande, revendeurs, trajet du fichier). */}
+        <HeroSlider
+          center={site.brand}
+          agent={site.agentName}
+          eco={t.ecosystem}
+          flow={t.orderFlow}
+          reseller={t.resellerFlow}
+          file={t.fileJourney}
+          titles={{ eco: t.ecosystem.title, order: t.ecosystem.views.order, reseller: t.ecosystem.views.reseller, file: t.fileJourney.title }}
+          rtl={isRtl(locale)}
+        >
+        <div className="container-x grid items-center gap-12 lg:grid-cols-2">
+          <div>
             <div className="hero-in hero-in-1"><Badge>{t.home.badge}</Badge></div>
             <h1 className="h1 mt-5">
               {t.home.h1a} <span className="text-shine">{t.home.h1b}</span>
@@ -60,12 +72,14 @@ export default async function HomePage({ params }: LocaleParams) {
               ))}
             </ul>
           </div>
-          {/* Hero : slider automatique des schemas complets a la place de la maquette (demande utilisateur du 20/10/2026). */}
-          <div className="hero-in-mock relative lg:col-span-7" dir="ltr">
+          <div className="hero-in-mock relative" dir="ltr">
             <div className="mock-glow" aria-hidden />
-            <HeroSlider center={site.brand} agent={site.agentName} eco={t.ecosystem} flow={t.orderFlow} reseller={t.resellerFlow} file={t.fileJourney} rtl={isRtl(locale)} />
+            <Tilt className="animate-float">
+              <Mockup kind="orders" locale={locale} className="shadow-2xl ring-1 ring-slate-200" />
+            </Tilt>
           </div>
         </div>
+        </HeroSlider>
       </section>
 
       <div className="border-y border-slate-200 bg-white">

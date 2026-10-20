@@ -67,7 +67,8 @@ export function Ecosystem({
   const CY = D.H / 2
   const polar = (angleDeg: number, rx: number, ry: number) => {
     const a = (angleDeg * Math.PI) / 180
-    return { x: CX + rx * Math.cos(a), y: CY + ry * Math.sin(a) }
+    // arrondi : évite un écart de virgule flottante entre le rendu serveur et le navigateur (hydratation)
+    return { x: Math.round((CX + rx * Math.cos(a)) * 100) / 100, y: Math.round((CY + ry * Math.sin(a)) * 100) / 100 }
   }
 
   // Six modules répartis en ellipse, en commençant en haut ; les sous-fonctions s'écartent de ±22° autour de l'axe.
