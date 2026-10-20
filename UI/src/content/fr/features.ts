@@ -44,7 +44,7 @@ export const features: Feature[] = [
     bullets: [
       "Calcul automatique au m², au mètre linéaire ou à l'unité (bâches, vinyle, papier, cartes)",
       "Paliers de quantité, quantités imposées et prix négociés par client ou revendeur",
-      "Devis, factures, bons de livraison et tickets PDF avec TVA, aux coordonnées de votre entreprise",
+      "Devis, factures, bons de livraison et tickets PDF avec TVA, aux coordonnées et identifiants légaux (ICE, IF, RC, patente) de votre entreprise",
       "Avance, ajustement manuel et reste à payer calculés automatiquement",
       "Stocks de matières premières : rouleaux, feuilles et consommables suivis par unité (QR code)",
       "Décompte automatique à la commande, seuil d'alerte et historique des mouvements",

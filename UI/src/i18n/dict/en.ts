@@ -35,7 +35,7 @@ export const en: Dict = {
         title: "Finance and stock",
         items: ["Invoices, tickets and quotes", "Collections, advances and statements", "Raw-material stock"],
         summary: "All the workshop's finance by sub-heading, from the ticket generated at order time to the dashboard, with stock deducted.",
-        details: ["Invoicing: invoices, quotes, PDF delivery notes with VAT", "Receipt, workshop and delivery tickets generated automatically", "Collections: advances, balance due, COD, statements per customer and reseller", "Dashboard: revenue, margins, unpaid amounts", "Stock: rolls, sheets and consumables tracked per unit (QR code), automatic deduction and low-stock alert"],
+        details: ["Invoicing: invoices, quotes, PDF delivery notes with VAT and your legal identifiers (ICE, IF, RC, patente)", "Receipt, workshop and delivery tickets generated automatically", "Collections: advances, balance due, COD, statements per customer and reseller", "Dashboard: revenue, margins, unpaid amounts", "Stock: rolls, sheets and consumables tracked per unit (QR code), automatic deduction and low-stock alert"],
       },
       {
         title: "Customers, sellers and resellers",
@@ -88,7 +88,7 @@ export const en: Dict = {
     audiences: "For digital and offset print shops, large-format and signage workshops, sign makers, CNC and laser cutting, relief letters, Alucobond facades, totems, furniture and vinyl wrapping.",
     pillars: [
       { title: "Trade quotes and pricing", text: "Prices computed automatically per m², per linear metre or per unit (banners, vinyl, paper, cards), finishing options, quantity tiers and negotiated prices per customer or reseller. PDF quote and mockup approval in one click." },
-      { title: "Invoicing and documents", text: "PDF invoices, quotes, delivery notes and tickets with VAT and your company details. Deposits, adjustments and balance due computed automatically, statements per reseller." },
+      { title: "Invoicing and documents", text: "PDF invoices, quotes, delivery notes and tickets with VAT, your company details and legal identifiers (ICE, IF, RC, patente). Deposits, adjustments and balance due computed automatically, statements per reseller." },
       { title: "Raw-material stock", text: "Rolls, sheets and consumables tracked per unit (QR code), automatic deduction on order, low-stock alert threshold and movement history." },
       { title: "Workshop and imposition", text: "Files sent automatically to your machines with PrintiosSync, grouped impositions, production statuses from \"New\" to \"Delivered\", subcontracting." },
       { title: "Delivery and cash on delivery", text: "Ameex, Olivraison, Ozone Express, Sendit or your own couriers, labels and tracking, automatic reconciliation of the COD collected with the balance due." },
@@ -104,7 +104,7 @@ export const en: Dict = {
     title: "Software that speaks the language of Moroccan workshops",
     items: [
       { title: "Moroccan carriers and cash on delivery", text: "Ameex, Olivraison, Ozone Express, Sendit and your in-house couriers, with the COD collected automatically reconciled with the balance due." },
-      { title: "Documents in dirhams with VAT", text: "PDF quotes, invoices, delivery notes and tickets in MAD, VAT per item, with your company details." },
+      { title: "Documents in dirhams with VAT", text: "PDF quotes, invoices, delivery notes and tickets in MAD, VAT per item, with your company details and legal identifiers (ICE, IF, RC, patente)." },
       { title: "WhatsApp support in French and Arabic", text: "A team that knows the trade answers on WhatsApp and by phone, in French and Arabic." },
       { title: "Anywhere in Morocco, on all your devices", text: "Online application available from the workshop, the shop or a phone; PrintiosSync brings files down to your machines." },
       { title: "Demo with real trade data", text: "A public demo with a complete fictional workshop: orders, mockups, deliveries, collections." },

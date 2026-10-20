@@ -39,7 +39,7 @@ export const fr = {
         title: "Finance et stocks",
         items: ["Factures, tickets et devis", "Encaissements, avances et relevés", "Stocks de matières premières"],
         summary: "Toute la finance de l'atelier par sous-rubrique, du ticket généré à la commande jusqu'au tableau de bord, avec les stocks décomptés.",
-        details: ["Facturation : factures, devis, bons de livraison PDF avec TVA", "Tickets de caisse, d'atelier et de livraison générés automatiquement", "Encaissements : avances, reste à payer, COD, relevés par client et revendeur", "Tableau de bord : chiffre d'affaires, marges, impayés", "Stocks : rouleaux, feuilles et consommables suivis par unité (QR code), décompte automatique et alerte de stock bas"],
+        details: ["Facturation : factures, devis, bons de livraison PDF avec TVA et vos identifiants légaux (ICE, IF, RC, patente)", "Tickets de caisse, d'atelier et de livraison générés automatiquement", "Encaissements : avances, reste à payer, COD, relevés par client et revendeur", "Tableau de bord : chiffre d'affaires, marges, impayés", "Stocks : rouleaux, feuilles et consommables suivis par unité (QR code), décompte automatique et alerte de stock bas"],
       },
       {
         title: "Clients, vendeurs et revendeurs",
@@ -92,7 +92,7 @@ export const fr = {
     audiences: "Pour les imprimeries numériques et offset, les ateliers de grand format et de signalétique, les enseignes, la découpe CNC et laser, les lettres relief, les façades Alucobond, les totems, le mobilier et l'habillage vinyle.",
     pillars: [
       { title: "Caisse et devis métier", text: "Prix calculés automatiquement au m², au mètre linéaire ou à l'unité (bâches, vinyle, papier, cartes), options de finition, paliers de quantité et prix négociés par client ou revendeur. Devis PDF et maquette à valider en un clic." },
-      { title: "Facturation et documents", text: "Factures, devis, bons de livraison et tickets PDF avec TVA, aux coordonnées de votre entreprise. Avances, ajustements et reste à payer calculés automatiquement, relevés par revendeur." },
+      { title: "Facturation et documents", text: "Factures, devis, bons de livraison et tickets PDF avec TVA, aux coordonnées et identifiants légaux (ICE, IF, RC, patente) de votre entreprise. Avances, ajustements et reste à payer calculés automatiquement, relevés par revendeur." },
       { title: "Stocks de matières premières", text: "Rouleaux, feuilles et consommables suivis par unité (QR code), décompte automatique à la commande, seuil d'alerte de stock bas et historique des mouvements." },
       { title: "Atelier et montage", text: "Fichiers envoyés automatiquement vers vos machines avec PrintiosSync, montages groupés, statuts de production du « Nouveau » au « Livré », sous-traitance." },
       { title: "Livraison et contre-remboursement", text: "Ameex, Olivraison, Ozone Express, Sendit ou vos propres livreurs, étiquettes et suivi, rapprochement automatique du COD encaissé avec le reste à payer." },
@@ -109,7 +109,7 @@ export const fr = {
     title: "Un logiciel qui parle le langage des ateliers marocains",
     items: [
       { title: "Transporteurs du Maroc et contre-remboursement", text: "Ameex, Olivraison, Ozone Express, Sendit et vos livreurs internes, avec le COD encaissé rapproché automatiquement du reste à payer." },
-      { title: "Documents en dirhams avec TVA", text: "Devis, factures, bons de livraison et tickets PDF en DH, TVA par article, aux coordonnées de votre entreprise." },
+      { title: "Documents en dirhams avec TVA", text: "Devis, factures, bons de livraison et tickets PDF en DH, TVA par article, aux coordonnées et identifiants légaux (ICE, IF, RC, patente) de votre entreprise." },
       { title: "Support WhatsApp en français et en arabe", text: "Une équipe qui connaît le métier répond par WhatsApp et par téléphone, en français et en arabe." },
       { title: "Partout au Maroc, sur tous vos postes", text: "Application en ligne accessible depuis l'atelier, le magasin ou le mobile ; PrintiosSync rapatrie les fichiers sur vos machines." },
       { title: "Démo avec les données du métier", text: "Une démo publique avec un atelier fictif complet : commandes, maquettes, livraisons, encaissements." },
