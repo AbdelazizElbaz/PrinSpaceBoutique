@@ -78,6 +78,43 @@ export default async function HomePage({ params }: LocaleParams) {
         </div>
       </div>
 
+      {/* Piliers du logiciel tout-en-un (référencement « logiciel imprimerie Maroc tout-en-un », 20/10/2026) :
+          vocabulaire explicite de chaque pilier, détaillé sur /logiciel-imprimerie-maroc. */}
+      <Section id="tout-en-un">
+        <Reveal><SectionHeading eyebrow={t.allInOne.eyebrow} title={t.allInOne.title} lead={t.allInOne.lead} /></Reveal>
+        <Reveal delay={100}><p className="mx-auto mt-4 max-w-3xl text-center text-sm text-slate-600">{t.allInOne.audiences}</p></Reveal>
+        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <Stagger step={80}>
+            {t.allInOne.pillars.map((p) => (
+              <div key={p.title} className="card card-glow h-full">
+                <h3 className="text-base font-semibold text-ink">{p.title}</h3>
+                <p className="mt-2 text-sm text-slate-600">{p.text}</p>
+              </div>
+            ))}
+          </Stagger>
+        </div>
+        <p className="mt-8 text-center">
+          <Link href={lp("/logiciel-imprimerie-maroc")} className="inline-flex items-center gap-1 font-semibold text-brand-700 hover:text-brand-800">
+            {t.allInOne.cta} <Arrow className={arrowCls} />
+          </Link>
+        </p>
+      </Section>
+
+      {/* « Pensé pour le Maroc » : points de confiance locaux (transporteurs, dirhams/TVA, support FR/AR…), 20/10/2026. */}
+      <Section tone="gray" id="maroc">
+        <Reveal><SectionHeading eyebrow={t.trust.eyebrow} title={t.trust.title} /></Reveal>
+        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <Stagger step={80}>
+            {t.trust.items.map((item) => (
+              <div key={item.title} className="card h-full">
+                <h3 className="flex items-start gap-2 text-base font-semibold text-ink"><Check className="mt-1 h-4 w-4 shrink-0 text-emerald-600" /> {item.title}</h3>
+                <p className="mt-2 text-sm text-slate-600">{item.text}</p>
+              </div>
+            ))}
+          </Stagger>
+        </div>
+      </Section>
+
       <CarriersBand locale={locale} />
 
       <Section tone="gray">

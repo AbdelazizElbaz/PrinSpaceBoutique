@@ -14,6 +14,17 @@ export const features: Feature[] = [
     color: "bg-blue-600",
   },
   {
+    slug: "devis-facturation-stocks",
+    icon: "Calculator",
+    title: "Quotes, invoicing and stock",
+    short: "Prices per m², per linear metre or per unit, PDF documents and tracked raw materials.",
+    description:
+      "Each item has its pricing mode (unit, m², linear metre), its options and quantity tiers: the quote prices itself. Invoices, delivery notes and PDF tickets come out of the same file, and raw materials are deducted on order.",
+    bullets: ["Automatic pricing per m², per linear metre or per unit (banners, vinyl, paper, cards)", "Quantity tiers, imposed quantities and negotiated prices per customer or reseller", "PDF quotes, invoices, delivery notes and tickets with VAT and your company details", "Deposit, manual adjustment and balance due computed automatically", "Raw-material stock: rolls, sheets and consumables tracked per unit (QR code)", "Automatic deduction on order, alert threshold and movement history", "Statements per reseller and per salesperson"],
+    mockup: "orders",
+    color: "bg-amber-600",
+  },
+  {
     slug: "atelier",
     icon: "Printer",
     title: "Workshop and printing",
@@ -121,7 +132,9 @@ export const steps: Step[] = [
 
 export const audiences: Audience[] = [
   { title: "Digital printing", text: "Business cards, flyers, posters: high volume of small orders, files to print every day." },
-  { title: "Large format and signage", text: "Banners, panels, vinyl: quotes, mockup approval, production and installation or delivery." },
+  { title: "Large format and signage", text: "Banners, panels, vinyl: quotes per m², mockup approval, production and installation or delivery." },
+  { title: "Signs, CNC and laser", text: "Relief letters, Alucobond facades, totems, CNC and laser cutting: materials per m² or per metre, offcuts, subcontracting and installation." },
+  { title: "Furniture and vinyl wrapping", text: "Furniture, fit-outs, vinyl wrapping of shop fronts and vehicles: quotes per project, production steps and delivery." },
   { title: "Promotional items", text: "Textile, mugs, packaging: options per item, materials and subcontracting." },
   { title: "Networks and franchises", text: "Several points of sale, external resellers, shared catalogue and consolidated view." },
 ]

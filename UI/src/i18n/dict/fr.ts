@@ -4,10 +4,45 @@
 export const fr = {
   meta: {
     // Titre et description orientés mots-clés (ERP, devis, facturation ICE, Maroc) — recommandations SEO du 19/10/2026.
-    title: "Logiciel de gestion d'imprimerie au Maroc | ERP, devis & facturation",
-    description: "logiciel ERP complet pour imprimeries et ateliers au Maroc. Devis express, factures conformes (ICE), commandes, suivi d'atelier, livraison multi-transporteurs et contre-remboursement.",
+    title: "Logiciel d'imprimerie tout-en-un au Maroc | Devis, atelier, stocks, facturation, livraison",
+    description: "logiciel tout-en-un pour imprimeries, ateliers de signalétique, enseignes, CNC et laser au Maroc. Devis au m², commandes, atelier, stocks de matières, factures et bons de livraison, livraison multi-transporteurs et contre-remboursement.",
+    from: (price: string) => `Dès ${price} HT/mois.`,
     ogTitle: "Commandes, atelier, livraison et encaissement COD pour les imprimeries.",
     trial: (d: number) => `Essai gratuit ${d} jours.`,
+  },
+  // Page « Logiciel d'imprimerie tout-en-un au Maroc » (/logiciel-imprimerie-maroc) — référencement, 20/10/2026.
+  allInOne: {
+    metaTitle: "Logiciel d'imprimerie tout-en-un au Maroc : devis, atelier, stocks, facturation, livraison",
+    metaDesc: "PrintIOS, le logiciel tout-en-un des imprimeries au Maroc : devis au m² et au mètre linéaire, commandes, atelier et montage, stocks de matières premières, factures et bons de livraison, livraison multi-transporteurs et contre-remboursement, boutique en ligne. Essai gratuit.",
+    eyebrow: "Tout-en-un",
+    title: "Un seul logiciel pour toute l'imprimerie",
+    lead: "Devis, commandes, atelier, stocks, facturation, livraison, encaissement et boutique en ligne : tout est relié dans le même dossier de commande, sans ressaisie ni fichier Excel à côté.",
+    audiences: "Pour les imprimeries numériques et offset, les ateliers de grand format et de signalétique, les enseignes, la découpe CNC et laser, les lettres relief, les façades Alucobond, les totems, le mobilier et l'habillage vinyle.",
+    pillars: [
+      { title: "Caisse et devis métier", text: "Prix calculés automatiquement au m², au mètre linéaire ou à l'unité (bâches, vinyle, papier, cartes), options de finition, paliers de quantité et prix négociés par client ou revendeur. Devis PDF et maquette à valider en un clic." },
+      { title: "Facturation et documents", text: "Factures, devis, bons de livraison et tickets PDF avec TVA, aux coordonnées de votre entreprise. Avances, ajustements et reste à payer calculés automatiquement, relevés par revendeur." },
+      { title: "Stocks de matières premières", text: "Rouleaux, feuilles et consommables suivis par unité (QR code), décompte automatique à la commande, seuil d'alerte de stock bas et historique des mouvements." },
+      { title: "Atelier et montage", text: "Fichiers envoyés automatiquement vers vos machines avec PrintiosSync, montages groupés, statuts de production du « Nouveau » au « Livré », sous-traitance." },
+      { title: "Livraison et contre-remboursement", text: "Ameex, Olivraison, Ozone Express, Sendit ou vos propres livreurs, étiquettes et suivi, rapprochement automatique du COD encaissé avec le reste à payer." },
+      { title: "Clients, fidélité et boutique en ligne", text: "Fiches clients et revendeurs, points de fidélité, codes promo, boutique en ligne connectée au catalogue, support WhatsApp en français et en arabe." },
+    ],
+    compareTitle: "Ce que PrintIOS centralise",
+    compareItems: ["Devis et commandes", "Calcul des prix au m², au mètre linéaire, à l'unité", "Atelier, montage et envoi aux machines", "Stocks de matières premières", "Factures, bons de livraison et tickets PDF", "Livraison multi-transporteurs et livreurs internes", "Contre-remboursement (COD) rapproché", "Clients, revendeurs et fidélité", "Boutique en ligne connectée", "Tableau de bord et finance"],
+    cta: "Voir toutes les fonctionnalités",
+    faqTitle: "Questions fréquentes sur le logiciel tout-en-un",
+  },
+  // Section « Pensé pour le Maroc » (accueil + page tout-en-un) — référencement, 20/10/2026.
+  trust: {
+    eyebrow: "Pensé pour le Maroc",
+    title: "Un logiciel qui parle le langage des ateliers marocains",
+    items: [
+      { title: "Transporteurs du Maroc et contre-remboursement", text: "Ameex, Olivraison, Ozone Express, Sendit et vos livreurs internes, avec le COD encaissé rapproché automatiquement du reste à payer." },
+      { title: "Documents en dirhams avec TVA", text: "Devis, factures, bons de livraison et tickets PDF en DH, TVA par article, aux coordonnées de votre entreprise." },
+      { title: "Support WhatsApp en français et en arabe", text: "Une équipe qui connaît le métier répond par WhatsApp et par téléphone, en français et en arabe." },
+      { title: "Partout au Maroc, sur tous vos postes", text: "Application en ligne accessible depuis l'atelier, le magasin ou le mobile ; PrintiosSync rapatrie les fichiers sur vos machines." },
+      { title: "Démo avec les données du métier", text: "Une démo publique avec un atelier fictif complet : commandes, maquettes, livraisons, encaissements." },
+      { title: "Formation vidéo et accompagnement", text: "Vidéos pas à pas en français et en arabe, onboarding en visio sur les forfaits Pro et Business." },
+    ],
   },
   nav: {
     demo: "Essayer la démo",
@@ -23,7 +58,8 @@ export const fr = {
     language: "Langue",
   },
   footer: {
-    blurb: "Commandes, atelier, livraison et encaissement dans un seul outil, pensé pour les imprimeries du Maroc.",
+    blurb: "Logiciel d'imprimerie tout-en-un : devis, commandes, atelier, stocks, facturation, livraison et encaissement, pensé pour les imprimeries du Maroc.",
+    allInOne: "Logiciel tout-en-un",
     product: "Produit",
     resources: "Ressources",
     legal: "Légal",
@@ -69,9 +105,9 @@ export const fr = {
     carriersMoreCta: "Dites-le-nous, nous l'ajoutons",
     carriersCompact: "Transporteurs intégrés + livreurs internes",
     badge: "Pensé pour les imprimeries du Maroc",
-    h1a: "Commandes, atelier, livraison et encaissement.",
-    h1b: "Un seul outil.",
-    lead: (brand: string) => `${brand} suit chaque commande du devis à l'encaissement du contre-remboursement : les fichiers partent seuls vers vos machines, les bons de livraison se génèrent en un clic et le COD collecté est rapproché du reste à payer.`,
+    h1a: "Le logiciel d'imprimerie tout-en-un au Maroc :",
+    h1b: "devis, atelier, stocks, facturation, livraison.",
+    lead: (brand: string) => `${brand} centralise tout dans un seul outil : devis au m², au mètre linéaire ou à l'unité, atelier et montage, stocks de matières premières, factures et bons de livraison PDF, livraison multi-transporteurs et encaissement du contre-remboursement (COD).`,
     bullets: (price: string) => ["Sans carte bancaire", "Espace remis en quelques minutes", `À partir de ${price} HT / mois`],
     whyEyebrow: "Pourquoi",
     whyTitle: "Vous connaissez ces journées",

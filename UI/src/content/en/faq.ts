@@ -5,6 +5,17 @@ const b = site.brand
 
 export const faq: FaqGroup[] = [
   {
+    id: "tout-en-un",
+    title: "All-in-one software",
+    items: [
+      { q: `Is ${b} an all-in-one print shop software?`, a: `Yes. ${b} centralises quotes, orders, workshop and imposition, raw-material stock, invoices and delivery notes, multi-carrier delivery, cash-on-delivery collection, customers and the online store in a single tool. Every module works on the same order file, with no re-typing.` },
+      { q: "Are prices computed per m² and per linear metre?", a: "Yes. Each item has its pricing mode: per unit (cards, flyers), per m² (banners, vinyl, panels) or per linear metre. Finishing options, quantity tiers and negotiated prices per customer apply automatically to the quote and the order." },
+      { q: "Does it manage raw-material stock?", a: "Yes. Rolls, sheets and consumables are tracked per unit (QR code) with an alert threshold, automatic deduction on order according to each item's consumption, and movement history." },
+      { q: `Which workshops is ${b} made for?`, a: `Digital and offset print shops, but also large-format and signage workshops, sign makers, CNC and laser cutting, relief letters, Alucobond facades, totems, furniture and vinyl wrapping: each item has its pricing mode (unit, m², linear metre), its materials and its production steps.` },
+      { q: "Which documents are generated?", a: `PDF quotes, invoices, delivery notes, labels and delivery tickets, with VAT and your company details, generated from the order file. ${b} also handles deposits, adjustments and the balance due.` },
+    ],
+  },
+  {
     id: "demarrage",
     title: "Getting started and trial",
     items: [

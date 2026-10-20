@@ -11,12 +11,15 @@ export function PlanPrice({
   locale,
   perLabel,
   size = "lg",
+  yearlyTotalLabel,
 }: {
   plan: Plan
   yearly?: boolean
   locale: "fr" | "ar" | "en"
   perLabel: string
   size?: "lg" | "md" | "sm"
+  /** Formule annuelle : libellé du montant complet de l'année (demande du 20/10/2026 « donner le prix complet »). */
+  yearlyTotalLabel?: (amount: string) => string
 }) {
   const price = yearly ? p.yearlyMonthly : p.monthly
   const list = yearly ? p.listYearlyMonthly : p.listMonthly
@@ -37,6 +40,12 @@ export function PlanPrice({
       <span className="text-xs font-normal text-slate-500">{perLabel}</span>
       {p.promoLabel && list && list > price && size !== "sm" && (
         <span className="rounded-full bg-rose-100 px-2 py-0.5 text-[11px] font-semibold text-rose-700">{p.promoLabel}</span>
+      )}
+      {yearly && yearlyTotalLabel && (
+        <span className={`basis-full ${size === "sm" ? "text-[11px]" : "text-xs"} text-slate-600`}>
+          {list && list > price && <span className="me-1 text-slate-400 line-through">{money(list * 12, locale)}</span>}
+          {yearlyTotalLabel(money(price * 12, locale))}
+        </span>
       )}
     </span>
   )

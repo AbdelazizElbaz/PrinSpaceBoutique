@@ -10,6 +10,7 @@ export function Footer({ locale }: { locale: Locale }) {
     {
       title: t.footer.product,
       links: [
+        { href: "/logiciel-imprimerie-maroc", label: t.footer.allInOne },
         { href: "/fonctionnalites", label: t.nav.features },
         { href: "/agent", label: t.nav.agent },
         { href: "/tarifs", label: t.nav.pricing },

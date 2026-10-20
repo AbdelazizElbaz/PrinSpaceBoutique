@@ -35,6 +35,25 @@ export const features: Feature[] = [
     color: "bg-blue-600",
   },
   {
+    slug: "devis-facturation-stocks",
+    icon: "Calculator",
+    title: "Devis, facturation et stocks",
+    short: "Prix au m², au mètre linéaire ou à l'unité, documents PDF et matières premières suivies.",
+    description:
+      "Chaque article a son mode de calcul (unité, m², mètre linéaire), ses options et ses paliers de quantité : le devis se chiffre seul. Factures, bons de livraison et tickets PDF sortent du même dossier, et les matières premières se décomptent à la commande.",
+    bullets: [
+      "Calcul automatique au m², au mètre linéaire ou à l'unité (bâches, vinyle, papier, cartes)",
+      "Paliers de quantité, quantités imposées et prix négociés par client ou revendeur",
+      "Devis, factures, bons de livraison et tickets PDF avec TVA, aux coordonnées de votre entreprise",
+      "Avance, ajustement manuel et reste à payer calculés automatiquement",
+      "Stocks de matières premières : rouleaux, feuilles et consommables suivis par unité (QR code)",
+      "Décompte automatique à la commande, seuil d'alerte et historique des mouvements",
+      "Relevés par revendeur et par vendeur",
+    ],
+    mockup: "orders",
+    color: "bg-amber-600",
+  },
+  {
     slug: "atelier",
     icon: "Printer",
     title: "Atelier et impression",
@@ -197,7 +216,9 @@ export const steps = [
 // Métiers ciblés (accueil)
 export const audiences = [
   { title: "Imprimerie numérique", text: "Cartes de visite, flyers, affiches : gros volume de petites commandes, fichiers à imprimer chaque jour." },
-  { title: "Grand format et signalétique", text: "Bâches, panneaux, vinyle : devis, maquette à valider, production et pose ou livraison." },
+  { title: "Grand format et signalétique", text: "Bâches, panneaux, vinyle : devis au m², maquette à valider, production et pose ou livraison." },
+  { title: "Enseignes, CNC et laser", text: "Lettres relief, façades Alucobond, totems, découpe CNC et laser : matières au m² ou au mètre, chutes, sous-traitance et pose." },
+  { title: "Mobilier et habillage vinyle", text: "Meubles, agencement, habillages vinyle de vitrines et de véhicules : devis par projet, étapes de production et livraison." },
   { title: "Objets publicitaires", text: "Textile, mugs, packaging : options par article, matériaux et sous-traitance." },
   { title: "Réseaux et franchises", text: "Plusieurs points de vente, revendeurs externes, catalogue commun et vue consolidée." },
 ]

@@ -7,6 +7,32 @@ const b = site.brand
 
 export const faq: FaqGroup[] = [
   {
+    id: "tout-en-un",
+    title: "Logiciel tout-en-un",
+    items: [
+      {
+        q: `${b} est-il un logiciel d'imprimerie tout-en-un ?`,
+        a: `Oui. ${b} centralise dans un seul outil les devis, les commandes, l'atelier et le montage, les stocks de matières premières, les factures et bons de livraison, la livraison multi-transporteurs, l'encaissement du contre-remboursement, les clients et la boutique en ligne. Chaque module travaille sur le même dossier de commande, sans ressaisie.`,
+      },
+      {
+        q: "Les prix sont-ils calculés au m² et au mètre linéaire ?",
+        a: "Oui. Chaque article a son mode de calcul : à l'unité (cartes, flyers), au m² (bâches, vinyle, panneaux) ou au mètre linéaire. Les options de finition, les paliers de quantité et les prix négociés par client s'appliquent automatiquement au devis et à la commande.",
+      },
+      {
+        q: "Gère-t-il les stocks de matières premières ?",
+        a: "Oui. Rouleaux, feuilles et consommables sont suivis par unité (QR code) avec seuil d'alerte, décompte automatique à la commande selon la consommation de chaque article, et historique des mouvements.",
+      },
+      {
+        q: `Pour quels ateliers ${b} est-il fait ?`,
+        a: `Pour les imprimeries numériques et offset, mais aussi les ateliers de grand format et de signalétique, les enseignes, la découpe CNC et laser, les lettres relief, les façades Alucobond, les totems, le mobilier et l'habillage vinyle : chaque article a son mode de calcul (unité, m², mètre linéaire), ses matières et ses étapes de production.`,
+      },
+      {
+        q: "Quels documents sont générés ?",
+        a: `Devis, factures, bons de livraison, étiquettes et tickets de livraison en PDF, avec TVA et aux coordonnées de votre entreprise, générés depuis le dossier de commande. ${b} gère aussi les avances, les ajustements et le reste à payer.`,
+      },
+    ],
+  },
+  {
     id: "demarrage",
     title: "Démarrage et essai",
     items: [

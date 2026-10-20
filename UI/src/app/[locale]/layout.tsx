@@ -8,6 +8,7 @@ import { ChatWidget } from "@/components/chat/ChatWidget"
 import { VisitorTracker } from "@/components/chat/VisitorTracker"
 import { SiteSettingsProvider } from "@/components/SiteSettingsProvider"
 import { applyPlans, getSiteSettings } from "@/lib/siteSettings"
+import { money } from "@/content/site.config"
 import { getContent } from "@/content"
 import { site } from "@/content/site.config"
 import { dir, getDict, htmlLang, isLocale, locales, localePath, ogLocale, type Locale } from "@/i18n"
@@ -29,8 +30,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const t = getDict(locale)
   return {
     metadataBase: new URL(siteUrl),
-    title: { default: `${site.brand} — ${t.meta.title}`, template: `%s — ${site.brand}` },
-    description: `${site.brand} : ${t.meta.description} ${t.meta.trial(site.trialDays)}`,
+    // Mot-clé d'abord, marque ensuite (format des concurrents les mieux classés) ; prix d'appel dans la description.
+    title: { default: `${t.meta.title} — ${site.brand}`, template: `%s — ${site.brand}` },
+    description: `${site.brand} : ${t.meta.description} ${t.meta.from(money(applyPlans(getContent(locale).plans, await getSiteSettings())[0]?.monthly ?? 290, locale))} ${t.meta.trial(site.trialDays)}`,
     openGraph: {
       type: "website",
       locale: ogLocale[locale],
@@ -88,7 +90,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     // Pays cible et fonctionnalités principales (titres des fonctionnalités du site) — recommandations SEO du 19/10/2026.
     countriesSupported: "MA",
     featureList: getContent(locale).features.map((f) => f.title),
-    offers: { "@type": "Offer", price: String(starterPrice), priceCurrency: "MAD", availability: "https://schema.org/InStock", areaServed: "MA" },
+    // Une offre par forfait (Starter / Pro / Business), prix mensuels HT en dirhams.
+    offers: applyPlans(getContent(locale).plans, settings).map((p) => ({ "@type": "Offer", name: p.name, price: String(p.monthly), priceCurrency: "MAD", availability: "https://schema.org/InStock", areaServed: "MA", url: `${siteUrl}${localePath(locale, "/tarifs")}` })),
     description: `${site.brand} : ${t.meta.description}`,
     url: `${siteUrl}${localePath(locale, "/")}`,
     inLanguage: htmlLang[locale],
