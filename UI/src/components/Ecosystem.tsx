@@ -109,7 +109,9 @@ export function Ecosystem({
             const soft = SOFT[i % SOFT.length]
             const Icon = ICONS[i % ICONS.length]
             const mod = polar(angles[i], D.moduleRx, D.moduleRy)
-            const spread = m.items.length === 1 ? [0] : m.items.length === 2 ? [-15, 15] : [-25, 0, 25]
+            // modules du haut et du bas : pastilles côte à côte, donc écart angulaire plus grand pour éviter le chevauchement
+            const wide = angles[i] === -90 || angles[i] === 90
+            const spread = m.items.length === 1 ? [0] : m.items.length === 2 ? [-15, 15] : wide ? [-33, 0, 33] : [-25, 0, 25]
             const isActive = active === i
             const nw = D.nodeW
             const nh = D.nodeH
@@ -188,7 +190,7 @@ export function Ecosystem({
         {current !== null && (
           <div
             key={active}
-            className={`eco-details absolute left-1/2 z-10 w-[min(92%,40rem)] rounded-2xl border border-slate-200/80 bg-white/95 p-4 shadow-2xl backdrop-blur ${cardAtTop ? "top-2" : "bottom-2"}`}
+            className={`eco-details pointer-events-none absolute left-1/2 z-10 w-[min(92%,40rem)] rounded-2xl border border-white/60 bg-white/70 p-4 shadow-2xl backdrop-blur-sm ${cardAtTop ? "top-2" : "bottom-2"}`}
             dir={dir}
             aria-live="polite"
           >
