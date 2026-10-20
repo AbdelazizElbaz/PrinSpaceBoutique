@@ -27,9 +27,9 @@ export const en: Dict = {
       },
       {
         title: "Delivery and COD",
-        items: ["Ameex, Olivraison, Ozone, Sendit", "Carrier pickup", "In-house couriers"],
+        items: ["Ameex, Olivraison, Ozone, Sendit", "Real-time status tracking", "Carrier pickup and in-house couriers"],
         summary: "Integrated carriers and in-house couriers, from pickup to cash-on-delivery collection.",
-        details: ["Label and tracking number created automatically at the carrier", "Carrier pickup request scheduled from the order", "In-house couriers: courier space, rounds, delivery ticket", "COD reconciliation: amounts collected and paid out per carrier"],
+        details: ["Real-time delivery status tracking: prepared, picked up, in transit, delivered, returned, updated automatically by the carrier", "Label and tracking number created automatically at the carrier", "Carrier pickup request scheduled from the order", "In-house couriers: courier space, rounds, delivery ticket", "COD reconciliation: amounts collected and paid out per carrier"],
       },
       {
         title: "Finance and stock",

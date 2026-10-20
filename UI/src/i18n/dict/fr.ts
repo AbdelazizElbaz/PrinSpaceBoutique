@@ -31,9 +31,9 @@ export const fr = {
       },
       {
         title: "Livraison et COD",
-        items: ["Ameex, Olivraison, Ozone, Sendit", "Ramassage transporteur", "Livreurs internes"],
+        items: ["Ameex, Olivraison, Ozone, Sendit", "Suivi des états en temps réel", "Ramassage transporteur et livreurs internes"],
         summary: "Transporteurs intégrés et livreurs internes, du ramassage à l'encaissement contre remboursement.",
-        details: ["Étiquette et numéro de suivi créés automatiquement chez le transporteur", "Demande de ramassage transporteur planifiée depuis la commande", "Livreurs internes : espace livreur, tournées, ticket de livraison", "Rapprochement COD : montants collectés et versés par transporteur"],
+        details: ["Suivi des états de livraison en temps réel : préparée, ramassée, en cours, livrée, retour, mis à jour automatiquement par le transporteur", "Étiquette et numéro de suivi créés automatiquement chez le transporteur", "Demande de ramassage transporteur planifiée depuis la commande", "Livreurs internes : espace livreur, tournées, ticket de livraison", "Rapprochement COD : montants collectés et versés par transporteur"],
       },
       {
         title: "Finance et stocks",
