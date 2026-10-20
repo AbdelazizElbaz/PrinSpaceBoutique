@@ -88,7 +88,7 @@ export function Ecosystem({
     >
       {/* 3D (demande du 20/10/2026 « plus d'animation 3D ») : le schéma s'incline en suivant la souris (Tilt) et oscille
           lentement en perspective au repos ; la carte de détail flotte au-dessus du plan (translateZ). */}
-      <Tilt max={7} glare={false}>
+      <Tilt max={3} glare={false}>
         <svg viewBox={`0 0 ${D.W} ${D.H}`} className="eco-svg h-auto w-full" role="img" aria-label={center}>
           <defs>
             <radialGradient id="eco-glow" cx="50%" cy="50%" r="50%">
@@ -114,18 +114,7 @@ export function Ecosystem({
             const nw = D.nodeW
             const nh = D.nodeH
             return (
-              <g
-                key={m.title}
-                className={`eco-module ${isActive ? "eco-active" : ""}`}
-                style={{ ["--d" as string]: `${0.15 + i * 0.12}s` }}
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                onClick={() => setActive(isActive ? null : i)}
-                tabIndex={0}
-                role="button"
-                aria-pressed={isActive}
-                aria-label={m.title}
-              >
+              <g key={m.title} className={`eco-module ${isActive ? "eco-active" : ""}`} style={{ ["--d" as string]: `${0.15 + i * 0.12}s`, pointerEvents: "none" }}>
                 {/* centre → module */}
                 <line x1={CX} y1={CY} x2={mod.x} y2={mod.y} className="eco-line" stroke={color} strokeOpacity={isActive ? 1 : 0.7} strokeWidth={isActive ? 2.5 : 1.75} strokeDasharray="5 6" strokeLinecap="round" />
                 {/* module → sous-fonctions (mode complet seulement) : pastilles blanches */}
@@ -153,10 +142,18 @@ export function Ecosystem({
                 <g className="eco-node" style={{ ["--d" as string]: `${0.35 + i * 0.12}s`, transformOrigin: `${mod.x}px ${mod.y}px` }}>
                   <foreignObject x={mod.x - nw / 2 - PAD} y={mod.y - nh / 2 - PAD} width={nw + PAD * 2} height={nh + PAD * 2}>
                     <div className="flex h-full items-center justify-center" style={{ padding: PAD }}>
+                      {/* seule zone survolable du module (précision du survol, retour du 20/10/2026) */}
                       <div
-                        className="flex h-full w-full cursor-pointer items-center gap-2.5 rounded-2xl border bg-white px-3 shadow-lg transition-colors"
-                        style={{ borderColor: isActive ? color : "#e2e8f0", background: isActive ? color : "#fff", boxShadow: isActive ? `0 12px 28px ${soft}, 0 0 0 1px ${color}` : "0 8px 22px rgba(30, 58, 138, 0.12)" }}
+                        className="flex h-full w-full cursor-pointer items-center gap-2.5 rounded-2xl border bg-white px-3 shadow-lg transition-colors outline-none"
+                        style={{ pointerEvents: "auto", borderColor: isActive ? color : "#e2e8f0", background: isActive ? color : "#fff", boxShadow: isActive ? `0 12px 28px ${soft}, 0 0 0 1px ${color}` : "0 8px 22px rgba(30, 58, 138, 0.12)" }}
                         dir={dir}
+                        onMouseEnter={() => setActive(i)}
+                        onFocus={() => setActive(i)}
+                        onClick={() => setActive(isActive ? null : i)}
+                        tabIndex={0}
+                        role="button"
+                        aria-pressed={isActive}
+                        aria-label={m.title}
                       >
                         <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl" style={{ background: isActive ? "rgba(255,255,255,0.2)" : soft, color: isActive ? "#fff" : color }}>
                           <Icon className="h-4 w-4" />
