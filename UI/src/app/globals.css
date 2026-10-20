@@ -440,3 +440,22 @@ body {
   .flow .flow-svg { animation: none !important; }
   .flow .flow-card:hover { transform: none; }
 }
+
+/* Trajet du fichier (FileJourney.tsx, page PrintiosSync) : boucle de 12 s synchronisée avec le déplacement SMIL du
+   PDF ; halo des stations à l'arrivée du fichier (--d), fichier qui apparaît dans le dossier (64 %), badge « prêt à
+   lancer » chez l'opérateur (87 %), pointillés qui défilent, scène inclinée en 3D. */
+@keyframes fj-halo { 0% { opacity: 0; transform: scale(0.7); } 2% { opacity: 0.3; transform: scale(1); } 9% { opacity: 0; transform: scale(1.6); } 100% { opacity: 0; transform: scale(1.6); } }
+@keyframes fj-newfile { 0%, 64% { opacity: 0; transform: translateX(-10px); } 68%, 97% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes fj-ready { 0%, 87% { opacity: 0; transform: scale(0.7); } 90%, 97% { opacity: 1; transform: scale(1); } 100% { opacity: 0; } }
+.fj .fj-halo, .fj .fj-newfile, .fj .fj-ready, .fj .fj-file { opacity: 0; }
+.fj-on .fj-file { opacity: 1; }
+.fj-on .fj-halo { animation: fj-halo 12s ease-out var(--d, 0s) infinite; }
+.fj-on .fj-newfile { animation: fj-newfile 12s ease-out infinite; }
+.fj-on .fj-ready { animation: fj-ready 12s ease-out infinite; }
+.fj-on .fj-line { animation: eco-dash 1.2s linear infinite; }
+.fj-on .fj-svg { animation: eco-float3d 10s ease-in-out 1s infinite; transform-style: preserve-3d; }
+@media (prefers-reduced-motion: reduce) {
+  .fj .fj-halo, .fj .fj-file { display: none; }
+  .fj .fj-newfile, .fj .fj-ready { opacity: 1; animation: none !important; }
+  .fj .fj-line, .fj .fj-svg { animation: none !important; }
+}

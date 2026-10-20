@@ -14,7 +14,7 @@ export const fr = {
   // Schémas animés (components/Ecosystem.tsx, OrderFlow.tsx, Diagrams.tsx), 20/10/2026.
   ecosystem: {
     title: "Tout l'atelier autour d'un seul dossier de commande",
-    views: { ecosystem: "Vue écosystème", order: "Créer une commande" },
+    views: { ecosystem: "Vue écosystème", order: "Créer une commande", reseller: "Vue revendeurs" },
     hint: "Survolez un module pour voir le détail de ce qu'il couvre.",
     modules: [
       {
@@ -60,6 +60,28 @@ export const fr = {
     flow: { title: "Parcours de la commande", steps: ["Devis", "Maquette validée", "Avance et ticket", "Atelier en temps réel", "Livraison", "COD encaissé"] },
     ship: { title: "Atelier et expédition", sources: ["Fichiers de conception", "Montage", "Machines"], sync: "Suivi de production en temps réel par atelier et machine, tickets générés, fichiers envoyés par PrintiosSync", mockTitle: "Suivi en temps réel", mockSteps: ["Fichier prêt", "En production", "Ramassée par le transporteur", "Livrée"], cod: "COD encaissé" },
     integrations: { title: "Connecté à votre atelier", extras: ["WhatsApp", "PrintiosSync", "Boutique en ligne", "PDF / Excel"] },
+  },
+  resellerFlow: {
+    reseller: {
+      title: "Le revendeur commande",
+      account: "Revendeur · Imprimerie Atlas",
+      negotiated: "Prix négociés −15 %",
+      line: "Flyers A5 · 1 000 ex. · recto-verso",
+      publicPrice: "Public 850 DH",
+      negotiatedPrice: "Négocié 722 DH",
+      filesTitle: "Fichiers de conception et de montage",
+      files: [{ name: "flyer-A5_recto-verso.pdf", kind: "conception" }, { name: "montage_A5x8_SRA3.pdf", kind: "montage" }],
+    },
+    workshop: { title: "L'atelier traite", steps: ["Fichiers reçus dans la commande", "Montage et imposition", "Production suivie en temps réel", "Ticket de livraison généré", "Expédiée au revendeur"] },
+    ticket: {
+      title: "Ticket de livraison et relevé",
+      ticketTitle: "Ticket de livraison",
+      number: "N° 2041",
+      rows: [{ k: "Revendeur", v: "Imprimerie Atlas" }, { k: "Articles", v: "Flyers A5 × 1 000" }, { k: "Montant", v: "722 DH" }, { k: "Paiement", v: "Sur relevé" }],
+      auto: "Généré automatiquement",
+      statementTitle: "Relevé du revendeur",
+      statement: [{ k: "Commandes du mois", v: "12" }, { k: "Encours", v: "4 860 DH" }, { k: "Réglé", v: "9 300 DH" }],
+    },
   },
   allInOne: {
     metaTitle: "Logiciel d'imprimerie tout-en-un au Maroc : devis, atelier, stocks, facturation, livraison",
@@ -257,6 +279,25 @@ export const fr = {
     customTitle: "Besoin d'une formation sur mesure ?",
     customText: "Onboarding en visio inclus sur Pro (1 h) et Business (2 h). Formation sur site, import de vos données et paramétrage complet sur devis.",
     customCta: "Demander une formation",
+  },
+  // Trajet du fichier sur la page PrintiosSync (components/FileJourney.tsx), 20/10/2026.
+  fileJourney: {
+    eyebrow: "Du dossier de commande à la machine",
+    title: "Le fichier arrive tout seul dans le dossier de la machine",
+    lead: "Votre équipe peut travailler à distance : les fichiers de conception et de montage sont déposés dans la commande, et PrintiosSync les apporte automatiquement dans le dossier de la bonne machine, dans l'atelier. Plus besoin de les envoyer par WhatsApp ou par Drive.",
+    stations: [
+      { title: "Infographiste, où qu'il soit", text: "Conception et montage déposés directement dans la commande, depuis l'atelier, la maison ou un autre site." },
+      { title: "Commande dans PrintIOS", text: "Le fichier passe « prêt à imprimer » et est affecté à l'instance de la machine (ex. « HP Indigo — production »)." },
+      { title: "PrintiosSync sur le poste", text: "L'agent installé sur le poste de l'atelier télécharge le fichier en arrière-plan, en mode service." },
+      { title: "Dossier de la machine", text: "" },
+      { title: "Opérateur", text: "Il ouvre le dossier de sa machine : le fichier est déjà là, nommé avec le numéro de commande." },
+    ],
+    noMore: "WhatsApp · Drive · clé USB",
+    folder: "D:\\Impression\\HP Indigo\\",
+    existing: ["CMD-2038_carte-visite.pdf", "CMD-2040_bache-3x2.pdf"],
+    file: "CMD-2041_flyer-A5.pdf",
+    newBadge: "nouveau",
+    ready: "Prêt à lancer",
   },
   agent: {
     metaTitle: (agent: string) => `${agent} — l'agent qui apporte les fichiers sur vos machines`,

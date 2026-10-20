@@ -10,7 +10,7 @@ export const en: Dict = {
   },
   ecosystem: {
     title: "The whole workshop around one order file",
-    views: { ecosystem: "Ecosystem view", order: "Create an order" },
+    views: { ecosystem: "Ecosystem view", order: "Create an order", reseller: "Resellers view" },
     hint: "Hover a module to see what it covers.",
     modules: [
       {
@@ -56,6 +56,28 @@ export const en: Dict = {
     flow: { title: "Order journey", steps: ["Quote", "Mockup approved", "Advance and ticket", "Workshop in real time", "Delivery", "COD collected"] },
     ship: { title: "Workshop and shipping", sources: ["Design files", "Imposition", "Machines"], sync: "Real-time production tracking per workshop and machine, tickets generated, files sent by PrintiosSync", mockTitle: "Real-time tracking", mockSteps: ["File ready", "In production", "Picked up by the carrier", "Delivered"], cod: "COD collected" },
     integrations: { title: "Connected to your workshop", extras: ["WhatsApp", "PrintiosSync", "Online store", "PDF / Excel"] },
+  },
+  resellerFlow: {
+    reseller: {
+      title: "The reseller orders",
+      account: "Reseller · Atlas Print",
+      negotiated: "Negotiated prices −15 %",
+      line: "A5 flyers · 1,000 pcs · double-sided",
+      publicPrice: "Public 850 DH",
+      negotiatedPrice: "Negotiated 722 DH",
+      filesTitle: "Design and imposition files",
+      files: [{ name: "flyer-A5_double-sided.pdf", kind: "design" }, { name: "imposition_A5x8_SRA3.pdf", kind: "imposition" }],
+    },
+    workshop: { title: "The workshop processes", steps: ["Files received in the order", "Imposition", "Production tracked in real time", "Delivery ticket generated", "Shipped to the reseller"] },
+    ticket: {
+      title: "Delivery ticket and statement",
+      ticketTitle: "Delivery ticket",
+      number: "No. 2041",
+      rows: [{ k: "Reseller", v: "Atlas Print" }, { k: "Items", v: "A5 flyers × 1,000" }, { k: "Amount", v: "722 DH" }, { k: "Payment", v: "On statement" }],
+      auto: "Generated automatically",
+      statementTitle: "Reseller statement",
+      statement: [{ k: "Orders this month", v: "12" }, { k: "Outstanding", v: "4,860 DH" }, { k: "Paid", v: "9,300 DH" }],
+    },
   },
   allInOne: {
     metaTitle: "All-in-one print shop software in Morocco: quotes, workshop, stock, invoicing, delivery",
@@ -251,6 +273,24 @@ export const en: Dict = {
     customTitle: "Need tailored training?",
     customText: "Video-call onboarding included on Pro (1 h) and Business (2 h). On-site training, data import and full setup on quote.",
     customCta: "Request training",
+  },
+  fileJourney: {
+    eyebrow: "From the order file to the machine",
+    title: "The file lands in the machine's folder by itself",
+    lead: "Your team can work remotely: design and imposition files are dropped into the order, and PrintiosSync brings them automatically to the right machine's folder in the workshop. No more sending them over WhatsApp or Drive.",
+    stations: [
+      { title: "Designer, wherever they are", text: "Design and imposition dropped directly into the order, from the workshop, home or another site." },
+      { title: "Order in PrintIOS", text: "The file becomes \"ready to print\" and is assigned to the machine's instance (e.g. \"HP Indigo — production\")." },
+      { title: "PrintiosSync on the station", text: "The agent installed on the workshop station downloads the file in the background, as a service." },
+      { title: "Machine folder", text: "" },
+      { title: "Operator", text: "They open their machine's folder: the file is already there, named with the order number." },
+    ],
+    noMore: "WhatsApp · Drive · USB stick",
+    folder: "D:\\Print\\HP Indigo\\",
+    existing: ["CMD-2038_business-card.pdf", "CMD-2040_banner-3x2.pdf"],
+    file: "CMD-2041_flyer-A5.pdf",
+    newBadge: "new",
+    ready: "Ready to run",
   },
   agent: {
     metaTitle: (agent) => `${agent} — the agent that brings files to your machines`,

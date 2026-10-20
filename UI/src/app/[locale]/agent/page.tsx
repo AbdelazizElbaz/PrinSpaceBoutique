@@ -3,8 +3,9 @@ import Link from "next/link"
 import { Apple, Check, Download, KeyRound, MonitorCog, RefreshCw, Server, ShieldCheck } from "lucide-react"
 import { Section, SectionHeading, CtaBand } from "@/components/ui"
 import { Mockup } from "@/components/mockups/Mockup"
+import { FileJourney } from "@/components/FileJourney"
 import { site } from "@/content/site.config"
-import { getDict, isLocale, localePath } from "@/i18n"
+import { getDict, isLocale, isRtl, localePath } from "@/i18n"
 import { pageAlternates, type LocaleParams } from "@/lib/seo"
 
 export async function generateMetadata({ params }: LocaleParams): Promise<Metadata> {
@@ -50,6 +51,14 @@ export default async function AgentPage({ params }: LocaleParams) {
           </div>
         </div>
       </section>
+
+      {/* Trajet du fichier, de l'infographiste (à distance ou non) au dossier de la machine : schéma 3D animé (20/10/2026). */}
+      <Section tone="gray" id="trajet">
+        <SectionHeading eyebrow={t.fileJourney.eyebrow} title={t.fileJourney.title} lead={t.fileJourney.lead} />
+        <div className="mt-12">
+          <FileJourney brand={site.agentName} t={t.fileJourney} rtl={isRtl(locale)} />
+        </div>
+      </Section>
 
       <Section>
         <SectionHeading eyebrow={t.agent.whatEyebrow} title={t.agent.whatTitle} />

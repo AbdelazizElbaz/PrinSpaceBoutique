@@ -32,7 +32,7 @@ const TONES = {
   blue: { box: "border-sky-200 bg-gradient-to-b from-sky-50/80 to-white", pill: "bg-sky-100 text-sky-800 ring-sky-200" },
 } as const
 
-function Panel({ tone, title, children, className = "", delay = 0 }: { tone: keyof typeof TONES; title: string; children: ReactNode; className?: string; delay?: number }) {
+export function Panel({ tone, title, children, className = "", delay = 0 }: { tone: keyof typeof TONES; title: string; children: ReactNode; className?: string; delay?: number }) {
   const t = TONES[tone]
   // 3D : chaque panneau s'incline avec la souris (Tilt), entre en perspective (flow-panel) et ses cartes internes
   // (.flow-z) flottent au-dessus du plan grâce à translateZ.

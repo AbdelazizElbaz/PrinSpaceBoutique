@@ -85,7 +85,7 @@ export default async function HomePage({ params }: LocaleParams) {
         <Reveal><SectionHeading eyebrow={t.allInOne.eyebrow} title={t.allInOne.title} lead={t.allInOne.lead} /></Reveal>
         <Reveal delay={100}><p className="mx-auto mt-4 max-w-3xl text-center text-sm text-slate-600">{t.allInOne.audiences}</p></Reveal>
         {/* Schéma animé de l'écosystème (modules en orbite autour de la marque), 20/10/2026. */}
-        <Reveal delay={150} className="mt-10"><Diagrams center={site.brand} eco={t.ecosystem} flow={t.orderFlow} rtl={isRtl(locale)} /></Reveal>
+        <Reveal delay={150} className="mt-10"><Diagrams center={site.brand} eco={t.ecosystem} flow={t.orderFlow} reseller={t.resellerFlow} rtl={isRtl(locale)} /></Reveal>
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Stagger step={80}>
             {t.allInOne.pillars.map((p) => (
