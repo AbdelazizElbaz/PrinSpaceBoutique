@@ -207,7 +207,7 @@ export function OrderFlow({ center, t, rtl = false }: { center: string; t: Order
 
       {/* Bande du bas : transporteurs natifs + autres connexions */}
       <Panel tone="blue" title={t.integrations.title} className="mt-8" delay={0.45}>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {CARRIERS.map((c, i) => (
             <div key={c.key} className="flow-in flow-z flow-card flex h-16 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 shadow-md" style={d(0.6 + i * 0.08)} dir="ltr">
               <Image src={c.logo} alt={c.name} width={c.w} height={c.h} className={c.wordmark ? "h-6 w-auto" : "h-10 w-auto"} />

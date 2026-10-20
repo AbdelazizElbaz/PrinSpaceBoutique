@@ -6,4 +6,6 @@ export const CARRIERS = [
   { key: "olivraison", name: "Olivraison", logo: "/carriers/olivraison.png", w: 512, h: 512, wordmark: false },
   { key: "ozoneexpress", name: "Ozone Express", logo: "/carriers/ozoneexpress.png", w: 536, h: 466, wordmark: false },
   { key: "sendit", name: "Sendit", logo: "/carriers/sendit.png", w: 180, h: 208, wordmark: false },
+  // Express Relais (relaisexpress.ma) — integre le 20/10/2026 (API AIO), logo vectoriel.
+  { key: "expressrelais", name: "Express Relais", logo: "/carriers/expressrelais.svg", w: 360, h: 104, wordmark: true },
 ] as const

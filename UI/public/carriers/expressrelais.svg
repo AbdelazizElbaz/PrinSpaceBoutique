@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="104" viewBox="0 0 360 104" role="img" aria-label="Express Relais">
+  <rect x="2" y="2" width="100" height="100" rx="22" fill="#e30613"/>
+  <path d="M24 32h48l-8 12H40v6h26l-8 12H40v6h32l-8 12H24z" fill="#fff"/>
+  <text x="116" y="48" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#1f2937">Express</text>
+  <text x="116" y="88" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#e30613">Relais</text>
+</svg>

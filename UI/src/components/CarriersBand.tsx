@@ -18,7 +18,7 @@ export function CarriersBand({ locale }: { locale: Locale }) {
       <Reveal>
         <SectionHeading eyebrow={t.carriersEyebrow} title={t.carriersTitle} lead={t.carriersLead} />
       </Reveal>
-      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {/* Stagger anime chaque élément du tableau reçu : on lui passe un seul tableau plat (4 transporteurs + livreurs internes). */}
         <Stagger step={90}>
           {[...CARRIERS.map((c) => (

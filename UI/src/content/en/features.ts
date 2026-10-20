@@ -20,7 +20,7 @@ export const features: Feature[] = [
     short: "Prices per m², per linear metre or per unit, PDF documents and tracked raw materials.",
     description:
       "Each item has its pricing mode (unit, m², linear metre), its options and quantity tiers: the quote prices itself. Invoices, delivery notes and PDF tickets come out of the same file, and raw materials are deducted on order.",
-    bullets: ["Automatic pricing per m², per linear metre or per unit (banners, vinyl, paper, cards)", "Quantity tiers, imposed quantities and negotiated prices per customer or reseller", "PDF quotes, invoices, delivery notes and tickets with VAT and your company details", "Deposit, manual adjustment and balance due computed automatically", "Raw-material stock: rolls, sheets and consumables tracked per unit (QR code)", "Automatic deduction on order, alert threshold and movement history", "Statements per reseller and per salesperson"],
+    bullets: ["Automatic pricing per m², per linear metre or per unit (banners, vinyl, paper, cards)", "Quantity tiers, imposed quantities and negotiated prices per customer or reseller", "PDF quotes, invoices, delivery notes and tickets with VAT, your company details and legal identifiers (ICE, IF, RC, patente)", "Deposit, manual adjustment and balance due computed automatically", "Raw-material stock: rolls, sheets and consumables tracked per unit (QR code)", "Automatic deduction on order, alert threshold and movement history", "Statements per reseller and per salesperson"],
     mockup: "orders",
     color: "bg-amber-600",
   },
