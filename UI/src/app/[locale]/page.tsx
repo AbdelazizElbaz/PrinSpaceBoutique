@@ -6,6 +6,7 @@ import { Icon } from "@/components/Icon"
 import { Mockup } from "@/components/mockups/Mockup"
 import { CarriersBand } from "@/components/CarriersBand"
 import { Diagrams } from "@/components/Diagrams"
+import { Ecosystem } from "@/components/Ecosystem"
 import { Reveal, Stagger, Tilt, CountUp } from "@/components/motion"
 import { site, money } from "@/content/site.config"
 import { applySettings, getSiteSettings, waLink } from "@/lib/siteSettings"
@@ -59,11 +60,10 @@ export default async function HomePage({ params }: LocaleParams) {
               ))}
             </ul>
           </div>
+          {/* Hero : schema ecosysteme compact a la place de la maquette (demande utilisateur du 20/10/2026). */}
           <div className="hero-in-mock relative" dir="ltr">
             <div className="mock-glow" aria-hidden />
-            <Tilt className="animate-float">
-              <Mockup kind="orders" locale={locale} className="shadow-2xl ring-1 ring-slate-200" />
-            </Tilt>
+            <Ecosystem compact center={site.brand} modules={t.ecosystem.modules} hint={t.ecosystem.hint} rtl={isRtl(locale)} />
           </div>
         </div>
       </section>
