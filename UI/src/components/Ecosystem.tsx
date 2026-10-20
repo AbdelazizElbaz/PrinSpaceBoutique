@@ -21,7 +21,9 @@ const ICONS = [FileText, Printer, Truck, Coins, Users, ShoppingBag]
 
 // Largeur 1000 en mode complet : les pastilles les plus à gauche et à droite restent dans le cadre (cadre serré pour
 // que le schéma reste lisible une fois réduit dans la colonne du hero).
-const FULL = { W: 1000, H: 640, moduleRx: 235, moduleRy: 150, itemRx: 410, itemRy: 272, nodeW: 184, nodeH: 54, font: 14, centerR: 44, logoScale: 0.9, glowR: 130 }
+// 18 pastilles réparties uniformément (tous les 20°), la pastille centrale de chaque module 12 % plus loin : aucun
+// chevauchement (vérifié géométriquement avec des pastilles de 190×44) et tout reste dans le cadre 1060×680.
+const FULL = { W: 1060, H: 680, moduleRx: 235, moduleRy: 150, itemRx: 420, itemRy: 278, nodeW: 184, nodeH: 54, font: 14, centerR: 44, logoScale: 0.9, glowR: 130 }
 const COMPACT = { W: 720, H: 560, moduleRx: 250, moduleRy: 200, itemRx: 0, itemRy: 0, nodeW: 214, nodeH: 60, font: 16, centerR: 52, logoScale: 1.05, glowR: 150 }
 const PAD = 16 // marge autour des cartes dans leur foreignObject, pour que l'ombre ne soit pas rognée
 
@@ -109,9 +111,7 @@ export function Ecosystem({
             const soft = SOFT[i % SOFT.length]
             const Icon = ICONS[i % ICONS.length]
             const mod = polar(angles[i], D.moduleRx, D.moduleRy)
-            // modules du haut et du bas : pastilles côte à côte, donc écart angulaire plus grand pour éviter le chevauchement
-            const wide = angles[i] === -90 || angles[i] === 90
-            const spread = m.items.length === 1 ? [0] : m.items.length === 2 ? [-15, 15] : wide ? [-33, 0, 33] : [-25, 0, 25]
+            const spread = m.items.length === 1 ? [0] : m.items.length === 2 ? [-15, 15] : [-20, 0, 20]
             const isActive = active === i
             const nw = D.nodeW
             const nh = D.nodeH
@@ -122,15 +122,18 @@ export function Ecosystem({
                 {/* module → sous-fonctions (mode complet seulement) : pastilles blanches */}
                 {!compact &&
                   m.items.slice(0, 3).map((item, j) => {
-                    const pt = polar(angles[i] + spread[j], D.itemRx, D.itemRy)
+                    const far = spread[j] === 0 ? 1.12 : 1
+                    const pt = polar(angles[i] + spread[j], D.itemRx * far, D.itemRy * far)
                     return (
                       <g key={item} className="eco-item" style={{ ["--d" as string]: `${0.55 + i * 0.12 + j * 0.08}s` }}>
                         <line x1={mod.x} y1={mod.y} x2={pt.x} y2={pt.y} className="eco-line eco-line-sub" stroke={isActive ? color : "#cbd5e1"} strokeWidth="1.25" strokeDasharray="3 6" strokeLinecap="round" />
                         <foreignObject x={pt.x - 100} y={pt.y - 28} width="200" height="56">
                           <div className="flex h-full items-center justify-center" dir={dir}>
                             <span
-                              className={`inline-flex max-w-full items-center gap-1.5 rounded-full border bg-white px-2.5 py-1 text-center text-[13px] font-medium leading-tight shadow-sm ${isActive ? "border-slate-300 text-slate-900" : "border-slate-200 text-slate-600"}`}
-                              style={isActive ? { boxShadow: `0 4px 14px ${soft}` } : undefined}
+                              className={`inline-flex max-w-full cursor-pointer items-center gap-1.5 rounded-full border bg-white px-2.5 py-1 text-center text-[13px] font-medium leading-tight shadow-sm ${isActive ? "border-slate-300 text-slate-900" : "border-slate-200 text-slate-600"}`}
+                              style={{ pointerEvents: "auto", ...(isActive ? { boxShadow: `0 4px 14px ${soft}` } : {}) }}
+                              onMouseEnter={() => setActive(i)}
+                              onClick={() => setActive(isActive ? null : i)}
                             >
                               <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: color }} />
                               <span>{item}</span>
