@@ -10,7 +10,7 @@ export const en: Dict = {
   },
   ecosystem: {
     title: "The whole workshop around one order file",
-    views: { ecosystem: "Ecosystem view", order: "Create an order", reseller: "Resellers view" },
+    views: { ecosystem: "Ecosystem view", order: "Create an order", reseller: "Resellers view", file: "File journey" },
     hint: "Hover a module to see what it covers.",
     modules: [
       {

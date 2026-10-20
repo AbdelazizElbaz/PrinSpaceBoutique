@@ -10,7 +10,7 @@ export const ar: Dict = {
   },
   ecosystem: {
     title: "الورشة كلها حول ملف طلبية واحد",
-    views: { ecosystem: "عرض المنظومة", order: "إنشاء طلبية", reseller: "عرض الموزّعين" },
+    views: { ecosystem: "عرض المنظومة", order: "إنشاء طلبية", reseller: "عرض الموزّعين", file: "مسار الملف" },
     hint: "مرّر الفأرة فوق وحدة لرؤية تفاصيل ما تغطيه.",
     modules: [
       {
