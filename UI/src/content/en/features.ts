@@ -1,3 +1,4 @@
+import { CARRIERS } from "@/lib/carriers"
 import type { Feature } from "../fr/features"
 import type { Step, Audience, Stat, Testimonial } from "../types"
 
@@ -142,7 +143,7 @@ export const audiences: Audience[] = [
 export const stats: Stat[] = [
   { value: "A few minutes", label: "to receive your workspace" },
   { value: "0 gap", label: "between COD collected and balance due" },
-  { value: "4", label: "connected carriers + in-house couriers" },
+  { value: String(CARRIERS.length), label: "connected carriers + in-house couriers" },
   { value: "24/7", label: "PrintiosSync in service mode" },
 ]
 

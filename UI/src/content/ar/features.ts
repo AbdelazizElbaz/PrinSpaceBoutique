@@ -1,3 +1,4 @@
+import { CARRIERS } from "@/lib/carriers"
 import type { Feature } from "../fr/features"
 import type { Step, Audience, Stat, Testimonial } from "../types"
 
@@ -123,7 +124,7 @@ export const audiences: Audience[] = [
 export const stats: Stat[] = [
   { value: "دقائق معدودة", label: "لاستلام فضائك" },
   { value: "0 فرق", label: "بين المحصَّل والمتبقي للدفع" },
-  { value: "4", label: "ناقلون مرتبطون + موزّعون داخليون" },
+  { value: String(CARRIERS.length), label: "ناقلون مرتبطون + موزّعون داخليون" },
   { value: "24/7", label: "PrintiosSync في وضع الخدمة" },
 ]
 

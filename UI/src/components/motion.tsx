@@ -97,7 +97,8 @@ export function Tilt({ children, className = "", max = 10, glare = true }: { chi
  */
 export function CountUp({ value, duration = 1400, className = "" }: { value: string; duration?: number; className?: string }) {
   const { ref, seen } = useInView<HTMLSpanElement>(0.5)
-  const m = value.match(/^([^\d]*)(\d[\d\s.,]*)(.*)$/)
+  // Le nombre se termine par un chiffre : l'espace qui suit (« 0 écart », « 24 h ») reste dans le suffixe.
+  const m = value.match(/^([^\d]*)(\d(?:[\d\s.,]*\d)?)(.*)$/)
   const [n, setN] = useState(0)
   const target = m ? parseFloat(m[2].replace(/\s/g, "").replace(",", ".")) : NaN
   const decimals = m && /[.,]\d+$/.test(m[2].trim()) ? m[2].trim().split(/[.,]/)[1].length : 0

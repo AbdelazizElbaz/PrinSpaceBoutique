@@ -1,3 +1,5 @@
+import { CARRIERS } from "@/lib/carriers"
+
 // Modules de l'application, présentés sur /fonctionnalites et en résumé sur l'accueil.
 // Les `icon` sont des noms lucide-react (résolus dans components/Icon.tsx).
 // `mockup` référence une illustration SVG dans components/mockups/.
@@ -227,7 +229,7 @@ export const audiences = [
 export const stats = [
   { value: "Quelques minutes", label: "pour recevoir votre espace" },
   { value: "0 écart", label: "entre COD encaissé et reste à payer" },
-  { value: "4", label: "transporteurs connectés + livreurs internes" },
+  { value: String(CARRIERS.length), label: "transporteurs connectés + livreurs internes" },
   { value: "24/7", label: "PrintiosSync en mode service" },
 ]
 
