@@ -31,6 +31,8 @@ FROM php:8.3-fpm-alpine
 RUN apk add --no-cache nginx supervisor nodejs icu-dev libzip-dev oniguruma-dev \
     && docker-php-ext-install pdo_mysql intl zip bcmath opcache \
     && { echo "opcache.enable=1"; echo "opcache.validate_timestamps=0"; echo "opcache.memory_consumption=128"; } > /usr/local/etc/php/conf.d/opcache.ini
+# PHP : ne pas annoncer la version (en-tête X-Powered-By), ne jamais afficher d'erreur au client.
+RUN { echo "expose_php=Off"; echo "display_errors=Off"; echo "display_startup_errors=Off"; echo "html_errors=Off";       echo "allow_url_include=Off"; echo "session.cookie_httponly=1"; } > /usr/local/etc/php/conf.d/security.ini
 
 # API Laravel
 WORKDIR /var/www/api
